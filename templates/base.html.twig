@@ -24,17 +24,32 @@ The above copyright notice and this permission notice shall be included in all c
     {% endblock %}
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
+
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
+{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" integrity="sha256-16PDMvytZTH9heHu9KBPjzrFTaoner60bnABykjNiM0=" crossorigin="anonymous">#}
+{#    <link href='{{ asset('fullcalendar/main.min.css') }}' rel='stylesheet' />#}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css" integrity="sha256-zsz1FbyNCtIE2gIB+IyWV7GbCLyKJDTBRz0qQaBSLxM=" crossorigin="anonymous">
     <link href="{{ asset('assets/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet" />
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth'
+            });
+            calendar.render();
+        });
+
+    </script>
 </head>
 
 <body class="">
 <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="{{ asset('assets/img/sidebar-1.jpg') }}">
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -166,9 +181,9 @@ The above copyright notice and this permission notice shall be included in all c
                         <div class="card card-stats">
                             <div class="card-header card-header-warning card-header-icon">
                                 <div class="card-icon">
-                                    <i class="material-icons">content_copy</i>
+                                    <i class="material-icons"><span class="material-icons">apartment</span></i>
                                 </div>
-                                <p class="card-category">Used Space</p>
+                                <p class="card-category">Appartement</p>
                                 <h3 class="card-title">49/50
                                     <small>GB</small>
                                 </h3>
@@ -283,10 +298,7 @@ The above copyright notice and this permission notice shall be included in all c
                 </div>
                 <div class="row">
 
-                        <div class="card-body">
-                            <div class="col-md-12 m-auto w-75" id='calendar'></div>
-
-                        </div>
+                    <div id='calendar'></div>
 
 
                 </div>
@@ -331,6 +343,9 @@ The above copyright notice and this permission notice shall be included in all c
 </div>
 
 <!--   Core JS Files   -->
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js" integrity="sha256-XOMgUu4lWKSn8CFoJoBoGd9Q/OET+xrfGYSo+AKpFhE=" crossorigin="anonymous"></script>
+{#<script src='{{ asset('fullcalendar/main.min.js') }}'></script>#}
 <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/core/bootstrap-material-design.min.js') }}"></script>
@@ -373,38 +388,6 @@ The above copyright notice and this permission notice shall be included in all c
 <script src="{{ asset('assets/js/material-dashboard.js?v=2.1.2') }}" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('assets/demo/demo.js') }}"></script>
-<script>
-
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'fr',
-            timeZone: 'Europe/paris',
-            headerToolbar: {
-                start: 'prev,next today',
-                center: 'title',
-                end: 'dayGridMonth,timeGridWeek'
-
-
-            },
-            // buttonText: {
-            //
-            //     today: 'Aujourd\'hui',
-            //     month : 'Mois',
-            //     week : 'Semaine',
-            //     list : 'Liste'
-            // }
-            {#events:{{ calendarEvent|raw }}#}
-
-
-        });
-        {#console.log({{ calendarEvent|raw }}#}
-        {#)#}
-        calendar.render();
-    });
-
-</script>
 
 </body>
 
