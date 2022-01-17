@@ -24,27 +24,17 @@ The above copyright notice and this permission notice shall be included in all c
     {% endblock %}
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
-
+    {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
 {#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" integrity="sha256-16PDMvytZTH9heHu9KBPjzrFTaoner60bnABykjNiM0=" crossorigin="anonymous">#}
 {#    <link href='{{ asset('fullcalendar/main.min.css') }}' rel='stylesheet' />#}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css" integrity="sha256-zsz1FbyNCtIE2gIB+IyWV7GbCLyKJDTBRz0qQaBSLxM=" crossorigin="anonymous">
     <link href="{{ asset('assets/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet" />
-    <script>
+    {% endblock %}
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
-            });
-            calendar.render();
-        });
-
-    </script>
 </head>
 
 <body class="">
@@ -56,7 +46,7 @@ The above copyright notice and this permission notice shall be included in all c
           Tip 2: you can also add an image using data-image tag
       -->
         <div class="logo"><a href="" class="simple-text logo-normal">
-                Appartement Mmanagement
+                Appartement
             </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
@@ -86,13 +76,13 @@ The above copyright notice and this permission notice shall be included in all c
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="./icons.html">
-                        <i class="material-icons">bubble_chart</i>
-                        <p>Icons</p>
+                        <i class="material-icons">assignment_turned_in</i>
+                        <p>tenancier</p>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="./map.html">
-                        <i class="material-icons"><span class="material-icons">summarize</span></i>
+                        <i class="material-icons"><span class="material-icons">leaderboard</span></i>
                         <p>Rapport</p>
                     </a>
                 </li>
@@ -112,7 +102,7 @@ The above copyright notice and this permission notice shall be included in all c
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:;">Dashboard</a>
+                    <a class="navbar-brand" href="javascript:;">Appartement Management</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
@@ -175,134 +165,8 @@ The above copyright notice and this permission notice shall be included in all c
         </nav>
         <!-- End Navbar -->
         <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-warning card-header-icon">
-                                <div class="card-icon">
-                                    <i class="material-icons"><span class="material-icons">apartment</span></i>
-                                </div>
-                                <p class="card-category">Appartement</p>
-                                <h3 class="card-title">49/50
-                                    <small>GB</small>
-                                </h3>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons text-danger">warning</i>
-                                    <a href="javascript:;">Get More Space...</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-success card-header-icon">
-                                <div class="card-icon">
-                                    <i class="material-icons">store</i>
-                                </div>
-                                <p class="card-category">Revenue</p>
-                                <h3 class="card-title">$34,245</h3>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">date_range</i> Last 24 Hours
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-danger card-header-icon">
-                                <div class="card-icon">
-                                    <i class="material-icons">info_outline</i>
-                                </div>
-                                <p class="card-category">Fixed Issues</p>
-                                <h3 class="card-title">75</h3>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Tracked from Github
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-info card-header-icon">
-                                <div class="card-icon">
-                                    <i class="fa fa-twitter"></i>
-                                </div>
-                                <p class="card-category">Followers</p>
-                                <h3 class="card-title">+245</h3>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">update</i> Just Updated
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-success">
-                                <div class="ct-chart" id="dailySalesChart"></div>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Daily Sales</h4>
-                                <p class="card-category">
-                                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">access_time</i> updated 4 minutes ago
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-warning">
-                                <div class="ct-chart" id="websiteViewsChart"></div>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Email Subscriptions</h4>
-                                <p class="card-category">Last Campaign Performance</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-danger">
-                                <div class="ct-chart" id="completedTasksChart"></div>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Completed Tasks</h4>
-                                <p class="card-category">Last Campaign Performance</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div id='calendar'></div>
-
-
-                </div>
-            </div>
+           {% block contenu %}
+            {% endblock %}
         </div>
         <footer class="footer">
             <div class="container-fluid">
@@ -344,7 +208,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 <!--   Core JS Files   -->
 
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js" integrity="sha256-XOMgUu4lWKSn8CFoJoBoGd9Q/OET+xrfGYSo+AKpFhE=" crossorigin="anonymous"></script>
+{% block javascripts %}
+
+{#<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js" integrity="sha256-XOMgUu4lWKSn8CFoJoBoGd9Q/OET+xrfGYSo+AKpFhE=" crossorigin="anonymous"></script>#}
 {#<script src='{{ asset('fullcalendar/main.min.js') }}'></script>#}
 <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
@@ -388,6 +254,7 @@ The above copyright notice and this permission notice shall be included in all c
 <script src="{{ asset('assets/js/material-dashboard.js?v=2.1.2') }}" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('assets/demo/demo.js') }}"></script>
+{% endblock %}
 
 </body>
 
