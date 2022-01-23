@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommuneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +24,16 @@ class Commune
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Appartement::class, mappedBy="commune")
+     */
+    private $Appartement;
+
+    public function __construct()
+    {
+        $this->Appartement = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +47,36 @@ class Commune
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Appartement[]
+     */
+    public function getAppartement(): Collection
+    {
+        return $this->Appartement;
+    }
+
+    public function addAppartement(Appartement $appartement): self
+    {
+        if (!$this->Appartement->contains($appartement)) {
+            $this->Appartement[] = $appartement;
+            $appartement->setCommune($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppartement(Appartement $appartement): self
+    {
+        if ($this->Appartement->removeElement($appartement)) {
+            // set the owning side to null (unless already changed)
+            if ($appartement->getCommune() === $this) {
+                $appartement->setCommune(null);
+            }
+        }
 
         return $this;
     }

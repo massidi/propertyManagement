@@ -32,6 +32,17 @@ class Appartement
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="appartement")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Commune::class, inversedBy="Appartement")
+     */
+    private $commune;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +81,30 @@ class Appartement
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getCommune(): ?Commune
+    {
+        return $this->commune;
+    }
+
+    public function setCommune(?Commune $commune): self
+    {
+        $this->commune = $commune;
 
         return $this;
     }

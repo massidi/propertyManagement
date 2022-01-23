@@ -3,8 +3,8 @@
 {% block stylesheets %}
     {{ parent() }}
 
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css">
-{#    <link href="{{ asset('assets/css/main.min.css') }}" rel="stylesheet" />#}
+{#            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css">#}
+    <link href="{{ asset('assets/fullcalendar/main.css') }}" rel="stylesheet" />
 
 {% endblock %}
 
@@ -158,6 +158,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js" integrity="sha256-XOMgUu4lWKSn8CFoJoBoGd9Q/OET+xrfGYSo+AKpFhE=" crossorigin="anonymous"></script>
+{#    <link href="{{ asset('assets/fullcalendar/main.js') }}" rel="stylesheet" />#}
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {
