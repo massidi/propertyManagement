@@ -2,41 +2,56 @@
 
 <div class="row">
     <div class=" col-md-6">
+        <div class="form-group">
         {{ form_label(form.nom, 'Nom de l\'appartement',{'label_attr': {'class': 'bmd-label-floating'}}) }}
         {{ form_widget(form.nom) }}
     </div>
+    </div>
     <div class=" col-md-6">
+        <div class="form-group">
         {{ form_label(form.nbrDeChambre, 'Nombre de Chambre',{'label_attr': {'class': 'bmd-label-floating'}}) }}
         {{ form_widget(form.nbrDeChambre) }}
+    </div>
     </div>
 </div>
 <div class="row">
     <div class=" col-md-5">
-        {{ form_label(form.status, 'Status') }}
+        <div class="form-group">
 
+        {{ form_label(form.status, 'Status') }}
+        </div>
     </div>
     <div class=" col-md-1">
-        {{ form_widget(form.status) }}
+        <div class="form-group">
 
+        {{ form_widget(form.status) }}
+        </div>
     </div>
 
     <div class=" col-md-6">
-
-        {{ form_label(form.adresse, 'Adresse') }}
-
+        <div class="form-group">
+        {{ form_label(form.adresse, 'Adresse',{'label_attr': {'class': 'bmd-label-floating'}}) }}
         {{ form_widget(form.adresse) }}
+        </div>
+
     </div>
 </div>
 <div class="row">
     <div class=" col-md-6">
-        {{ form_label(form.commune, 'Commune') }}
+        <div class="form-group">
+
+        {{ form_label(form.commune, 'Commune',{'label_attr': {'class': 'bmd-label-floating'}}) }}
 
         {{ form_widget(form.commune) }}
+        </div>
     </div>
     <div class=" col-md-6">
-        {{ form_label(form.category, 'Choisir la categorie') }}
+        <div class="form-group">
+
+        {{ form_label(form.category, 'Choisir la categorie',{'label_attr': {'class': 'bmd-label-floating'}}) }}
 
         {{ form_widget(form.category) }}
+    </div>
     </div>
 </div>
 

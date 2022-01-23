@@ -3,37 +3,58 @@
 {% block title %}Appartement index{% endblock %}
 
 {% block contenu %}
-    <h1>Appartement index</h1>
+{#    <h1>Appartement index</h1>#}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>NbrDeChambre</th>
-                <th>Status</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for appartement in appartements %}
-            <tr>
-                <td>{{ appartement.id }}</td>
-                <td>{{ appartement.nom }}</td>
-                <td>{{ appartement.nbrDeChambre }}</td>
-                <td>{{ appartement.status ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a>
-                    <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <th>Nom</th>#}
+{#                <th>NbrDeChambre</th>#}
+{#                <th>Status</th>#}
+{#                <th>actions</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+    <div class="container">
 
-    <a href="{{ path('appartement_new') }}">Create new</a>
+    <div class="row">
+    {% for appartement in appartements %}
+
+        <div class="col-md-4">
+            <div class="card border-success mb-3" style="width: 20rem;">
+                <img class="img-thumbnail" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ appartement.nom }}</h5>
+                    <p class="card-text">  commune:{{ appartement.commune }}</p>
+                    <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
+                    <p class="card-text">l'appartement est occupé: {{ appartement.status ? 'Oui' : 'Non' }}  Categorie:{{ appartement.Category }}</p>
+
+                </div>
+
+                {% if appartement.status == false %}
+                <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
+
+                    {% else %}
+                        <button class="btn btn-danger" disabled>{{ button_label|default('Booking') }}</button>
+                        {% endif %}
+{#                <a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a>#}
+{#                <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a>#}
+
+
+        </div>
+        </div>
+
+    {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>
+    {% endfor %}
+        </div>
+    </div>
+
+{#<a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a>#}
+{# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a>#}
+
+
 {% endblock %}

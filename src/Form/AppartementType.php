@@ -37,8 +37,8 @@ class AppartementType extends AbstractType
 
                 'attr' => [
 
-                    'class' => 'form-check ',
-                    'required' => true
+                    'class' => 'form-check-input ','type'=>'checkbox',
+//                    'required' => true
                 ]])
             ->add('category',EntityType::class,
             [
