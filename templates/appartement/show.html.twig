@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Appartement{% endblock %}
+
+{% block contenu %}
+    <h1>Appartement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ appartement.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ appartement.nom }}</td>
+            </tr>
+            <tr>
+                <th>NbrDeChambre</th>
+                <td>{{ appartement.nbrDeChambre }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ appartement.status ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('appartement_index') }}">back to list</a>
+
+    <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a>
+
+    {{ include('appartement/_delete_form.html.twig') }}
+{% endblock %}

@@ -43,6 +43,11 @@ class Appartement
      */
     private $commune;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adresse;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class Appartement
     public function setCommune(?Commune $commune): self
     {
         $this->commune = $commune;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
 
         return $this;
     }

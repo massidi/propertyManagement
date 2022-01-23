@@ -1,0 +1,44 @@
+{{ form_start(form) }}
+
+<div class="row">
+    <div class=" col-md-6">
+        {{ form_label(form.nom, 'Nom de l\'appartement',{'label_attr': {'class': 'bmd-label-floating'}}) }}
+        {{ form_widget(form.nom) }}
+    </div>
+    <div class=" col-md-6">
+        {{ form_label(form.nbrDeChambre, 'Nombre de Chambre',{'label_attr': {'class': 'bmd-label-floating'}}) }}
+        {{ form_widget(form.nbrDeChambre) }}
+    </div>
+</div>
+<div class="row">
+    <div class=" col-md-5">
+        {{ form_label(form.status, 'Status') }}
+
+    </div>
+    <div class=" col-md-1">
+        {{ form_widget(form.status) }}
+
+    </div>
+
+    <div class=" col-md-6">
+
+        {{ form_label(form.adresse, 'Adresse') }}
+
+        {{ form_widget(form.adresse) }}
+    </div>
+</div>
+<div class="row">
+    <div class=" col-md-6">
+        {{ form_label(form.commune, 'Commune') }}
+
+        {{ form_widget(form.commune) }}
+    </div>
+    <div class=" col-md-6">
+        {{ form_label(form.category, 'Choisir la categorie') }}
+
+        {{ form_widget(form.category) }}
+    </div>
+</div>
+
+    <button class="btn btn-success btn-lg btn-block">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

@@ -17,4 +17,15 @@ class FacturationController extends AbstractController
             'controller_name' => 'FacturationController',
         ]);
     }
+
+    /**
+     * @Route("/detail-facture/{id}", name="facturation")
+     */
+    public function facturation(): Response
+    {
+        return $this->render('facturation/facture.html.twig', [
+            'controller_name' => 'FacturationController',
+        ]);
+    }
+
 }
