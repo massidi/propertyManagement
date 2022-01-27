@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AppartementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,9 +30,9 @@ class Appartement
     private $nbrDeChambre;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default":"1"})
      */
-    private $status;
+    private $status=true;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="appartement")
@@ -47,6 +49,16 @@ class Appartement
      * @ORM\Column(type="string", length=255)
      */
     private $adresse;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Accessoires::class, mappedBy="details")
+     */
+    private $accessoires;
+
+    public function __construct()
+    {
+        $this->accessoires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,5 +136,37 @@ class Appartement
         $this->adresse = $adresse;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Accessoires[]
+     */
+    public function getAccessoires(): Collection
+    {
+        return $this->accessoires;
+    }
+
+    public function addAccessoire(Accessoires $accessoire): self
+    {
+        if (!$this->accessoires->contains($accessoire)) {
+            $this->accessoires[] = $accessoire;
+            $accessoire->addDetail($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoire(Accessoires $accessoire): self
+    {
+        if ($this->accessoires->removeElement($accessoire)) {
+            $accessoire->removeDetail($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
     }
 }

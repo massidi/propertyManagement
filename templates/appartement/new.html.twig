@@ -2,6 +2,11 @@
 
 {% block title %}New Appartement{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block contenu %}
 
 
@@ -29,4 +34,20 @@
 
 
 {#    <a href="{{ path('appartement_index') }}">back to list</a>#}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.tagselected').select2(
+                {
+                    tags:true
+                }
+            );
+
+        });
+    </script>
+
 {% endblock %}

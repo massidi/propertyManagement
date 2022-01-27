@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Accessoires;
 use App\Entity\Appartement;
 use App\Entity\Category;
 use App\Entity\Commune;
@@ -9,6 +10,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,14 +30,15 @@ class AppartementType extends AbstractType
                 ]
 
             ])
-            ->add('nbrDeChambre',NumberType::class, [
+            ->add('nbrDeChambre',IntegerType::class, [
 
                 'attr' => [
 
                     'class' => 'form-control ',
                 ]])
-            ->add('status',CheckboxType::class, [
-
+            ->add('status',HiddenType::class, [
+'mapped'=>true,
+                'required'=>false,
                 'attr' => [
 
                     'class' => 'form-check-input ','type'=>'checkbox',
@@ -54,7 +58,19 @@ class AppartementType extends AbstractType
                      'attr' => ['class' => 'form-control ']
                 ]
             )
+            ->add('accessoires',EntityType::class,
+                [
+                    'class'=>Accessoires::class,
+                    'by_reference' => false,
+                    'mapped'=>true,
+                    'multiple'=>true,
+                    'choice_label'=>'nom',
+                    'attr' => ['class' => 'form-control tagselected ']
+                ]
+            )
             ->add('adresse',TextType::class, [
+
+                'label_format' => 'form.address.%name%',
 
                 'attr' => [
                     'class' => 'form-control ',
