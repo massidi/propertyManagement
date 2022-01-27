@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,10 +40,16 @@ class Booking
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="bookings")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking")
      */
-    private $client;
+    private $clients;
+
+    public function __construct()
+    {
+        $this->clients = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -96,15 +104,35 @@ class Booking
         return $this;
     }
 
-    public function getClient(): ?Client
+    /**
+     * @return Collection|Client[]
+     */
+    public function getClients(): Collection
     {
-        return $this->client;
+        return $this->clients;
     }
 
-    public function setClient(?Client $client): self
+    public function addClient(Client $client): self
     {
-        $this->client = $client;
+        if (!$this->clients->contains($client)) {
+            $this->clients[] = $client;
+            $client->setBooking($this);
+        }
 
         return $this;
     }
+
+    public function removeClient(Client $client): self
+    {
+        if ($this->clients->removeElement($client)) {
+            // set the owning side to null (unless already changed)
+            if ($client->getBooking() === $this) {
+                $client->setBooking(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

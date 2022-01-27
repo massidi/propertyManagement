@@ -3,61 +3,74 @@
 {% block title %}Appartement index{% endblock %}
 
 {% block contenu %}
-{#    <h1>Appartement index</h1>#}
+    {# <h1>Appartement index</h1> #}
 
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Id</th>#}
-{#                <th>Nom</th>#}
-{#                <th>NbrDeChambre</th>#}
-{#                <th>Status</th>#}
-{#                <th>actions</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
+    {# <table class="table"> #}
+    {# <thead> #}
+    {# <tr> #}
+    {# <th>Id</th> #}
+    {# <th>Nom</th> #}
+    {# <th>NbrDeChambre</th> #}
+    {# <th>Status</th> #}
+    {# <th>actions</th> #}
+    {# </tr> #}
+    {# </thead> #}
+    {# <tbody> #}
     <div class="container">
 
-    <div class="row">
+        <div class="row">
 
-    {% for appartement in appartements %}
+            {% for appartement in appartements %}
 
-        <div class="col-md-4">
-            <div class="card border-success mb-3" style="width: 20rem;">
-                <img class="img-thumbnail" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">{{ appartement.nom |upper}} </h5>
-                    {% for accessoire in appartement.accessoires %}
-                        <p class="card-text">{{ accessoire.nom|join("")}}</p>
-                        {{ dump(accessoire) }}
-                    {% endfor %}
-                    <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
-                    <p class="card-text"> commune:{{ appartement.commune }}</p>
-                    <p class="card-text">l'appartement est occupé: {{ appartement.status ? 'Oui' : 'Non' }}  Categorie:{{ appartement.Category }}</p>
-                </div>
-                {% if appartement.status == false %}
-                <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
-                    {% else %}
-                        <button class="btn btn-danger" disabled>{{ button_label|default('Booking') }}</button>
+                <div class="col-md-4">
+                    <div class="card border-success mb-3" style="width: 20rem;">
+                        <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}">
+
+                        <img class="img-thumbnail"
+                             src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80"
+                             rel="nofollow" alt="Card image cap">
+                        </a>
+                        <div class="card-body">
+
+                            <h5 class="card-title">   {{ appartement.nom |upper }} </h5>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+
+                            {% for accessoire in appartement.accessoires %}
+{#                                    <div class="p-2 bd-highlight">Flex item 1</div>#}
+                                    <p class="p-2 bd-highlight">.{{ accessoire.nom }}</p>
+
+
+{#                                {{ dump(accessoire) }}#}
+                            {% endfor %}
+                            </div>
+                            <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
+                            <p class="card-text"> commune:{{ appartement.commune }}</p>
+                            <p class="card-text">l'appartement est occupé: {{ appartement.status ? 'Oui' : 'Non' }}
+                                Categorie:{{ appartement.Category }}</p>
+                        </div>
+                        {% if appartement.status == false %}
+                            <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
+                        {% else %}
+                            <button class="btn btn-danger" disabled>{{ button_label|default('Booking') }}</button>
                         {% endif %}
-{#                <a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a>#}
-{#                <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a>#}
+{#                        <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}"></a>#}
+                        {# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a> #}
 
-        </div>
-        </div>
+                    </div>
+                </div>
 
-    {% else %}
-        <tr>
-            <td colspan="5">no records found</td>
-        </tr>
-        {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
 
 
         </div>
     </div>
 
-{#<a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a>#}
-{# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a>#}
+    {# <a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a> #}
+    {# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a> #}
 
 
 {% endblock %}

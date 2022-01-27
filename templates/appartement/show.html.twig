@@ -4,51 +4,59 @@
 
 {% block contenu %}
 
-<div class="container">
+    <div class="container">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-    <div class="card mb-3">
-        <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
-        <div class="card-body">
-            <h4 class="card-title">{{ appartement.nom }}</h4>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Nombre de pièce {{ appartement.nbrDeChambre }}</small></p>
-        </div>
-    </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <img class="card-img-top"
+                             src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80"
+                             rel="nofollow" alt="Card image cap">
+                        <div class="card-body">
+                            <h3>Location appartement</h3>
+                            <h4 class="card-title">{{ appartement.nom }}</h4>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                                additional content. This content is a little bit longer.</p>
+                            <p class="card-text"><small class="text-muted">Nombre de
+                                    pièce {{ appartement.nbrDeChambre }}</small></p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
+            <h3>Description du professionnel</h3>
+
+
         </div>
-        <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
 
     </div>
-</div>
-{#    <h1>Appartement</h1>#}
+    {# <h1>Appartement</h1> #}
 
-{#    <table class="table">#}
-{#        <tbody>#}
-{#            <tr>#}
-{#                <th>Id</th>#}
-{#                <td>{{ appartement.id }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Nom</th>#}
-{#                <td>{{ appartement.nom }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>NbrDeChambre</th>#}
-{#                <td>{{ appartement.nbrDeChambre }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Status</th>#}
-{#                <td>{{ appartement.status ? 'Yes' : 'No' }}</td>#}
-{#            </tr>#}
-{#        </tbody>#}
-{#    </table>#}
+    {# <table class="table"> #}
+    {# <tbody> #}
+    {# <tr> #}
+    {# <th>Id</th> #}
+    {# <td>{{ appartement.id }}</td> #}
+    {# </tr> #}
+    {# <tr> #}
+    {# <th>Nom</th> #}
+    {# <td>{{ appartement.nom }}</td> #}
+    {# </tr> #}
+    {# <tr> #}
+    {# <th>NbrDeChambre</th> #}
+    {# <td>{{ appartement.nbrDeChambre }}</td> #}
+    {# </tr> #}
+    {# <tr> #}
+    {# <th>Status</th> #}
+    {# <td>{{ appartement.status ? 'Yes' : 'No' }}</td> #}
+    {# </tr> #}
+    {# </tbody> #}
+    {# </table> #}
 
-{#    <a href="{{ path('appartement_index') }}">back to list</a>#}
+    {# <a href="{{ path('appartement_index') }}">back to list</a> #}
 
-{#    <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a>#}
+    {# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a> #}
 
-{#    {{ include('appartement/_delete_form.html.twig') }}#}
+    {# {{ include('appartement/_delete_form.html.twig') }} #}
 {% endblock %}

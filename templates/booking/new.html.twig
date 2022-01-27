@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Booking{% endblock %}
+
+{% block contenu %}
+
+    <div class="container">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title ">Reservation</h4>
+                            <p class="card-category"> Veuillez renseigner l'identité du client</p>
+                        </div>
+                        <div class="card-body">
+                            {{ include('booking/_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{{ path('booking_index') }}">back to list</a>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{#    <script>#}
+
+{#        const addTagLink = document.createElement('a')#}
+{#        addTagLink.classList.add('add_tag_list')#}
+{#        addTagLink.href='#'#}
+{#        addTagLink.innerText='Add a tag'#}
+{#        addTagLink.dataset.collectionHolderClass='tags'#}
+
+{#        const newLinkLi = document.createElement('li').append(addTagLink)#}
+
+{#        const collectionHolder = document.querySelector('ul.tags')#}
+{#        collectionHolder.appendChild(addTagLink)#}
+
+{#        const addFormToCollection = (e) => {#}
+{#            const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);#}
+
+{#            const item = document.createElement('li');#}
+
+{#            item.innerHTML = collectionHolder#}
+{#                .dataset#}
+{#                .prototype#}
+{#                .replace(#}
+{#                    /__name__/g,#}
+{#                    collectionHolder.dataset.index#}
+{#                );#}
+
+{#            collectionHolder.appendChild(item);#}
+
+{#            collectionHolder.dataset.index++;#}
+{#        }#}
+
+{#        addTagLink.addEventListener("click", addFormToCollection)#}
+{#    </script>#}
+
+    <script>
+
+        var $addTagLink = $('<a href="#" style="margin: 11px 7px 15px;" class="btn btn-info add_tag_link" class="add_tag_link btn btn-info"><i class="fa fa-plus"></i>Client</a>');
+        // var $addTagLink1 = $('<a href="#" class="add_tag_link btn btn-info">Nouveau produit</a>');
+
+        var $newLinkLi = $('<li></li>').append($addTagLink);
+
+
+        jQuery(document).ready(function () {
+            // Get the ul that holds the collection of tags
+            var $collectionHolder = $('ul.tags');
+            // var $collectionHolder1 = $('ul.prod');
+
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+            // $collectionHolder1.append($newLinkLi1);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+            // $collectionHolder1.data('index', $collectionHolder1.find(':input').length);
+
+
+            $addTagLink.on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                $(this).transition = "all 2s ease-in-out";
+
+                addTagForm($collectionHolder, $newLinkLi);
+
+                // add a new tag form (see code block below)
+
+            });
+
+
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+
+
+            var $newFormLi = $('<li></li>').append(newForm);
+
+
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-tag btn-sm btn-danger" >supprimer</a>');
+
+            $newLinkLi.before($newFormLi);
+
+            // handle the removal, just for this example
+            $('.remove-tag').click(function (e) {
+
+                e.preventDefault();
+                $(this).parent().slideUp("slow", function () {
+                    $(this).remove();
+                });
+
+
+                return false;
+            });
+
+
+        }
+
+    </script>
+{% endblock %}

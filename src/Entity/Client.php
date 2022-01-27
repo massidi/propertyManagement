@@ -55,9 +55,9 @@ class Client
     private $idType = [];
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="client")
+     * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="clients")
      */
-    private $bookings;
+    private $Booking;
 
     public function __construct()
     {
@@ -153,33 +153,16 @@ class Client
         return $this;
     }
 
-    /**
-     * @return Collection|Booking[]
-     */
-    public function getBookings(): Collection
+    public function getBooking(): ?Booking
     {
-        return $this->bookings;
+        return $this->Booking;
     }
 
-    public function addBooking(Booking $booking): self
+    public function setBooking(?Booking $Booking): self
     {
-        if (!$this->bookings->contains($booking)) {
-            $this->bookings[] = $booking;
-            $booking->setClient($this);
-        }
+        $this->Booking = $Booking;
 
         return $this;
     }
 
-    public function removeBooking(Booking $booking): self
-    {
-        if ($this->bookings->removeElement($booking)) {
-            // set the owning side to null (unless already changed)
-            if ($booking->getClient() === $this) {
-                $booking->setClient(null);
-            }
-        }
-
-        return $this;
-    }
 }
