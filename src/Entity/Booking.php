@@ -20,12 +20,12 @@ class Booking
     private $id;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $checkInAt;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $checkOutAt;
 
@@ -40,7 +40,7 @@ class Booking
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking")
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking",cascade={"persist"})
      */
     private $clients;
 
@@ -56,24 +56,24 @@ class Booking
         return $this->id;
     }
 
-    public function getCheckInAt(): ?\DateTimeImmutable
+    public function getCheckInAt(): ?\DateTime
     {
         return $this->checkInAt;
     }
 
-    public function setCheckInAt(\DateTimeImmutable $checkInAt): self
+    public function setCheckInAt(\DateTime $checkInAt): self
     {
         $this->checkInAt = $checkInAt;
 
         return $this;
     }
 
-    public function getCheckOutAt(): ?\DateTimeImmutable
+    public function getCheckOutAt(): ?\DateTime
     {
         return $this->checkOutAt;
     }
 
-    public function setCheckOutAt(\DateTimeImmutable $checkOutAt): self
+    public function setCheckOutAt(\DateTime $checkOutAt): self
     {
         $this->checkOutAt = $checkOutAt;
 

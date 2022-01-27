@@ -34,14 +34,19 @@
 
                             <h5 class="card-title">   {{ appartement.nom |upper }} </h5>
                             <div class="d-flex flex-row bd-highlight mb-3">
-
+                                <ul class="list-inline" style="list-style: none;">
                             {% for accessoire in appartement.accessoires %}
 {#                                    <div class="p-2 bd-highlight">Flex item 1</div>#}
-                                    <p class="p-2 bd-highlight">.{{ accessoire.nom }}</p>
+
+                                    <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li>
+
+
+
 
 
 {#                                {{ dump(accessoire) }}#}
                             {% endfor %}
+                                </ul>
                             </div>
                             <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
                             <p class="card-text"> commune:{{ appartement.commune }}</p>

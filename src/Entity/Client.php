@@ -45,14 +45,14 @@ class Client
     private $pays;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $cardId;
 
     /**
      * @ORM\Column(type="array")
      */
-    private $idType = [];
+    private $idType;
 
     /**
      * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="clients")
@@ -141,12 +141,12 @@ class Client
         return $this;
     }
 
-    public function getIdType(): ?array
+    public function getIdType(): ?string
     {
         return $this->idType;
     }
 
-    public function setIdType(array $idType): self
+    public function setIdType(string $idType): self
     {
         $this->idType = $idType;
 

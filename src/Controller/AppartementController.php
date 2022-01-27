@@ -61,6 +61,7 @@ class AppartementController extends AbstractController
      */
     public function show(Appartement $appartement): Response
     {
+//        dd($appartement->getAccessoires()[0]);
         return $this->render('appartement/show.html.twig', [
             'appartement' => $appartement,
         ]);

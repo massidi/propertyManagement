@@ -16,6 +16,11 @@
                         <div class="card-body">
                             <h3>Location appartement</h3>
                             <h4 class="card-title">{{ appartement.nom }}</h4>
+                            <ul class="list-inline" style="list-style: none;">
+                                {% for accessoire in appartement.accessoires %}
+                                    <li class="list-inline-item">{{ accessoire.nom }}</li>
+                                {% endfor %}
+                            </ul>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
                                 additional content. This content is a little bit longer.</p>
                             <p class="card-text"><small class="text-muted">Nombre de
