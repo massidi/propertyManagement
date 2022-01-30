@@ -4,6 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Booking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
+use Doctrine\ORM\Query\ResultSetMapping;
+
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,18 +26,55 @@ class BookingRepository extends ServiceEntityRepository
     //  * @return Booking[] Returns an array of Booking objects
     //  */
     /*
-    public function findByExampleField($value)
+     *  */
+
+    public function getCurrentBooking()
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+//        $rsm = new ResultSetMapping();
+//
+//        $entityManager = $this->getEntityManager();
+//
+//        $query = $entityManager->createNativeQuery(
+//            'SELECT *
+//            FROM App\Entity\Booking
+//       ', $rsm
+//        );
+//
+//        // returns an array of Product objects
+//        return $query->getResult();
+
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb = $em->createQueryBuilder();
+        $de= new \DateTime('this year');
+        $de->format('Y-m-d Y-m-d H:i:s');
+        $today = date('Y-m-d Y-m-d H:i:s');
+
+        $query = $em->createQuery("SELECT b, a, c 
+        FROM App\Entity\Booking b                           
+        JOIN b.appartement a 
+        JOIN b.clients c
+        WHERE b.checkInAt  BETWEEN b.checkInAt AND b.checkOutAt 
+        ");
+
+        $rs_reservations = $query->getResult();
+
+
+        try {
+
+            return $rs_reservations;
+
+        } catch (\Doctrine\ORM\NoResultException $e)
+        {
+
+            return null;
+
+        }
     }
-    */
+
+
 
     /*
     public function findOneBySomeField($value): ?Booking

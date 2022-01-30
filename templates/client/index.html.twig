@@ -3,16 +3,28 @@
 {% block title %}Client index{% endblock %}
 
 {% block contenu %}
-    <h1>Client index</h1>
 
-    <table class="table">
-        <thead>
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title ">Liste des Invités</h4>
+        <p class="card-category"> Detail de tout nos clients</p>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table"
+                   id="table"
+                   data-toggle="table"
+
+                   data-pagination="true"
+                   data-search="true"
+            >
+                <thead class=" text-primary">
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
+                <th data-field="id">#</th>
+                <th data-field="Nom">Nom</th>
+                <th data-field="Prenom">Prenom</th>
                 <th>Email</th>
-                <th>Telephone</th>
+                <th data-field="Telephone">Telephone</th>
                 <th>Pays</th>
                 <th>CardId</th>
                 <th>IdType</th>
@@ -42,6 +54,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('client_new') }}">Create new</a>
+        </div>
+    </div>
+</div>
+{#    <a href="{{ path('client_new') }}">Create new</a>#}
 {% endblock %}

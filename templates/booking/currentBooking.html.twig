@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation actuelle{% endblock %}
+
+
+
+
+{% block contenu %}
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+
+                <div class="col-sm-6">
+                    <p class="m-0 text-dark">Comptabilité (OHADA) Revisé</p>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">acceuil</a></li>
+                        <li class="breadcrumb-item active">Sysinfocom</li>
+                    </ol>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title ">Réservation actuelle</h4>
+            <p class="card-category"> Detail de tout nos clients</p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <table class="table"
+
+                       id="table"
+                       data-toggle="table"
+                       data-locale="fr-FR"
+
+                       data-pagination="true"
+                       data-search="true">
+                    <thead>
+                    <tr>
+                        <th data-field="id">Id</th>
+                        <th data-field="CheckInAt">Nom client</th>
+                        <th>Appartement</th>
+                        <th>Entrer</th>
+                        <th data-field="price">Sortir</th>
+                        <th>Prix</th>
+                        <th>Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for booked in currentBooking %}
+                        <tr>
+                            <td>{{ booked.id }}</td>
+                            <td>{{ booked.clients[0].nom }}</td>
+                            <td>{{ booked.appartement.nom }}</td>
+
+                            <td>{{ booked.checkInAt ? booked.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ booked.checkOutAt ? booked.checkOutAt|date('Y-m-d H:i:s') : '' }}</td>
+{#                            <td>{{ booked.comment }}</td>#}
+                            <td>{{ booked.price }}</td>
+                            <td>
+                                <a href="{{ path('booking_show', {'id': booked.id}) }}">show</a>
+                                <a href="{{ path('booking_edit', {'id': booked.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    {# <a href="{{ path('booked_new') }}">Create new</a> #}
+{% endblock %}

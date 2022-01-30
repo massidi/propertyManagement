@@ -17,16 +17,20 @@ class Booking1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('checkInAt', DateType::class,
+            ->add('checkInAt', DateTimeType::class,
                 [
                     'attr' => [
-                        'class' => 'form-control '
+                        'class' => 'form-control ',
+
                     ],
                     'widget' => 'single_text',
+//                    'format' => 'yyyy-MM-dd HH:mm',
+//                    'html5'=>false,
+
 
                 ]
             )
-            ->add('checkOutAt', DateType::class,
+            ->add('checkOutAt', DateTimeType::class,
                 [
                     'attr' => [
                         'class' => 'form-control '

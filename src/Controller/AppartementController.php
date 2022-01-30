@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Appartement;
 use App\Form\AppartementType;
 use App\Repository\AppartementRepository;
+use App\Service\SearcheAppartement;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,15 +18,48 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppartementController extends AbstractController
 {
     /**
-     * @Route("/liste-appartement", name="appartement_index", methods={"GET"})
+     * @Route("/liste-appartement", name="appartement_index", methods={"GET", "POST"})
      * @param AppartementRepository $appartementRepository
+     * @param Request $request
+     * @param SearcheAppartement $searcheAppartement
      * @return Response
      */
-    public function index(AppartementRepository $appartementRepository): Response
+    public function index(AppartementRepository $appartementRepository,Request  $request,SearcheAppartement  $searcheAppartement): Response
     {
 
+        $appartements='';
+
+        if ($request->getMethod() === 'GET')
+        {
+            $date_start=  $searcheAppartement->available($request)[0];
+            $date_final= $searcheAppartement->available($request)[1];
+
+            $appartements=$appartementRepository->getAvailableRooms($date_start,$date_final);
+
+
+        }
+//        dd($appartements);
+
+
+
+
+
+//        dd($appartementRepository->getAvailableRooms($date_start,$date_final));
+//        else
+//        {
+//            $appartements =$appartementRepository->findAll();
+//        }
+
+
+
+
+
+
+
+
+
         return $this->render('appartement/index.html.twig', [
-            'appartements' => $appartementRepository->findAll(),
+            'appartements' =>$appartements,
         ]);
     }
 

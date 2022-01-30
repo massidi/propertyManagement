@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block contenu %}
+
+{#    {{ dump( calendar|raw  ) }}#}
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -152,14 +154,19 @@
 
         </div>
     </div>
+{#    {{ dump(calendar|raw ) }}#}
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js" integrity="sha256-XOMgUu4lWKSn8CFoJoBoGd9Q/OET+xrfGYSo+AKpFhE=" crossorigin="anonymous"></script>
-{#    <link href="{{ asset('assets/fullcalendar/main.js') }}" rel="stylesheet" />#}
 
+    <style>
+        p{
+            color: #171a1d;
+        }
+    </style>
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -173,9 +180,19 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
 
                 },
+                buttonText :{
+                    today: 'Aujourd\'hui',
+                    month: 'Mois',
+                    week:'Semaine',
+                    list: 'Liste',
+                    day: 'Jour'
+
+
+                },
+                weekText:'S',
                 weekNumbers: true,
                 dayMaxEvents: true, // allow "more" link when too many events
-                events: 'https://fullcalendar.io/demo-events.json'
+                events: {{ calendar|raw }}
             });
             calendar.render();
         });

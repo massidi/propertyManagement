@@ -44,6 +44,11 @@ class Booking
      */
     private $clients;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Appartement::class, inversedBy="bookings")
+     */
+    private $appartement;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
@@ -130,6 +135,18 @@ class Booking
                 $client->setBooking(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAppartement(): ?Appartement
+    {
+        return $this->appartement;
+    }
+
+    public function setAppartement(?Appartement $appartement): self
+    {
+        $this->appartement = $appartement;
 
         return $this;
     }

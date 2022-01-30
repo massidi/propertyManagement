@@ -47,4 +47,63 @@ class AppartementRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function checkAppartementAvailability($appartement_id, $date_start, $date_final)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+
+        $qb = $em->createQueryBuilder();
+
+        $nots = $em->createQuery("
+        SELECT COUNT(b) FROM App\Entity\Booking b
+            WHERE NOT (b.checkOutAt   < $date_start
+               OR
+               b.checkInAt > $date_final)
+            AND b.appartement = $appartement_id
+               
+        ")->getSingleScalarResult();
+
+        try {
+
+            return $nots;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function getAvailableRooms($date_start, $date_final)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+
+        $qb = $em->createQueryBuilder();
+
+        $nots = $em->createQuery("
+        SELECT IDENTITY(b.appartement) FROM App\Entity\Booking b
+            WHERE NOT (b.checkOutAt   < '$date_start'
+               OR
+               b.checkInAt > '$date_final')
+        ");
+
+        $dql_query = $nots->getDQL();
+        $qb->resetDQLParts();
+
+
+        $query = $qb->select('a')
+            ->from('App\Entity\Appartement', 'a')
+            ->where($qb->expr()->notIn('a.id', $dql_query ))
+            ->getQuery()
+            ->getResult();
+
+        try {
+
+            return $query;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
