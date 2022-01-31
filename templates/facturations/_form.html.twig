@@ -1,0 +1,30 @@
+{{ form_start(form) }}
+
+
+<div class="row">
+    <div class=" col-md-6">
+        <div class="form-group">
+            {{ form_label(form.paymentAt, 'Date du paiement') }}
+            {{ form_widget(form.paymentAt) }}
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class=" col-md-6">
+        <div class="form-group">
+            {{ form_label(form.taxe, 'TVA',{'label_attr': {'class': 'bmd-label-floating'}}) }}
+            {{ form_widget(form.taxe) }}
+        </div>
+    </div>
+    <div class=" col-md-6">
+        <div class="form-group">
+            {{ form_label(form.modeReglement, 'Mode de réglement',{'label_attr': {'class': 'bmd-label-floating'}}) }}
+            {{ form_widget(form.modeReglement) }}
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-success btn-lg btn-block">{{ button_label|default('Confirmer Payement') }}</button>
+{{ form_end(form) }}

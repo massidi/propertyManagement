@@ -71,6 +71,8 @@ class AppartementController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $idA='';
+
         $appartement = new Appartement();
         $form = $this->createForm(AppartementType::class, $appartement);
         $form->handleRequest($request);
@@ -78,6 +80,7 @@ class AppartementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($appartement);
             $entityManager->flush();
+            $idA=$appartement->getId();
 
             return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -85,6 +88,7 @@ class AppartementController extends AbstractController
         return $this->renderForm('appartement/new.html.twig', [
             'appartement' => $appartement,
             'form' => $form,
+            'booking'=>$idA
         ]);
     }
 

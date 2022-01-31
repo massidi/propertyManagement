@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Appartement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -52,26 +54,22 @@ class AppartementRepository extends ServiceEntityRepository
     public function checkAppartementAvailability($appartement_id, $date_start, $date_final)
     {
         $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
-
-
-        $qb = $em->createQueryBuilder();
-
-        $nots = $em->createQuery("
-        SELECT COUNT(b) FROM App\Entity\Booking b
-            WHERE NOT (b.checkOutAt   < $date_start
-               OR
-               b.checkInAt > $date_final)
-            AND b.appartement = $appartement_id
-               
-        ")->getSingleScalarResult();
 
         try {
-
-            return $nots;
-        } catch (\Doctrine\ORM\NoResultException $e) {
+            $nots = $em->createQuery("
+            SELECT COUNT(b) FROM App\Entity\Booking b
+                WHERE NOT (b.checkOutAt   < $date_start
+                   OR
+                   b.checkInAt > $date_final)
+                AND b.appartement = $appartement_id
+                   
+            ")->getSingleScalarResult();
+        } catch (NoResultException | NonUniqueResultException $e)
+        {
             return null;
         }
+
+
     }
 
     public function getAvailableRooms($date_start, $date_final)
@@ -102,7 +100,7 @@ class AppartementRepository extends ServiceEntityRepository
         try {
 
             return $query;
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return null;
         }
     }

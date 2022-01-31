@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,9 +40,10 @@ class BookingController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Appartement $appartement
      * @param AppartementRepository $appartementRepository
+     * @param RequestStack $requestStack
      * @return Response
      */
-    public function booking(FlashyNotifier $notifier, Request $request, EntityManagerInterface $entityManager, Appartement $appartement, AppartementRepository $appartementRepository): Response
+    public function booking(FlashyNotifier $notifier, Request $request, EntityManagerInterface $entityManager, Appartement $appartement, AppartementRepository $appartementRepository,RequestStack  $requestStack): Response
     {
 
         $booking = new Booking();
@@ -52,6 +54,7 @@ class BookingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             //Check if there are booked Apartment with those dates
 
             $room_availability = $appartementRepository->checkAppartementAvailability($appartement->getId(), $form["checkInAt"]->getData()->format('d/m/Y'), $form["checkOutAt"]->getData()->format('d/m/Y'));
@@ -60,12 +63,24 @@ class BookingController extends AbstractController
             //Room is available
 
             if (!$room_availability) {
+
+
                 $entityManager->persist($booking);
+
                 $entityManager->flush();
+
+
+                $session = $requestStack->getSession();
+                $session->set('booking_new', $booking);
+
+
+
                 $notifier->success('vous venez de faire une reservation à ' . " " . $booking->getClients()[0]->getNom() . ' avec success');
 
+                // stores an attribute in the session for later reuse
 
-                return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
+
+                return $this->redirectToRoute('creation_facture', [], Response::HTTP_SEE_OTHER);
             }
             else{
                 //Room is booked

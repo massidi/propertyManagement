@@ -12,11 +12,11 @@
             <div class="row mb-2">
 
                 <div class="col-sm-6">
-                    <p class="m-0 text-dark">Comptabilité (OHADA) Revisé</p>
+                    <h4 class="m-0 text-dark">Réservations</h4>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">acceuil</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('homepage') }}">acceuil</a></li>
                         <li class="breadcrumb-item active">Sysinfocom</li>
                     </ol>
                 </div><!-- /.col -->
@@ -60,8 +60,8 @@
                             <td>{{ booked.clients[0].nom }}</td>
                             <td>{{ booked.appartement.nom }}</td>
 
-                            <td>{{ booked.checkInAt ? booked.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ booked.checkOutAt ? booked.checkOutAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td><h4> <span class="badge badge-pill badge-success">{{ booked.checkInAt ? booked.checkInAt|date('Y-m-d H:i:s') : '' }}</span></h4></td>
+                            <td> <h4><span class="badge badge-pill badge-danger">{{ booked.checkOutAt ? booked.checkOutAt|date('Y-m-d H:i:s') : '' }}</span></h4> </td>
 {#                            <td>{{ booked.comment }}</td>#}
                             <td>{{ booked.price }}</td>
                             <td>
