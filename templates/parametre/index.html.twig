@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parametrage{% endblock %}
+
+{% block contenu %}
+
+
+<div class="container-fluid">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+
+                <div class="col-sm-6">
+                    <h4 class="m-0 text-dark">Paramètrages</h4>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('appartement_index') }}">Paramètrage</a></li>
+                        <li class="breadcrumb-item active">Sysinfocom</li>
+                    </ol>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">APPARTEMENT</h5>
+                    <p class="card-text">Création d'un appartement.</p>
+                    <a href="{{ path('mes_appartement') }}" class="btn btn-primary">voir detail <i class="material-icons"> visibility</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">CATEGORIE</h5>
+                    <p class="card-text">Création d'une categorie pour chaque appartement.</p>
+                    <a href="{{ path('category_new') }}" class="btn btn-primary">voir detail <i class="material-icons"> visibility</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">COMMUNE</h5>
+                    <p class="card-text">Définir et ajout des commune de kinshasa.</p>
+                    <a href="#" class="btn btn-primary">Ajout</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">ACCESSOIRES</h5>
+                    <p class="card-text">Création des accessioires qui composer une demeure, une maison,un appartement ou un flat.</p>
+                    <a href="{{ path('accessoires_index') }}" class="btn btn-primary">ajouter</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">RAPPORT</h5>
+                    <p class="card-text">Démarche et creation de rapport administratif.</p>
+                    <a href="#" class="btn btn-primary">voir detail <i class="material-icons"> visibility</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">IMPOT</h5>
+                    <p class="card-text">Définir un impot pour chaque payment.</p>
+                    <a href="#" class="btn btn-primary">ajouter</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">Reduction</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

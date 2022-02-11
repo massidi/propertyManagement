@@ -482,6 +482,15 @@
             "./templates/base.html.twig"
         ]
     },
+    "symfony/twilio-notifier": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "eb697fe6a90b4972a4a544b4f7ea56520d29d9e9"
+        }
+    },
     "symfony/validator": {
         "version": "5.4",
         "recipe": {
@@ -558,8 +567,14 @@
     "twig/extra-bundle": {
         "version": "v3.3.7"
     },
+    "twig/intl-extra": {
+        "version": "v3.3.5"
+    },
     "twig/twig": {
         "version": "v3.3.7"
+    },
+    "twilio/sdk": {
+        "version": "6.33.1"
     },
     "webmozart/assert": {
         "version": "1.10.0"

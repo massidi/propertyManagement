@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class=" col-md-12">
+        {{ form_label(form.nom, 'Nom Accessoir') }}
+
+        {{ form_widget(form.nom) }}
+    </div>
+</div>
+
+
+<button class="btn btn-success btn-lg ">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

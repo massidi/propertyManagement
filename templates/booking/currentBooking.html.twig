@@ -16,7 +16,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('homepage') }}">acceuil</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('appartement_index') }}">Reservation</a></li>
                         <li class="breadcrumb-item active">Sysinfocom</li>
                     </ol>
                 </div><!-- /.col -->
@@ -65,8 +65,8 @@
 {#                            <td>{{ booked.comment }}</td>#}
                             <td>{{ booked.price }}</td>
                             <td>
-                                <a href="{{ path('booking_show', {'id': booked.id}) }}">show</a>
-                                <a href="{{ path('booking_edit', {'id': booked.id}) }}">edit</a>
+                                <a href="{{ path('booking_show', {'id': booked.id}) }}"><button class="btn btn-info btn-sm"> <i class="material-icons"> visibility</i></button></a>
+                                <a href="{{ path('booking_edit', {'id': booked.id}) }}"><button class="btn btn-warning btn-sm"> <i class="material-icons"> edit</i></button></a>
                             </td>
                         </tr>
                     {% else %}

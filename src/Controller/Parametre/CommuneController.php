@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Parametre;
 
 use App\Entity\Commune;
 use App\Form\CommuneType;
@@ -21,7 +21,7 @@ class CommuneController extends AbstractController
      */
     public function index(CommuneRepository $communeRepository): Response
     {
-        return $this->render('commune/index.html.twig', [
+        return $this->render('parametre/commune/index.html.twig', [
             'communes' => $communeRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class CommuneController extends AbstractController
             return $this->redirectToRoute('commune_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('commune/new.html.twig', [
+        return $this->renderForm('parametre/commune/new.html.twig', [
             'commune' => $commune,
             'form' => $form,
         ]);
@@ -53,7 +53,7 @@ class CommuneController extends AbstractController
      */
     public function show(Commune $commune): Response
     {
-        return $this->render('commune/show.html.twig', [
+        return $this->render('parametre/commune/show.html.twig', [
             'commune' => $commune,
         ]);
     }
@@ -72,7 +72,7 @@ class CommuneController extends AbstractController
             return $this->redirectToRoute('commune_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('commune/edit.html.twig', [
+        return $this->renderForm('parametre/commune/edit.html.twig', [
             'commune' => $commune,
             'form' => $form,
         ]);

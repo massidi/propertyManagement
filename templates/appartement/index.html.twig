@@ -1,112 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Appartement index{% endblock %}
+{% block title %}List de mes appartements{% endblock %}
 
 {% block contenu %}
-    {# <h1>Appartement index</h1> #}
 
-    {# <table class="table"> #}
-    {# <thead> #}
-    {# <tr> #}
-    {# <th>Id</th> #}
-    {# <th>Nom</th> #}
-    {# <th>NbrDeChambre</th> #}
-    {# <th>Status</th> #}
-    {# <th>actions</th> #}
-    {# </tr> #}
-    {# </thead> #}
-    {# <tbody> #}
-
-    <div class="container">
+    <div class="container-fluid">
+        <a href="{{ path('appartement_new') }}" type="btn"
+           class="btn btn-success">{{ button_label|default('ajouter') }}</a>
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Appartement Disponible</h4>
-                <p class="card-category"> vérifier la disponibilité des appartements</p>
-            </div>
-            <div class="card-body">
-
-                <div class="col-md-12">
-
-                    <form class="form-inline" action="{{ path('appartement_index') }}">
-                        <div class="form-group mb-2">
-                            <label for="staticEmail2" class="sr-only">Email</label>
-                            <input type="datetime-local" class="form-control" name="checkIn">
-                        </div>
-                        <div class="form-group mx-sm-3 mb-2">
-                            <label for="inputPassword2" class="sr-only">Password</label>
-                            <input type="datetime-local" class="form-control" name="checkOut">
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-2">Recherche</button>
-                    </form>
-                </div>
+                <h4 class="card-title ">Appartement</h4>
+                <p class="card-category"> Liste de tous mes appartements</p>
             </div>
         </div>
+    </div>
 
+    <div class="container-fluid">
         <div class="row">
+        {% for appartement in appartements %}
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}">
 
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80"
+                             rel="nofollow" alt="Card image cap">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">   {{ appartement.nom |upper }} </h5>
+                        <div class="d-flex flex-row bd-highlight mb-3">
+                            <ul class="list-inline" style="list-style: none;">
+                                {% for accessoire in appartement.accessoires %}
 
-            {% for appartement in appartements %}
+                                    <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li>
 
-                <div class="col-md-4">
-                    <div class="card border-success mb-3" style="width: 20rem;">
-                        <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}">
-
-                            <img class="img-thumbnail"
-                                 src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80"
-                                 rel="nofollow" alt="Card image cap">
-                        </a>
-                        <div class="card-body">
-
-                            <h5 class="card-title">   {{ appartement.nom |upper }} </h5>
-                            <div class="d-flex flex-row bd-highlight mb-3">
-                                <ul class="list-inline" style="list-style: none;">
-                                    {% for accessoire in appartement.accessoires %}
-                                        {# <div class="p-2 bd-highlight">Flex item 1</div> #}
-
-                                        <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li>
-
-
-
-
-
-                                        {# {{ dump(accessoire) }} #}
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
-                            <p class="card-text"> commune:{{ appartement.commune }}</p>
-                            <p class="card-text">l'appartement est occupé: {{ appartement.status ? 'Oui' : 'Non' }}
-                                Categorie:{{ appartement.Category }}</p>
+                                {% endfor %}
+                            </ul>
                         </div>
-                        {% if appartement.status == false %}
-                            <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
-                        {% else %}
-                            <a type="button" class="btn btn-success"
-                               href="{{ path('booking_new', {'id': appartement.id}) }}">{{ button_label|default('Booking') }}</a>
-                        {% endif %}
-                        {# <a type="button" href="{{ path('booking_new', {'id': appartement.id}) }}"></a> #}
-                        {# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a> #}
-
+                        <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
+                        <p class="card-text"> commune:{{ appartement.commune }}</p>
+                        <p class="card-text">
+                            Categorie:{{ appartement.Category }}</p>
                     </div>
+
                 </div>
-                {% for appartements in appartement.bookings %}
-
-{#                {{ dump(appartements) }}#}
-            {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
-            {% endfor %}
-
-
+            </div>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
         </div>
     </div>
 
 
 
-    {# <a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a> #}
-    {# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">edit</a> #}
+
+
+
 
 
 {% endblock %}

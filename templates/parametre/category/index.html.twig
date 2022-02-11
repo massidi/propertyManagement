@@ -5,6 +5,8 @@
 {% block contenu %}
 
     <div class="container-fluid">
+        <a href="{{ path('category_new') }}" type="btn" class="btn btn-success">{{ button_label|default('ajouter') }}</a>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -48,5 +50,5 @@
         </div>
     </div>
 
-    <a href="{{ path('category_new') }}">Create new</a>
+
 {% endblock %}

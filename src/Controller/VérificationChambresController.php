@@ -13,7 +13,7 @@ class VérificationChambresController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('v�rification_chambres/index.html.twig', [
+        return $this->render('v�rification_chambres/filter.html.twig', [
             'controller_name' => 'VérificationChambresController',
         ]);
     }

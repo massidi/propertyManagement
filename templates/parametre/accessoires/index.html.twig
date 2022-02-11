@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accessoires index{% endblock %}
+
+{% block contenu %}
+    <div class="container-fluid">
+        <a href="{{ path('accessoires_new') }}" type="btn"
+           class="btn btn-success">{{ button_label|default('ajouter') }}</a>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Simple Table</h4>
+                        <p class="card-category"> Here is a subtitle for this table</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th>actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for accessoire in accessoires %}
+                                    <tr>
+                                        <td>{{ accessoire.id }}</td>
+                                        <td>{{ accessoire.nom }}</td>
+                                        <td>
+                                            <a href="{{ path('accessoires_show', {'id': accessoire.id}) }}">show</a>
+                                            <a href="{{ path('accessoires_edit', {'id': accessoire.id}) }}">edit</a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

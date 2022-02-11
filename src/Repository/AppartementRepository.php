@@ -55,19 +55,22 @@ class AppartementRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
 
-        try {
-            $nots = $em->createQuery("
-            SELECT COUNT(b) FROM App\Entity\Booking b
-                WHERE NOT (b.checkOutAt   < $date_start
+
+            $sd= $em->createQuery("
+            SELECT COUNT(b.appartement) FROM App\Entity\Booking b
+                WHERE NOT (b.checkOutAt <= '$date_start'
                    OR
-                   b.checkInAt > $date_final)
-                AND b.appartement = $appartement_id
-                   
-            ")->getSingleScalarResult();
-        } catch (NoResultException | NonUniqueResultException $e)
-        {
-            return null;
-        }
+                   b.checkInAt >= '$date_final')
+                AND b.appartement = $appartement_id")->getSingleScalarResult();
+
+
+
+//         dd($sd);
+        return $sd;
+//        catch (NoResultException | NonUniqueResultException $e) {
+//            return null;
+//        }
+
 
 
     }
@@ -75,7 +78,6 @@ class AppartementRepository extends ServiceEntityRepository
     public function getAvailableRooms($date_start, $date_final)
     {
         $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
 
 
         $qb = $em->createQueryBuilder();
@@ -93,7 +95,7 @@ class AppartementRepository extends ServiceEntityRepository
 
         $query = $qb->select('a')
             ->from('App\Entity\Appartement', 'a')
-            ->where($qb->expr()->notIn('a.id', $dql_query ))
+            ->where($qb->expr()->notIn('a.id', $dql_query))
             ->getQuery()
             ->getResult();
 

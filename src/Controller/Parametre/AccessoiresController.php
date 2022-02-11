@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Parametre;
+
 
 use App\Entity\Accessoires;
 use App\Form\AccessoiresType;
@@ -21,7 +22,7 @@ class AccessoiresController extends AbstractController
      */
     public function index(AccessoiresRepository $accessoiresRepository): Response
     {
-        return $this->render('accessoires/index.html.twig', [
+        return $this->render('parametre/accessoires/index.html.twig', [
             'accessoires' => $accessoiresRepository->findAll(),
         ]);
     }
@@ -42,7 +43,7 @@ class AccessoiresController extends AbstractController
             return $this->redirectToRoute('accessoires_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('accessoires/new.html.twig', [
+        return $this->renderForm('parametre/accessoires/new.html.twig', [
             'accessoire' => $accessoire,
             'form' => $form,
         ]);
@@ -53,7 +54,7 @@ class AccessoiresController extends AbstractController
      */
     public function show(Accessoires $accessoire): Response
     {
-        return $this->render('accessoires/show.html.twig', [
+        return $this->render('parametre/accessoires/show.html.twig', [
             'accessoire' => $accessoire,
         ]);
     }
@@ -72,7 +73,7 @@ class AccessoiresController extends AbstractController
             return $this->redirectToRoute('accessoires_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('accessoires/edit.html.twig', [
+        return $this->renderForm('parametre/accessoires/edit.html.twig', [
             'accessoire' => $accessoire,
             'form' => $form,
         ]);

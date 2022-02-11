@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FacturationController!{% endblock %}
+{% block title %}Facture #{{ facturation.createdAd|date('mdY') }} {{ facturation.booking.clients[0].nom }}{% endblock %}
+
+
 
     {% block stylesheets %}
         {{ parent() }}
@@ -133,7 +135,8 @@
 
     {% endblock %}
 {% block contenu %}
-
+{% set total=0 %}
+    {% set number =0%}
 
     <div class="container">
 {#        {{ dump( facturation.booking.appartement.accessoires) }}#}
@@ -153,11 +156,10 @@
                 <div class="invoice-header">
                     <div class="invoice-from">
                         <address class="m-t-5 m-b-5">
-                            <strong class="text-inverse">Twitter, Inc.</strong><br>
+                            <strong class="text-inverse">Immobilier</strong><br>
                             Street Address<br>
                             City, Zip Code<br>
                             Tel: (123) 456-7890<br>
-                            Fax: (123) 456-7890
                         </address>
                     </div>
                     <div class="invoice-to">
@@ -170,7 +172,7 @@
                         </address>
                     </div>
                     <div class="invoice-date">
-                        <small>Facture / {{ facturation.createdAd|date('M') }}</small>
+                        <small>Facture / {{ facturation.createdAd|format_datetime('full','medium',pattern="EEE, MMM d",locale='fr') }}</small>
                         <div class="date text-inverse m-t-5">{{ facturation.createdAd|date(' Y-m-d') }}</div>
                         <div class="invoice-detail">
                             #0000123DSS<br>
@@ -197,13 +199,15 @@
                                 <td>
                                     <span class="text-inverse">{{ facturation.booking.appartement.nom }}</span><br>
                                     {% for acc in facturation.booking.appartement.accessoires %}
-                                    <small>acc.nom</small>
-                                        {{ dump(acc.detail) }}
+                                    <small>{{ acc.nom }}</small>
+
+
                                     {% endfor %}
+                                    {{ facturation.booking.appartement.adresse }}
                                 </td>
-                                <td class="text-center">$50.00</td>
-                                <td class="text-center">50</td>
-                                <td class="text-right">$2,500.00</td>
+                                <td class="text-center">{{ facturation.booking.checkInAt|date('d M Y') }}</td>
+                                <td class="text-center">{{ facturation.booking.checkOutAt|date('d M Y') }}</td>
+                                <td class="text-right">${{ facturation.booking.price }}</td>
                             </tr>
 
 
@@ -219,7 +223,7 @@
                             <div class="invoice-price-row">
                                 <div class="sub-price">
                                     <small>SOUS-TOTAL</small>
-                                    <span class="text-inverse">$4,500.00</span>
+                                    <span class="text-inverse">${{ facturation.booking.price }}</span>
                                 </div>
                                 <div class="sub-price">
                                     <i class="fa fa-plus text-muted"></i>
@@ -230,8 +234,10 @@
                                 </div>
                             </div>
                         </div>
+                        {% set total = (facturation.booking.price) *(facturation.taxe)/100 %}
+                        {% set number= (facturation.booking.price)+total%}
                         <div class="invoice-price-right">
-                            <small>TOTAL</small> <span class="f-w-600">$4508.00</span>
+                            <small>TOTAL</small> <span class="f-w-600">${{ number }}</span>
                         </div>
                     </div>
                     <!-- end invoice-price -->
@@ -247,7 +253,7 @@
                 <!-- begin invoice-footer -->
                 <div class="invoice-footer">
                     <p class="text-center m-b-5 f-w-600">
-                        MERCI POUR VOTRE AFFAIRE
+                        MERCI POUR VOTRE CONFIANCE
                     </p>
                     <p class="text-center">
                         <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> matiasgallipoli.com</span>

@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Accessoires</h1>
 
-    {{ include('accessoires/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('parametre/accessoires/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('accessoires_index') }}">back to list</a>
 
-    {{ include('accessoires/_delete_form.html.twig') }}
+    {{ include('parametre/accessoires/_delete_form.html.twig') }}
 {% endblock %}

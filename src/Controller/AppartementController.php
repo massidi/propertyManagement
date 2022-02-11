@@ -17,6 +17,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AppartementController extends AbstractController
 {
+
+
+    /**
+     * @Route("/mes-appartement", name="mes_appartement", methods={"GET"})
+     * @param AppartementRepository $appartementRepository
+     * @return Response
+     */
+    public function index(AppartementRepository $appartementRepository): Response
+    {
+
+        return $this->render('appartement/index.html.twig', [
+            'appartements' => $appartementRepository->findAll(),
+        ]);
+    }
+
+
     /**
      * @Route("/liste-appartement", name="appartement_index", methods={"GET", "POST"})
      * @param AppartementRepository $appartementRepository
@@ -24,7 +40,7 @@ class AppartementController extends AbstractController
      * @param SearcheAppartement $searcheAppartement
      * @return Response
      */
-    public function index(AppartementRepository $appartementRepository,Request  $request,SearcheAppartement  $searcheAppartement): Response
+    public function filterAppartement(AppartementRepository $appartementRepository,Request  $request,SearcheAppartement  $searcheAppartement): Response
     {
 
         $appartements='';
@@ -38,27 +54,10 @@ class AppartementController extends AbstractController
 
 
         }
-//        dd($appartements);
 
 
 
-
-
-//        dd($appartementRepository->getAvailableRooms($date_start,$date_final));
-//        else
-//        {
-//            $appartements =$appartementRepository->findAll();
-//        }
-
-
-
-
-
-
-
-
-
-        return $this->render('appartement/index.html.twig', [
+        return $this->render('appartement/filter.html.twig', [
             'appartements' =>$appartements,
         ]);
     }
@@ -71,7 +70,6 @@ class AppartementController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $idA='';
 
         $appartement = new Appartement();
         $form = $this->createForm(AppartementType::class, $appartement);
@@ -80,7 +78,7 @@ class AppartementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($appartement);
             $entityManager->flush();
-            $idA=$appartement->getId();
+
 
             return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -88,7 +86,7 @@ class AppartementController extends AbstractController
         return $this->renderForm('appartement/new.html.twig', [
             'appartement' => $appartement,
             'form' => $form,
-            'booking'=>$idA
+
         ]);
     }
 

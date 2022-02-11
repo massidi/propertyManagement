@@ -7,6 +7,7 @@ use App\Entity\Booking;
 use App\Form\Booking1Type;
 use App\Repository\AppartementRepository;
 use App\Repository\BookingRepository;
+use Cassandra\Date;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,6 +43,7 @@ class BookingController extends AbstractController
      * @param AppartementRepository $appartementRepository
      * @param RequestStack $requestStack
      * @return Response
+     * @throws \Exception
      */
     public function booking(FlashyNotifier $notifier, Request $request, EntityManagerInterface $entityManager, Appartement $appartement, AppartementRepository $appartementRepository,RequestStack  $requestStack): Response
     {
@@ -52,22 +54,34 @@ class BookingController extends AbstractController
         $booking->setAppartement($appartement);
 
 
+
+
+            // dd($checkInAt->format('Y-m-d H:i'));
+
+
         if ($form->isSubmitted() && $form->isValid()) {
 
 
             //Check if there are booked Apartment with those dates
 
-            $room_availability = $appartementRepository->checkAppartementAvailability($appartement->getId(), $form["checkInAt"]->getData()->format('d/m/Y'), $form["checkOutAt"]->getData()->format('d/m/Y'));
+            $checkInAt= $form["checkInAt"]->getData()->format('Y-m-d H:i');
+            $checkOutAt=$form["checkOutAt"]->getData()->format('Y-m-d H:i');
 
+
+            $room_availability = $appartementRepository->checkAppartementAvailability($appartement->getId(),$checkInAt, $checkOutAt);
 
             //Room is available
 
-            if (!$room_availability) {
+            if ($room_availability=="0") {
+
+
 
 
                 $entityManager->persist($booking);
 
                 $entityManager->flush();
+
+                //stores my booking into a session
 
 
                 $session = $requestStack->getSession();
@@ -84,7 +98,9 @@ class BookingController extends AbstractController
             }
             else{
                 //Room is booked
-                $notifier->error('Pas d\'appartement pour cette date veillez changer la date');
+                $notifier->error('veillez choisir une autre date car la date choisie n\'est pas disponible');
+                return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
+
 
             }
 
@@ -107,7 +123,6 @@ class BookingController extends AbstractController
     {
 
         //here getting the current reservation
-//dd($bookingRepository->getCurrentBooking());
         return $this->render('booking/currentBooking.html.twig', [
             'currentBooking' => $bookingRepository->getCurrentBooking(),
         ]);
