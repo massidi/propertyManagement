@@ -57,6 +57,7 @@ class BookingRepository extends ServiceEntityRepository
         JOIN b.appartement a 
         JOIN b.clients c
         WHERE b.checkInAt  BETWEEN b.checkInAt AND b.checkOutAt 
+        ORDER BY b.checkInAt DESC
         ");
 
         $rs_reservations = $query->getResult();

@@ -10,7 +10,23 @@
 
 {% block contenu %}
 
-{#    {{ dump( calendar|raw  ) }}#}
+{#    {% set count=0 %}#}
+{#    {% set attente=null %}#}
+
+{#{% for key, value in data %}#}
+{#    {{ dump(key) }}#}
+{#    {% if value.borderColor['#00c853'] in  value  %}#}
+{#                {% set count = count +1 %}#}
+{#       {% else %}#}
+{#                {% set attente= value.borderColor%}#}
+{#        {% endif %}#}
+
+{#    {% endfor %}#}
+{#    {{ dump(count) }}#}
+{#    {{ dump(attente|length) }}#}
+
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -71,7 +87,7 @@
                             <i class="material-icons"> receipt</i>
                         </div>
                         <p class="card-category">Facture en attente</p>
-                        <h3 class="card-title">8/245</h3>
+                        <h3 class="card-title">8/9</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">

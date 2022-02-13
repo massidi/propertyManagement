@@ -29,8 +29,9 @@
             </div>
         </div>
     </div>
-
+<div class="container w-100">
         <div class="container-fluid">
+            <div class="row">
 
             {% for appartement in appartements %}
 
@@ -76,11 +77,11 @@
                     <td colspan="5">no records found</td>
                 </tr>
             {% endfor %}
-
+            </div>
 
         </div>
-    </div>
 
+</div>
 
 
     {# <a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a> #}

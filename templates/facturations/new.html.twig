@@ -137,30 +137,23 @@
     <div class="container">
         <div class="invoice-header">
             <div class="invoice-from">
-
                 <address class="m-t-5 m-b-5">
-                    <strong class="text-inverse">Twitter, Inc.</strong><br>
-                    Street Address<br>
-                    City, Zip Code<br>
-                    Phone: (123) 456-7890<br>
-                    Fax: (123) 456-7890
+                    <strong class="text-inverse">{{ facturation.booking.appartement.nom }}</strong><br>
+                    {{ facturation.booking.appartement.adresse }}<br>
+                    Tel: (123) 456-7890<br>
                 </address>
             </div>
             <div class="invoice-to">
                 <address class="m-t-5 m-b-5">
-                    <strong class="text-inverse">Company Name</strong><br>
-                    Street Address<br>
-                    City, Zip Code<br>
-                    Phone: (123) 456-7890<br>
-                    Fax: (123) 456-7890
+                    <strong class="text-inverse">{{ facturation.booking.clients[0].nom }}</strong><br>
+                    Tel: {{ facturation.booking.clients[0].telephone }}<br>
+                    Email: {{ facturation.booking.clients[0].email }}
                 </address>
             </div>
             <div class="invoice-date">
-                <small>Invoice / July period</small>
-                <div class="date text-inverse m-t-5">August 3,2012</div>
+                <small>Facture / {{ facturation.createdAd|format_datetime('full','medium',pattern="EEE, MMM  Y",locale='fr') }}</small>
                 <div class="invoice-detail">
-                    #0000123DSS<br>
-                    Services Product
+                    Prestations immobilières
                 </div>
             </div>
         </div>
@@ -171,8 +164,8 @@
                     <div class="card">
 
                         <div class="card-header card-header-info">
-                            <h4 class="card-title ">Ajouter un nouveau Appartement</h4>
-                            <p class="card-category"> Veuillez renseigner l'identité du fournisseur</p>
+                            <h4 class="card-title ">Confirmation de payement</h4>
+                            <p class="card-category"> Veuillez renseigner le detail de votre payement</p>
                         </div>
                         <div class="card-body">
                             {{ include('facturations/_form.html.twig') }}

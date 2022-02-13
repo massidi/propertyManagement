@@ -19,43 +19,20 @@ class HomeController extends AbstractController
      * @param AppartementRepository $appartementRepository
      * @return Response
      */
-    public function index(BookingRepository $bookingRepository,AppartementRepository  $appartementRepository,FacturationService  $facturationService): Response
+    public function index(AppartementRepository  $appartementRepository,FacturationService  $facturationService): Response
     {
 
         $booked=$facturationService->factureData();
+
+
         $response = json_encode($booked);
-//        dd($response)
-//        $booked=[];
-//
-//        //here getting the current reservation
-//
-////        dd($bookingRepository->getCurrentBooking());
-//
-//        foreach ($bookingRepository->getCurrentBooking() as $event)
-//        {
-//            $booked[]=[
-//                'id'=>$event->getId(),
-//                'start'=>$event->getCheckInAt()->format('Y-m-d H:i:s'),
-//                'end'=>$event->getCheckOutAt()->format('Y-m-d H:i:s'),
-//                'title'=>$event->getClients()[0]->getNom(),
-//                'borderColor'=>"#00c853",
-//                'textColor'=>"#171a1d",
-//                'backgroundColor'=>"#00c853",
-//                'description'=>$event->getComment()
-//
-//            ];
-//
-//        }
-
-//        $response = json_encode($response);
-
-
-
 
 
         return $this->render('home/index.html.twig', [
             'nbrAppartement' => $appartementRepository->findAll(),
-            'calendar'=>$response
+            'calendar'=>$response,
+            'data'=>$booked
+
         ]);
     }
 

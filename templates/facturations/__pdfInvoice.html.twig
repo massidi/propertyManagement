@@ -1,0 +1,129 @@
+
+
+    <div class="invoice embed-responsive">
+        <!-- begin invoice-company -->
+        <div class="invoice-company text-inverse f-w-600">
+            <span class="pull-right hidden-print">
+<div class=" invoice-date ">
+                <small>Facture / {{ facturation.createdAd|format_datetime('full','medium',pattern="EEE, MMM  Y",locale='fr') }}</small>
+
+            </div>  
+            </span>
+{#            <img src="{{ asset('assets/img/logo.jpg') }}" alt="Sysinfocom">#}
+            Cosmos Technology
+        </div>
+        <!-- end invoice-company -->
+        <!-- begin invoice-header -->
+        <div class="invoice-header " style="background: #f0f3f4">
+            <div class=" invoice-from ">
+                <address class="m-t-5 m-b-5">
+                    <strong class="text-inverse">{{ facturation.booking.appartement.nom }}</strong><br>
+                    {{ facturation.booking.appartement.adresse }}<br>
+                    Tel: (123) 456-7890<br>
+                </address>
+            </div>
+            <div class="invoice-to ">
+                <address class="m-t-5 m-b-5">
+                    <strong class="text-inverse">Destinataire:</strong><br>
+                    {{ facturation.booking.clients[0].nom }}<br>
+                    Tel: {{ facturation.booking.clients[0].telephone }}<br>
+                    Email: {{ facturation.booking.clients[0].email }}
+                </address>
+            </div>
+            <div class=" invoice-date ">
+                <small>Payement effectué le:</small>
+                <small>{{ facturation.paymentAt|date('d/m/y') }}</small>
+
+
+                <div class="invoice-detail">
+                    Prestations immobilières
+                </div>
+            </div>
+        </div>
+        <!-- end invoice-header -->
+        <!-- begin invoice-content -->
+        <hr>
+
+        <div class="invoice-content">
+            <!-- begin table-responsive -->
+            <div class="table-responsive">
+                <table class="table table-invoice">
+                    <thead>
+                    <tr style="text-align: justify ">
+                        <th class="text-left"  width="50%">DESCRIPTIONS</th>
+                        <th class="text-center" width="30%">ARRIVER</th>
+                        <th class="text-center" width="30%">DEPART</th>
+                        <th class="text-right" width="20%">TOTAL</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span class="text-inverse">{{ facturation.booking.appartement.nom }}</span><br>
+                            {% for acc in facturation.booking.appartement.accessoires %}
+                            <small>{{ acc.nom }}</small>
+                            {% endfor %}<br>
+                            {{ facturation.booking.appartement.adresse }}
+                        </td>
+                        <td class="text-center">{{ facturation.booking.checkInAt|date('d M Y') }}</td>
+                        <td class="text-center">{{ facturation.booking.checkOutAt|date('d M Y') }}</td>
+                        <td class="text-right">${{ facturation.booking.price }}</td>
+                    </tr>
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+
+            <!-- end table-responsive -->
+            <!-- begin invoice-price -->
+            <div class="invoice-price">
+                <div class="invoice-price-left">
+                    <div class="invoice-price-row">
+                        <div class="sub-price">
+                            <small>SOUS-TOTAL</small>
+                            <span class="text-inverse">${{ facturation.booking.price }}</span>
+                        </div>
+                        <div class="sub-price">
+                            <i class="fa fa-plus text-muted"></i>
+                        </div>
+                        <div class="sub-price">
+                            <small>TVA </small>
+                            <span class="text-inverse">{{ facturation.taxe }} %</span>
+                        </div>
+                    </div>
+                </div>
+                {% set total = (facturation.booking.price) *(facturation.taxe)/100 %}
+                {% set number= (facturation.booking.price)+total%}
+                <div class="invoice-price-right" >
+
+                    <small>TOTAL</small> <span class="f-w-600 ">  <strong class="amount" >${{ number }}</strong></span>
+                </div>
+            </div>
+            <!-- end invoice-price -->
+        </div>
+        <hr>
+        <!-- end invoice-content -->
+        <!-- begin invoice-note -->
+        <div class="invoice-note">
+            * Établissez tous les chèques à l'ordre de Cosmos Technology<br>
+            * Le paiement est exigible sous 30 jours<br>
+            * Pour toute question concernant cette facture, contactez  [Name, Phone Number, Email]
+        </div>
+        <!-- end invoice-note -->
+        <!-- begin invoice-footer -->
+        <div class="invoice-footer"style="text-align: center">
+            <p class="text-center m-b-5 f-w-600">
+                MERCI POUR VOTRE CONFIANCE
+            </p>
+            <p class="text-center" >
+                <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> matiasgallipoli.com</span>
+                <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:016-18192302</span>
+                <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> rtiemps@gmail.com</span>
+            </p>
+        </div>
+        <!-- end invoice-footer -->
+    </div>

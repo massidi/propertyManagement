@@ -3,6 +3,23 @@
 {% block title %}Client index{% endblock %}
 
 {% block contenu %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+
+                <div class="col-sm-6">
+                    <h4 class="m-0 text-dark">Mes Clients</h4>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('appartement_index') }}">Liste Client</a></li>
+                        <li class="breadcrumb-item active">Sysinfocom</li>
+                    </ol>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
 
 <div class="card">
     <div class="card-header card-header-primary">
@@ -43,8 +60,8 @@
                 <td>{{ client.cardId }}</td>
                 <td>{{ client.idType ? client.idType|join(', ') : '' }}</td>
                 <td>
-                    <a href="{{ path('client_show', {'id': client.id}) }}">show</a>
-                    <a href="{{ path('client_edit', {'id': client.id}) }}">edit</a>
+                    <a href="{{ path('client_show', {'id': client.id}) }}"><button class="btn btn-info btn-sm"> <i class="material-icons"> visibility</i></button></a>
+                    <a href="{{ path('client_edit', {'id': client.id}) }}"><button class="btn btn-warning btn-sm"> <i class="material-icons"> edit</i></button></a>
                 </td>
             </tr>
         {% else %}

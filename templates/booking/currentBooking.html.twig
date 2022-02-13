@@ -46,14 +46,15 @@
                         <th data-field="id">Id</th>
                         <th data-field="CheckInAt">Nom client</th>
                         <th>Appartement</th>
-                        <th>Entrer</th>
-                        <th data-field="price">Sortir</th>
+                        <th>Arriver</th>
+                        <th data-field="price">Départ</th>
                         <th>Prix</th>
                         <th>Action</th>
 
                     </tr>
                     </thead>
                     <tbody>
+                    {{ dump(currentBooking) }}
                     {% for booked in currentBooking %}
                         <tr>
                             <td>{{ booked.id }}</td>

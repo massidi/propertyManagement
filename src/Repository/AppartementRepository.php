@@ -56,21 +56,22 @@ class AppartementRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
 
 
-            $sd= $em->createQuery("
+        $sd = $em->createQuery("
             SELECT COUNT(b.appartement) FROM App\Entity\Booking b
-                WHERE NOT (b.checkOutAt <= '$date_start'
+                WHERE NOT EXIST (b.checkOutAt <= '$date_start'
                    OR
                    b.checkInAt >= '$date_final')
-                AND b.appartement = $appartement_id")->getSingleScalarResult();
-
+                AND b.appartement = $appartement_id");
 
 
 //         dd($sd);
-        return $sd;
-//        catch (NoResultException | NonUniqueResultException $e) {
-//            return null;
-//        }
-
+        try {
+            return $sd->getSingleScalarResult();
+        }
+        catch (NoResultException | NonUniqueResultException $e)
+        {
+            return null;
+        }
 
 
     }

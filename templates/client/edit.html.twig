@@ -3,11 +3,28 @@
 {% block title %}Edit Client{% endblock %}
 
 {% block contenu %}
-    <h1>Edit Client</h1>
+    <div class="container">
 
-    {{ include('client/_form.html.twig', {'button_label': 'Update'}) }}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
 
-    <a href="{{ path('client_index') }}">back to list</a>
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title ">Reservation</h4>
+                            <p class="card-category"> Veuillez renseigner l'identité du client</p>
+                        </div>
+                        <div class="card-body">
+                            {{ include('client/_form.html.twig') }}
 
-    {{ include('client/_delete_form.html.twig') }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ include('client/_delete_form.html.twig') }}
+
+
+    </div>
 {% endblock %}

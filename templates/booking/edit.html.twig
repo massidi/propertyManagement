@@ -2,12 +2,30 @@
 
 {% block title %}Edit Booking{% endblock %}
 
-{% block body %}
-    <h1>Edit Booking</h1>
+{% block contenu %}
+    <div class="container">
 
-    {{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
 
-    <a href="{{ path('booking_index') }}">back to list</a>
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title ">Modification  Reservation</h4>
+                            <p class="card-category"> Veuillez renseigner l'identité du client</p>
+                        </div>
+                        <div class="card-body">
+                            {{ include('booking/_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
 
-    {{ include('booking/_delete_form.html.twig') }}
+            </div>
+            {{ include('booking/_delete_form.html.twig') }}
+
+        </div>
+    </div>
+
+
+
 {% endblock %}

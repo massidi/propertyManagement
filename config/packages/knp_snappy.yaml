@@ -1,0 +1,19 @@
+knp_snappy:
+    temporary_folder: "%kernel.cache_dir%/snappy"
+    pdf:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:
+#            no-outline: true
+#            page-size : LETTER
+#            encoding : UTF-8
+
+            - { name: 'viewport-size', value: ‘1024x768’ }
+            - { name: 'page-size', value: 'A4' }
+            - { name: 'encoding', value: 'UTF-8' }
+            - { name: 'images', value: true }
+            - { name: 'default-header', value: null }
+    image:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
+        options:    []

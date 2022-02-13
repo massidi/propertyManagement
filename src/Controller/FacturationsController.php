@@ -8,14 +8,13 @@ use App\Event\SendNotificationEvent;
 use App\Form\FacturationType;
 use App\Repository\BookingRepository;
 use App\Repository\FacturationRepository;
-use App\Service\FacturationService;
+use App\Service\GeneratePdfService;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Notifier\TexterInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -56,7 +55,6 @@ class FacturationsController extends AbstractController
      * @param RequestStack $requestStack
      * @param BookingRepository $bookingRepository
      * @param EventDispatcherInterface $dispatcher
-     * @param TexterInterface $texter
      * @return Response
      */
     public function facture(Request $request, EntityManagerInterface $entityManager, RequestStack $requestStack, BookingRepository $bookingRepository,EventDispatcherInterface $dispatcher): Response
@@ -103,6 +101,24 @@ class FacturationsController extends AbstractController
     }
 
     /**
+     * @Route("/print_incoice/{id}", name="print_invoice", methods={"GET"})
+     * @param Facturation $facturation
+     * @param GeneratePdfService $pdfService
+     * @return Response
+     */
+    public function invoicePrint(Facturation $facturation, GeneratePdfService  $pdfService): Response
+    {
+        $title=$facturation->getBooking()->getClients()[0]->getNom();
+        $htm= $this->render('facturations/invoice-print.html.twig', [
+            'facturation' => $facturation,
+        ]);
+        $pdfService->pdfAction($htm,$title);
+        return $htm ;
+
+    }
+
+
+    /**
      * @Route("/detail-facture/{id}", name="facturations_detail", methods={"GET"})
      * @param Facturation $facturation
      * @return Response
@@ -113,6 +129,8 @@ class FacturationsController extends AbstractController
             'facturation' => $facturation,
         ]);
     }
+
+
 
     /**
      * @Route("/{id}/facturations_edit", name="facturations_edit", methods={"GET", "POST"})

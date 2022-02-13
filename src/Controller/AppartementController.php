@@ -7,6 +7,7 @@ use App\Form\AppartementType;
 use App\Repository\AppartementRepository;
 use App\Service\SearcheAppartement;
 use Doctrine\ORM\EntityManagerInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AppartementController extends AbstractController
 {
+    /**
+     * @var FlashyNotifier
+     */
+    private $notifier;
+
+    public function __construct(FlashyNotifier $notifier)
+    {
+        $this->notifier = $notifier;
+    }
+
 
 
     /**
@@ -78,6 +89,8 @@ class AppartementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($appartement);
             $entityManager->flush();
+            $this->notifier->success('Merci vous venez d\'ajouter une nouvelle habitation');
+
 
 
             return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);

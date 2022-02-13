@@ -50,7 +50,8 @@ class FacturationService
                'borderColor'=>$color,
                'textColor'=>"#171a1d",
                'backgroundColor'=>$color,
-               'description'=>$value->getBooking()->getComment()
+               'description'=>$value->getBooking()->getComment(),
+
 
 
 
