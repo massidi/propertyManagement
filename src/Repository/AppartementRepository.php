@@ -58,7 +58,7 @@ class AppartementRepository extends ServiceEntityRepository
 
         $sd = $em->createQuery("
             SELECT COUNT(b.appartement) FROM App\Entity\Booking b
-                WHERE NOT EXIST (b.checkOutAt <= '$date_start'
+                WHERE NOT (b.checkOutAt <= '$date_start'
                    OR
                    b.checkInAt >= '$date_final')
                 AND b.appartement = $appartement_id");

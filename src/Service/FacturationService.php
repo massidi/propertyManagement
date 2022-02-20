@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Repository\FacturationRepository;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class FacturationService
 {
@@ -12,14 +13,19 @@ class FacturationService
      * @var FacturationRepository
      */
     private $facturationRepository;
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $router;
 
     /**
      * FacturationService constructor.
      * @param FacturationRepository $facturationRepository
      */
-    public function __construct(FacturationRepository  $facturationRepository)
+    public function __construct(FacturationRepository  $facturationRepository,UrlGeneratorInterface $router)
     {
         $this->facturationRepository = $facturationRepository;
+        $this->router = $router;
     }
 
     public function factureData()
@@ -51,6 +57,7 @@ class FacturationService
                'textColor'=>"#171a1d",
                'backgroundColor'=>$color,
                'description'=>$value->getBooking()->getComment(),
+               'url'=>$this->router->generate('facturations_detail', ['id' => $value->getId()])
 
 
 

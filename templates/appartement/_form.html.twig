@@ -65,6 +65,18 @@
         </div>
     </div>
 </div>
+<div class="row">
+
+    <div class=" col-md-12 form-file-upload form-file-multiple">
+{#        <div class="btn-info">#}
+{#            {{ form_label(form.image, 'Upload image',{'label_attr': {'class': 'bmd-label-floating','type': 'btn'}}) }}#}
+
+{#            <div class="input-group">#}
+            {{ form_row(form.image) }}
+{#        </div>#}
+        </div>
+    </div>
+
 
     <button class="btn btn-success btn-lg btn-block">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

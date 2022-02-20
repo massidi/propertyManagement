@@ -1,4 +1,4 @@
-
+{% set factureNbr=facturation.id ~ facturation.createdAd|date('mdy') %}
 
     <div class="invoice embed-responsive">
         <!-- begin invoice-company -->
@@ -36,6 +36,7 @@
 
 
                 <div class="invoice-detail">
+                    N°{{ factureNbr}} <br>
                     Prestations immobilières
                 </div>
             </div>

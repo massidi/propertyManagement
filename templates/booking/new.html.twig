@@ -34,39 +34,29 @@
 
 {% block javascripts %}
     {{ parent() }}
-{#    <script>#}
 
-{#        const addTagLink = document.createElement('a')#}
-{#        addTagLink.classList.add('add_tag_list')#}
-{#        addTagLink.href='#'#}
-{#        addTagLink.innerText='Add a tag'#}
-{#        addTagLink.dataset.collectionHolderClass='tags'#}
 
-{#        const newLinkLi = document.createElement('li').append(addTagLink)#}
+    <script type = "text/javascript" >
+        // JavaScript program to illustrate
+        // calculation of no. of days between two date
+        // To set two dates to two variables
+        var date1 = document.getElementById('booking1_checkInAt');
+        var date2 = document.getElementById('booking1_checkOutAt');
+        // To calculate the time difference of two dates
+        var Difference_In_Time = date2.getTime() - date1.getTime();
 
-{#        const collectionHolder = document.querySelector('ul.tags')#}
-{#        collectionHolder.appendChild(addTagLink)#}
+        console.log(Difference_In_Time)
 
-{#        const addFormToCollection = (e) => {#}
-{#            const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);#}
+        // To calculate the no. of days between two dates
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-{#            const item = document.createElement('li');#}
+        //To display the final no. of days (result)
+        document.write("Total number of days between dates  <br>"
+            + date1 + "<br> and <br>"
+            + date2 + " is: <br> "
+            + Difference_In_Days);
 
-{#            item.innerHTML = collectionHolder#}
-{#                .dataset#}
-{#                .prototype#}
-{#                .replace(#}
-{#                    /__name__/g,#}
-{#                    collectionHolder.dataset.index#}
-{#                );#}
-
-{#            collectionHolder.appendChild(item);#}
-
-{#            collectionHolder.dataset.index++;#}
-{#        }#}
-
-{#        addTagLink.addEventListener("click", addFormToCollection)#}
-{#    </script>#}
+    </script>
 
     <script>
 

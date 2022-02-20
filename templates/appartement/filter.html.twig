@@ -12,34 +12,38 @@
             </div>
             <div class="card-body">
 
-                <div class="col-md-12">
 
                     <form class="form-inline" action="{{ path('appartement_index') }}">
+                        <div class="col-md-4 col-sm-12 order-1">
                         <div class="form-group mb-2">
-                            <label >ENTRER</label>
+                            <label >ARRIVER</label>
                             <input type="datetime-local" class="form-control" name="checkIn">
                         </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 order-2">
                         <div class="form-group -3 mb-2">
-                            <label >SORTIR</label>
+                            <label >DEPART</label>
                             <input type="datetime-local" class="form-control" name="checkOut">
                         </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 order-2">
                         <button type="submit" class="btn btn-primary mb-2">Recherche</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-<div class="container w-100">
-        <div class="container-fluid">
-            <div class="row">
 
+<div class="container">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
             {% for appartement in appartements %}
 
                 <div class="col-md-4">
-                    <div class="card border-success mb-3" style="width: 20rem;">
+                    <div class="card border-success mb-3" >
                         <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}">
 
-                            <img class="img-thumbnail"
+                            <img class="card-img-top"
                                  src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80"
                                  rel="nofollow" alt="Card image cap">
                         </a>
@@ -54,7 +58,8 @@
                                 </ul>
                             </div>
                             <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
-                            <p class="card-text"> commune:{{ appartement.commune }}</p>
+{#                            <p class="card-text"> commune:</p>#}
+                            <p class="card-text">{{ appartement.commune }} {{ appartement.adresse }}</p>
                             <p class="card-text">l'appartement est occupé: {{ appartement.status ? 'Oui' : 'Non' }}
                                 Categorie:{{ appartement.Category }}</p>
                         </div>

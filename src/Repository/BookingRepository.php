@@ -56,7 +56,7 @@ class BookingRepository extends ServiceEntityRepository
         FROM App\Entity\Booking b                           
         JOIN b.appartement a 
         JOIN b.clients c
-        WHERE b.checkInAt  BETWEEN b.checkInAt AND b.checkOutAt 
+        WHERE b.checkInAt  <= b.checkOutAt OR b.checkOutAt <= b.checkInAt
         ORDER BY b.checkInAt DESC
         ");
 

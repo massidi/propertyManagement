@@ -60,10 +60,16 @@ class Appartement
      */
     private $bookings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="appartement",cascade={"persist"})
+     */
+    private $images;
+
     public function __construct()
     {
         $this->accessoires = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,10 +177,7 @@ class Appartement
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getNom();
-    }
+
 
     /**
      * @return Collection|Booking[]
@@ -204,5 +207,39 @@ class Appartement
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setAppartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAppartement() === $this) {
+                $image->setAppartement(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString(): ?string
+    {
+        return $this->getNom();
     }
 }

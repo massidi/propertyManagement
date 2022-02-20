@@ -3,54 +3,156 @@
 {% block title %}List de mes appartements{% endblock %}
 
 {% block contenu %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
 
-    <div class="container-fluid">
-        <a href="{{ path('appartement_new') }}" type="btn"
-           class="btn btn-success">{{ button_label|default('ajouter') }}</a>
-        <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title ">Appartement</h4>
-                <p class="card-category"> Liste de tous mes appartements</p>
+                <div class="col-sm-6">
+                    <h4 class="m-0 text-dark">Appartement Management</h4>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('mes_appartement') }}">Liste Habitation</a></li>
+                        <li class="breadcrumb-item active">Modification</li>
+                    </ol>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+<div class="container-fluid">
+    {# <div class="container-fluid"> #}
+    <a href="{{ path('appartement_new') }}" type="btn"
+       class="btn btn-success">{{ button_label|default('ajouter') }}</a>
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title ">Appartement</h4>
+            <p class="card-category"> Liste de tous mes appartements</p>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <table class="table table-striped table-bordered"
+
+                       id="table"
+                       data-toggle="table"
+
+                       data-pagination="true"
+                       data-search="true">
+                    <thead class="bg-info">
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Categories</th>
+                        <th>Image</th>
+
+                        <th>Adresse</th>
+                        <th>Statut</th>
+                        <th>Prix</th>
+
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for appartement in appartements %}
+                        <tr>
+                            <td>{{ appartement.id }}</td>
+
+                            <td>{{ appartement.nom }}</td>
+                            <td>{{ appartement.category }}</td>
+                            {% if appartement.images is not empty %}
+                                <td><img src="{{ asset('uploads/' ~ appartement.images[0].nom) }}" class="rounded"
+                                         alt="..."
+                                         style="width:80px;height: 35px"></td>
+                            {% else %}
+                                <td>pas d'image</td>
+                            {% endif %}
+
+                            <td>{{ appartement.adresse }}</td>
+                            <td>{{ appartement.status }}</td>
+                            <td>{{ appartement.nbrDeChambre }}</td>
+                            <td>
+                                <a href="{{ path('appartement_show', {'id': appartement.id}) }}">
+                                    <button class="btn btn-warning btn-sm"><i class="material-icons"> visibility</i>
+                                    </button>
+                                </a>
+                                <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">
+                                    <button class="btn btn-info btn-sm"><i class="material-icons"> edit</i></button>
+                                </a>
+                                <a href="{{ path('appartement_delete', {'id': appartement.id}) }}">
+                                    <button class="btn btn-danger btn-sm"><i class="material-icons"> delete</i></button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="container-fluid">
-        <div class="row">
-        {% for appartement in appartements %}
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}">
+    {# {% for appartement in appartements %} #}
+    {# <div class="col-md-4"> #}
+    {# <div class="card" style="width: 18rem;"> #}
+    {# <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}"> #}
+    {# {% if appartement.images is not empty %} #}
 
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80"
-                             rel="nofollow" alt="Card image cap">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">   {{ appartement.nom |upper }} </h5>
-                        <div class="d-flex flex-row bd-highlight mb-3">
-                            <ul class="list-inline" style="list-style: none;">
-                                {% for accessoire in appartement.accessoires %}
+    {# <img  class="card-img-top" src="{{ asset('uploads/' ~ appartement.images[0].nom) }}" #}
+    {# alt="..."> #}
+    {# {% else %} #}
+    {# <img class="card-img-top" #}
+    {# src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" #}
+    {# rel="nofollow" alt="Card image cap"> #}
+    {# {% endif %} #}
+    {# </a> #}
+    {# <div class="card-body"> #}
+    {# <h5 class="card-title">   {{ appartement.nom |upper }} </h5> #}
+    {# <div class="d-flex flex-row bd-highlight mb-3"> #}
+    {# <ul class="list-inline" style="list-style: none;"> #}
+    {# {% for accessoire in appartement.accessoires %} #}
 
-                                    <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li>
+    {# <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li> #}
 
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
-                        <p class="card-text"> commune:{{ appartement.commune }}</p>
-                        <p class="card-text">
-                            Categorie:{{ appartement.Category }}</p>
-                    </div>
+    {# {% endfor %} #}
+    {# </ul> #}
+    {# </div> #}
+    {# <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p> #}
+    {# <p class="card-text"> commune:{{ appartement.commune }}</p> #}
+    {# <p class="card-text"> #}
+    {# Categorie:{{ appartement.Category }}</p> #}
+    {# </div> #}
+    {# <div class="card-footer"> #}
+    {# <a href="#" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"> <i class="material-icons"> visibility</i></a> #}
+    {# <a href="{{ path('appartement_edit', {'id': appartement.id}) }}" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true"><i class="material-icons"> edit</i></a> #}
+    {# <a href="{{ path('appartement_delete', {'id': appartement.id}) }}" class="btn btn-outline-danger btn-sm active" role="button"  ><i class="material-icons"> delete</i></a> #}
 
-                </div>
-            </div>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </div>
-    </div>
+    {# <div class="btn-group btn-group-toggle w-100 " data-toggle="buttons"> #}
+    {# <label class="btn btn-secondary active"> #}
+    {# <input type="radio" name="options" id="option1" autocomplete="off" checked> <i class="material-icons"> visibility</i> #}
+    {# </label> #}
+    {# <label class="btn btn-info"> #}
+    {# <input href="{{ path('appartement_edit', {'id': appartement.id}) }}" name="options" id="option2" autocomplete="off">  <i class="material-icons"> edit</i> #}
+    {# </label> #}
+    {# <label class="btn btn-danger"> #}
+    {# <input type="radio" name="options" id="option3" autocomplete="off"> <i class="material-icons"> delete</i> #}
+    {# </label> #}
+    {# </div> #}
+    {# </div> #}
+    {# </div> #}
+    {# </div> #}
+
+
+    {# {% else %} #}
+    {# <tr> #}
+    {# <td colspan="5">no records found</td> #}
+    {# </tr> #}
+    {# {% endfor %} #}
 
 
 

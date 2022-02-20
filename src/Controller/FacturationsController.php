@@ -9,6 +9,7 @@ use App\Form\FacturationType;
 use App\Repository\BookingRepository;
 use App\Repository\FacturationRepository;
 use App\Service\GeneratePdfService;
+use App\Service\PrixService;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +45,7 @@ class FacturationsController extends AbstractController
         //return all the invoices
 
         return $this->render('facturations/index.html.twig', [
-            'facturations' => $facturationRepository->findAll(),
+            'facturations' => $facturationRepository->findBy(array(), array('createdAd' => 'DESC')),
         ]);
     }
 
@@ -76,6 +77,22 @@ class FacturationsController extends AbstractController
 
         $facturation->setBooking($booking);
 
+        //recuperer la date de l'entrée de client et  de sortie
+        $later = $facturation->getBooking()->getCheckInAt();
+
+        $earlier = $facturation->getBooking()->getCheckOutAt();
+
+        //le nombre de jours entre date d'entré et de sortie
+
+        $abs_diff = $later->diff($earlier)->format("%a"); //3
+
+        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
+        $TotalPrix=($abs_diff)*$facturation->getBooking()->getAppartement()->getNbrDeChambre();
+
+//        dd($facturation->getBooking());
+
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($facturation);
             $entityManager->flush();
@@ -96,7 +113,9 @@ class FacturationsController extends AbstractController
         return $this->renderForm('facturations/new.html.twig', [
             'facturation' => $facturation,
             'form' => $form,
-            'reservation' => "booking"
+            'reservation' => "booking",
+            'TotalPrix'=>$TotalPrix
+
         ]);
     }
 
@@ -125,15 +144,28 @@ class FacturationsController extends AbstractController
      */
     public function show(Facturation $facturation): Response
     {
+        //recuperer la date de l'entrée de client et  de sortie
+        $later = $facturation->getBooking()->getCheckInAt();
+
+        $earlier = $facturation->getBooking()->getCheckOutAt();
+
+        //lz nombre de jours entre date d'entré et de sortie
+
+        $abs_diff = $later->diff($earlier)->format("%a"); //3
+
+        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
+        $TotalPrix=($abs_diff)*($facturation->getBooking()->getAppartement()->getNbrDeChambre());
+
         return $this->render('facturations/show.html.twig', [
             'facturation' => $facturation,
+            'TotalPrix'=>$TotalPrix
         ]);
     }
 
 
 
     /**
-     * @Route("/{id}/facturations_edit", name="facturations_edit", methods={"GET", "POST"})
+     * @Route("/facturations_edit/{id}", name="facturations_edit", methods={"GET", "POST"})
      * @param Request $request
      * @param Facturation $facturation
      * @param EntityManagerInterface $entityManager
@@ -144,6 +176,18 @@ class FacturationsController extends AbstractController
         $form = $this->createForm(FacturationType::class, $facturation);
         $form->handleRequest($request);
 
+        //recuperer la date de l'entrée de client et  de sortie
+        $later = $facturation->getBooking()->getCheckInAt();
+
+        $earlier = $facturation->getBooking()->getCheckOutAt();
+
+        //lz nombre de jours entre date d'entré et de sortie
+
+        $abs_diff = $later->diff($earlier)->format("%a"); //3
+
+        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
+        $TotalPrix=($abs_diff)*($facturation->getBooking()->getAppartement()->getNbrDeChambre());
+//        dd([$abs_diff,$TotalPrix,$facturation->getBooking()->getAppartement()->getNbrDeChambre()],[$later,$earlier]);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
@@ -153,11 +197,13 @@ class FacturationsController extends AbstractController
         return $this->renderForm('facturations/edit.html.twig', [
             'facturation' => $facturation,
             'form' => $form,
+            'TotalPrix'=>$TotalPrix
+
         ]);
     }
 
     /**
-     * @Route("/facturations_delete/{id}", name="facturations_delete", methods={"POST"})
+     * @Route("/{id}", name="facturations_delete", methods={"POST"})
      * @param Request $request
      * @param Facturation $facturation
      * @param EntityManagerInterface $entityManager
@@ -172,4 +218,22 @@ class FacturationsController extends AbstractController
 
         return $this->redirectToRoute('liste_facturation', [], Response::HTTP_SEE_OTHER);
     }
+//    /**
+//     * @Route("/supprimer_delete/{id}", name="supprimer_delete", methods={"POST"})
+//     * @param Request $request
+//     * @param Facturation $facturation
+//     * @param EntityManagerInterface $entityManager
+//     * @return Response
+//     */
+//    public function supprimer(Request $request, Facturation $facturation, EntityManagerInterface $entityManager): Response
+//    {
+//
+//
+//        if ($this->isCsrfTokenValid('delete' . $facturation->getBooking()->getId(), $request->request->get('_token'))) {
+//            $entityManager->remove($facturation);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('liste_facturation', [], Response::HTTP_SEE_OTHER);
+//    }
 }

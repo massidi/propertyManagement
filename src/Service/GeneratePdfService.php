@@ -61,17 +61,6 @@ class GeneratePdfService
 
     public function pdfAction($html,$title)
     {
-//        $html = $this->renderView('MyBundle:Foo:bar.html.twig', array(
-//            'some'  => $vars
-//        ));
-//        $options = [
-//            'margin-top' => 2,
-//            'margin-bottom' => 2,
-//            'margin-left' => 2,
-//            'margin-right' => 3,
-//        ];
-//        $this->pdf->setOptions($options);
-
 
 
         return new Response(

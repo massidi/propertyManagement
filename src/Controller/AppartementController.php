@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Appartement;
+use App\Entity\Image;
 use App\Form\AppartementType;
 use App\Repository\AppartementRepository;
 use App\Service\SearcheAppartement;
@@ -87,6 +88,28 @@ class AppartementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // On récupère les images transmises
+            $images = $form->get('image')->getData();
+
+            // On boucle sur les images
+            foreach($images as $image){
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Image();
+                $img->setNom($fichier);
+                $appartement->addImage($img);
+            }
+
+
             $entityManager->persist($appartement);
             $entityManager->flush();
             $this->notifier->success('Merci vous venez d\'ajouter une nouvelle habitation');
@@ -129,6 +152,30 @@ class AppartementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // On récupère les images transmises
+            $images = $form->get('image')->getData();
+
+            // On boucle sur les images
+            foreach($images as $image){
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Image();
+                $img->setNom($fichier);
+                $appartement->addImage($img);
+            }
+
+
+
+
             $entityManager->flush();
 
             return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
@@ -141,7 +188,7 @@ class AppartementController extends AbstractController
     }
 
     /**
-     * @Route("/supprimer-appartement/{id}", name="appartement_delete", methods={"POST"})
+     * @Route("/supprimer-appartement/{id}", name="appartement_delete", methods={"POST","GET"})
      * @param Request $request
      * @param Appartement $appartement
      * @param EntityManagerInterface $entityManager
@@ -154,6 +201,6 @@ class AppartementController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('mes_appartement', [], Response::HTTP_SEE_OTHER);
     }
 }

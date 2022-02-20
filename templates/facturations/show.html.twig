@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Facture #{{ facturation.createdAd|date('mdY') }} {{ facturation.booking.clients[0].nom }}{% endblock %}
+
+{% set factureNbr=facturation.id ~ facturation.createdAd|date('mdy') %}
+
+{% block title %}Facture N°{{ factureNbr}} {% endblock %}
 
 
 
@@ -137,7 +140,7 @@
 {% block contenu %}
     {% set total=0 %}
     {% set number =0 %}
-
+    {% set difference = date(facturation.booking.checkInAt).diff(date(facturation.booking.checkOutAt)) %}
 
     <div class="row">
         {# <div class="col-md-12"> #}
@@ -155,11 +158,18 @@
             <div class="card">
                 <div class="card-header"><strong>INFORMATIONS</strong></div>
                 <div class="card-header">Numéro <span class="float-right"
-                                                      style="text-align: right; color: green">111558</span></div>
+                                                      style="text-align: right; color: green">{{ factureNbr}} </span></div>
                 <div class="card-header">Client<span class="float-right"
                                                      style="text-align: right; color:green">{{ facturation.booking.clients[0].nom }}</span>
                 </div>
-                <div class="card-header">Montant <span class="float-right montant"
+                <div class="card-header">Prix Journalier <span class="float-right "
+                                                               style="text-align: right; color:green"> {{ facturation.booking.appartement.nbrDeChambre }} /J</span></div>
+
+                <div class="card-header">Nombre de jours <span class="float-right "
+                                                               style="text-align: right; color:green"> {{ difference.days }}/J</span></div>
+                <div class="card-header">Montant à payer <span class="float-right "
+                                                       style="text-align: right; color:green"> {{ TotalPrix }} CD</span></div>
+                <div class="card-header">Montant déja payé <span class="float-right montant"
                                                        style="text-align: right; color:green"> </span></div>
                 <div class="card-header">Date<span class="float-right"
                                                    style="text-align: right; color: green">{{ facturation.paymentAt|date('d M Y') }}</span>

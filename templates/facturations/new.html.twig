@@ -153,7 +153,9 @@
             <div class="invoice-date">
                 <small>Facture / {{ facturation.createdAd|format_datetime('full','medium',pattern="EEE, MMM  Y",locale='fr') }}</small>
                 <div class="invoice-detail">
-                    Prestations immobilières
+                    Prestations immobilières <br>
+                  Prix:  <span class="badge badge-pill badge-success">{{ TotalPrix }} UDF</span>
+
                 </div>
             </div>
         </div>

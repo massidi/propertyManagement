@@ -3,11 +3,32 @@
 {% block title %}Facturation index{% endblock %}
 
 {% block contenu %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+
+            <div class="col-sm-6">
+                <h4 class="m-0 text-dark">Appartement Management</h4>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ path('mes_appartement') }}">Liste Habitation</a></li>
+                    <li class="breadcrumb-item active">Modification</li>
+                </ol>
+            </div><!-- /.col -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<div class="container-fluid">
+
+
     <div class="card">
         <div class="card-header card-header-primary">
             <h4 class="card-title ">Mes Factures</h4>
             <p class="card-category"> Detail de tout mes factures</p>
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
 
@@ -21,6 +42,7 @@
                     <thead class="bg-info">
                     <tr>
                         <th>Id</th>
+                        <th>Numero Facture</th>
                         <th>Nom Invité</th>
                         <th>Date du paiement</th>
                         <th>Mode de réglement</th>
@@ -31,8 +53,12 @@
                     </thead>
                     <tbody>
                     {% for facturation in facturations %}
+                        {% set factureNbr=facturation.id ~ facturation.createdAd|date('mdy') %}
+
                         <tr>
                             <td>{{ facturation.id }}</td>
+                            <td>{{factureNbr}}</td>
+
                             <td>{{ facturation.booking.clients[0].nom }}</td>
                             <td> {% if facturation.paymentAt <= date() %}
                                     <h4><span class="badge badge-pill badge-success"> {{ facturation.paymentAt ? facturation.paymentAt|date('Y-m-d') : '' }} </span> &nbsp;<span class="badge badge-pill badge-success">Completé</span></h4>
@@ -63,6 +89,7 @@
             </div>
         </div>
     </div>
+</div>
 
     {# <a href="{{ path('facturations_new') }}">Create new</a> #}
 {% endblock %}
