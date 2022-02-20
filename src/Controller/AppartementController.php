@@ -55,7 +55,7 @@ class AppartementController extends AbstractController
     public function filterAppartement(AppartementRepository $appartementRepository,Request  $request,SearcheAppartement  $searcheAppartement): Response
     {
 
-        $appartements='';
+        $appartements="";
 
         if ($request->getMethod() === 'GET')
         {
