@@ -22,7 +22,7 @@ class Appartement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private  $nom ;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -239,6 +239,11 @@ class Appartement
         return $this;
     }
 
+
+    public function __toString():string
+    {
+        return $this->nom;
+    }
 
 //    /**
 //     * @return string|null
