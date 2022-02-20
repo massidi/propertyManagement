@@ -14,9 +14,9 @@ use Symfony\Component\Serializer\Encoder\JsonEncode;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="homepage")
-     * @param BookingRepository $bookingRepository
+     * @Route("/", name="homepage")
      * @param AppartementRepository $appartementRepository
+     * @param FacturationService $facturationService
      * @return Response
      */
     public function index(AppartementRepository  $appartementRepository,FacturationService  $facturationService): Response
