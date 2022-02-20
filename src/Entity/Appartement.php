@@ -238,8 +238,13 @@ class Appartement
 
         return $this;
     }
-    public function __toString(): ?string
-    {
-        return $this->nom;
-    }
+
+
+//    /**
+//     * @return string|null
+//     */
+//    public function __toString(): ?string
+//    {
+//        return $this->getNom();
+//    }
 }
