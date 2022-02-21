@@ -5,7 +5,7 @@
         <div class="invoice-company text-inverse f-w-600">
             <span class="pull-right hidden-print">
 <div class=" invoice-date ">
-                <small>Facture / {{ facturation.createdAd|format_datetime('full','medium',pattern="EEE, MMM  Y",locale='fr') }}</small>
+                <small>Facture / {{ facturation.createdAd|date('Y-m-d')  }}</small>
 
             </div>  
             </span>
