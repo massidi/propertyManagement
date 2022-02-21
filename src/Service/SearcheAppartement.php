@@ -19,7 +19,7 @@ class SearcheAppartement
             $checkOut=$request->query->get('checkOut');
 
         }
-        return [strtotime($checkIn),strtotime($checkOut)];
+        return [$checkIn,$checkOut];
 
     }
 

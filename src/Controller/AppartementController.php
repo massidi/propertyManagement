@@ -55,17 +55,19 @@ class AppartementController extends AbstractController
     public function filterAppartement(AppartementRepository $appartementRepository,Request  $request,SearcheAppartement  $searcheAppartement): Response
     {
 
-        $appartements="";
+        $appartements=$appartementRepository->findAll();
+
 
         if ($request->getMethod() === 'GET')
         {
-            $date_start=  $searcheAppartement->available($request)[0];
-            $date_final= $searcheAppartement->available($request)[1];
+            $date_start= new \DateTime($searcheAppartement->available($request)[0]) ;
+            $date_final= new \DateTime($searcheAppartement->available($request)[1]);
 
-            $appartements=$appartementRepository->getAvailableRooms($date_start,$date_final);
+            $appartements=$appartementRepository->getAvailableRooms($date_start->format('Y-m-d H:i:s'),$date_final->format('Y-m-d H:i:s'));
 
 
         }
+//        dd([$date_start]);
 
 
 
