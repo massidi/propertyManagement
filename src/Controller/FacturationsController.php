@@ -87,7 +87,7 @@ class FacturationsController extends AbstractController
         $abs_diff = $later->diff($earlier)->format("%a"); //3
 
         //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
-        $TotalPrix=($abs_diff)*$facturation->getBooking()->getAppartement()->getNbrDeChambre();
+        $TotalPrix=($abs_diff)*$facturation->getBooking()->getAppartement()->getPrice();
 
 //        dd($facturation->getBooking());
 
