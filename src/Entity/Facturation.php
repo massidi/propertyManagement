@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FacturationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=FacturationRepository::class)
@@ -38,9 +39,16 @@ class Facturation
     private $createdAd;
 
     /**
-     * @ORM\OneToOne(targetEntity=Booking::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Booking::class,inversedBy="facturation", cascade={"persist", "remove"})
+     * @JoinColumn(name="customer_id", referencedColumnName="id")
+     *
      */
     private $booking;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $amount;
 
     public function getId(): ?int
     {
@@ -103,6 +111,18 @@ class Facturation
     public function setBooking(?Booking $booking): self
     {
         $this->booking = $booking;
+
+        return $this;
+    }
+
+    public function getAmount(): ?float
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(float $amount): self
+    {
+        $this->amount = $amount;
 
         return $this;
     }

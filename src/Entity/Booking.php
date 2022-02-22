@@ -6,6 +6,7 @@ use App\Repository\BookingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=BookingRepository::class)
@@ -37,17 +38,19 @@ class Booking
     /**
      * @ORM\Column(type="float")
      */
-    private $price;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking",cascade={"persist"})
-     */
     private $clients;
 
     /**
      * @ORM\ManyToOne(targetEntity=Appartement::class, inversedBy="bookings")
+     * @ORM\joinColumn(onDelete="SET NULL")
+     *
      */
     private $appartement;
+    /**
+     * @ORM\OneToOne(targetEntity="facturation", mappedBy="booking", cascade={"persist", "remove"},orphanRemoval="true")
+     */
+    private $facturation;
 
     public function __construct()
     {
@@ -97,17 +100,6 @@ class Booking
         return $this;
     }
 
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Client[]
@@ -155,6 +147,17 @@ class Booking
     {
 
         return $this->comment;
+    }
+    public function getFacturation(): ?Facturation
+    {
+        return $this->facturation;
+    }
+
+    public function setBooking(?Facturation  $facturation): self
+    {
+        $this->facturation = $facturation;
+
+        return $this;
     }
 
 

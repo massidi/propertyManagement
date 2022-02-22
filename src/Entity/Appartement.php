@@ -56,12 +56,13 @@ class Appartement
     private $accessoires;
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="appartement")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="appartement",orphanRemoval="true")
+     *
      */
     private $bookings;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="appartement",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="appartement",cascade={"persist","remove"})
      */
     private $images;
 

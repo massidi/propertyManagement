@@ -190,7 +190,7 @@ class AppartementController extends AbstractController
     }
 
     /**
-     * @Route("/supprimer-appartement/{id}", name="appartement_delete", methods={"POST","GET"})
+     * @Route("/{id}", name="appartement_delete", methods={"POST","GET"})
      * @param Request $request
      * @param Appartement $appartement
      * @param EntityManagerInterface $entityManager
