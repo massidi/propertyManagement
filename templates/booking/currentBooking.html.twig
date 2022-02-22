@@ -63,7 +63,8 @@
                             <td><h4> <span class="badge badge-pill badge-success">{{ booked.checkInAt ? booked.checkInAt|date('Y-m-d H:i:s') : '' }}</span></h4></td>
                             <td> <h4><span class="badge badge-pill badge-danger">{{ booked.checkOutAt ? booked.checkOutAt|date('Y-m-d H:i:s') : '' }}</span></h4> </td>
 {#                            <td>{{ booked.comment }}</td>#}
-                            <td>{{ booked.price }}</td>
+                            <td>{{ booked.appartement.price }}</td>
+
                             <td>
                                 <a href="{{ path('booking_show', {'id': booked.id}) }}"><button class="btn btn-info btn-sm"> <i class="material-icons"> visibility</i></button></a>
                                 <a href="{{ path('booking_edit', {'id': booked.id}) }}"><button class="btn btn-warning btn-sm"> <i class="material-icons"> edit</i></button></a>

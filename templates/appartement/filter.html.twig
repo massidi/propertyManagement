@@ -57,10 +57,10 @@
                                     {% endfor %}
                                 </ul>
                             </div>
-                            <p class="card-text">Nombre de chambre:{{ appartement.nbrDeChambre }}</p>
+                            <p class="card-text">Prix par jour: <strong>{{ appartement.price }}</strong> </p>
 {#                            <p class="card-text"> commune:</p>#}
                             <p class="card-text">{{ appartement.commune }} {{ appartement.adresse }}</p>
-                            <p class="card-text">l'appartement est occupé: {{ appartement.status ? 'Oui' : 'Non' }}
+                            <p class="card-text">
                                 Categorie:{{ appartement.Category }}</p>
                         </div>
                         {% if appartement.status == false %}

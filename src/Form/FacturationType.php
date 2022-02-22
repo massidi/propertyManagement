@@ -6,6 +6,7 @@ use App\Entity\Facturation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,6 +35,12 @@ class FacturationType extends AbstractType
                     'class' => 'form-control '
                 ]
             ])
+            ->add('amount', IntegerType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control '
+                    ]
+                ])
             ->add('taxe', ChoiceType::class, [
                 'choices'  => [
                     'TVA 5,5%' => "5",

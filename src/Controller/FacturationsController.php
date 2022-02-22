@@ -154,7 +154,7 @@ class FacturationsController extends AbstractController
         $abs_diff = $later->diff($earlier)->format("%a"); //3
 
         //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
-        $TotalPrix=($abs_diff)*($facturation->getBooking()->getAppartement()->getNbrDeChambre());
+        $TotalPrix=($abs_diff)*($facturation->getBooking()->getAppartement()->getPrice());
 
         return $this->render('facturations/show.html.twig', [
             'facturation' => $facturation,
@@ -186,7 +186,7 @@ class FacturationsController extends AbstractController
         $abs_diff = $later->diff($earlier)->format("%a"); //3
 
         //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
-        $TotalPrix=($abs_diff)*($facturation->getBooking()->getAppartement()->getNbrDeChambre());
+        $TotalPrix=($abs_diff)*($facturation->getBooking()->getAppartement()->getPrice());
 //        dd([$abs_diff,$TotalPrix,$facturation->getBooking()->getAppartement()->getNbrDeChambre()],[$later,$earlier]);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -203,7 +203,7 @@ class FacturationsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="facturations_delete", methods={"POST"})
+     * @Route("/facturations_delete/{id}", name="facturations_delete", methods={"POST"})
      * @param Request $request
      * @param Facturation $facturation
      * @param EntityManagerInterface $entityManager

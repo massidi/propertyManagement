@@ -41,7 +41,7 @@
                             <td>{{ booking.checkInAt ? booking.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>{{ booking.checkOutAt ? booking.checkOutAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>{{ booking.comment }}</td>
-                            <td>{{ booking.price }}</td>
+                            <td>{{ booking.appartement.nbrDeChambre }}</td>
                             <td>
                                 <a href="{{ path('booking_show', {'id': booking.id}) }}">show</a>
                                 <a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>

@@ -43,12 +43,8 @@ class Booking1Type extends AbstractType
                         'class' => 'form-control '
                     ]
                 ])
-            ->add('price', IntegerType::class,
-                [
-                    'attr' => [
-                        'class' => 'form-control '
-                    ]
-                ])
+
+
             ->add('clients', CollectionType::class, [
                 'entry_type' => ClientType::class,
                 'entry_options' => ['label' => true],

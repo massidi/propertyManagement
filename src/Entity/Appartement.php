@@ -27,7 +27,7 @@ class Appartement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nbrDeChambre;
+    private $price;
 
     /**
      * @ORM\Column(type="boolean", options={"default":"1"})
@@ -91,14 +91,14 @@ class Appartement
     }
 
 
-    public function getNbrDeChambre(): ?string
+    public function getPrice(): ?string
     {
-        return $this->nbrDeChambre;
+        return $this->price;
     }
 
-    public function setNbrDeChambre(string $nbrDeChambre): self
+    public function setPrice(string $price): self
     {
-        $this->nbrDeChambre = $nbrDeChambre;
+        $this->price = $price;
 
         return $this;
     }

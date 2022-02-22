@@ -35,10 +35,10 @@ class Booking
      */
     private $comment;
 
-    /**
-     * @ORM\Column(type="float")
-     */
 
+    /**
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking",cascade={"persist"})
+     */
     private $clients;
 
     /**

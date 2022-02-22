@@ -31,7 +31,7 @@ class AppartementType extends AbstractType
                 ]
 
             ])
-            ->add('nbrDeChambre',IntegerType::class, [
+            ->add('price',IntegerType::class, [
 
                 'attr' => [
 

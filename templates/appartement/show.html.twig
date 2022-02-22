@@ -81,9 +81,9 @@
                             de {{ appartement.commune }} . La plage de Karadere est à 15 minutes.
 
                             De construction très recente, elle dispose de tout le confort : une cuisine équipée, un
-                            beau salon / séjour avec TV et DVD, {{ appartement.nbrDeChambre }} chambres avec chacune
-                            salle d'eau et WC.
+                            beau salon / séjour avec TV et DVD,
                             .</p>
+                        <h4>PRIX:{{ appartement.price }} CDF /Jours</h4>
                         <h3>Description</h3>
                         <p><strong>Adresse:</strong> <br>
                             {{ appartement.commune }}  {{ appartement.adresse }}
@@ -106,7 +106,8 @@
             </div>
 
         </div>
-        <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
+        <a type="button" class="btn btn-success"
+           href="{{ path('booking_new', {'id': appartement.id}) }}">{{ button_label|default('Booking') }}</a>
 
     </div>
     </div>

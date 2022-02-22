@@ -68,7 +68,7 @@
                         </td>
                         <td class="text-center">{{ facturation.booking.checkInAt|date('d M Y') }}</td>
                         <td class="text-center">{{ facturation.booking.checkOutAt|date('d M Y') }}</td>
-                        <td class="text-right">${{ facturation.booking.price }}</td>
+                        <td class="text-right">${{ facturation.amount }}</td>
                     </tr>
 
 
@@ -86,7 +86,7 @@
                     <div class="invoice-price-row">
                         <div class="sub-price">
                             <small>SOUS-TOTAL</small>
-                            <span class="text-inverse">${{ facturation.booking.price }}</span>
+                            <span class="text-inverse">${{ facturation.amount }}</span>
                         </div>
                         <div class="sub-price">
                             <i class="fa fa-plus text-muted"></i>
@@ -97,8 +97,8 @@
                         </div>
                     </div>
                 </div>
-                {% set total = (facturation.booking.price) *(facturation.taxe)/100 %}
-                {% set number= (facturation.booking.price)+total%}
+                {% set total = (facturation.amount) *(facturation.taxe)/100 %}
+                {% set number= (facturation.amount)+total%}
                 <div class="invoice-price-right" >
 
                     <small>TOTAL</small> <span class="f-w-600 ">  <strong class="amount" >${{ number }}</strong></span>
