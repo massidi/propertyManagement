@@ -39,8 +39,7 @@ class Facturation
     private $createdAd;
 
     /**
-     * @ORM\OneToOne(targetEntity=Booking::class,inversedBy="Facturation", cascade={"persist", "remove"})
-     * @JoinColumn(name="booking_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity=Booking::class,inversedBy="facturation", cascade={"persist", "remove"})
      *
      */
     private $booking;

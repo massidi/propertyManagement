@@ -45,7 +45,7 @@ class FacturationsController extends AbstractController
         //return all the invoices
 
         return $this->render('facturations/index.html.twig', [
-            'facturations' => $facturationRepository->findBy(array(), array('createdAd' => 'DESC')),
+            'facturations' => $facturationRepository->findAll(),
         ]);
     }
 
