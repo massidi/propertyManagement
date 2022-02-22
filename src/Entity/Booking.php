@@ -36,8 +36,9 @@ class Booking
     private $comment;
 
 
+
     /**
-     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking",cascade={"persist"},orphanRemoval="true")
      */
     private $clients;
 
@@ -48,7 +49,7 @@ class Booking
      */
     private $appartement;
     /**
-     * @ORM\OneToOne(targetEntity="facturation", mappedBy="booking", cascade={"persist", "remove"},orphanRemoval="true")
+     * @ORM\OneToOne(targetEntity="Facturation", mappedBy="booking", cascade={"persist", "remove"},orphanRemoval="true")
      */
     private $facturation;
 

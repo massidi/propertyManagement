@@ -48,9 +48,9 @@ class BookingRepository extends ServiceEntityRepository
         $qb = $em->createQueryBuilder();
 
         $qb = $em->createQueryBuilder();
-        $de= new \DateTime('this year');
-        $de->format('Y-m-d Y-m-d H:i:s');
-        $today = date('Y-m-d Y-m-d H:i:s');
+//        $de= new \DateTime('this year');
+//        $de->format('Y-m-d Y-m-d H:i:s');
+//        $today = date('Y-m-d Y-m-d H:i:s');
 
         $query = $em->createQuery("SELECT b, a, c 
         FROM App\Entity\Booking b                           
