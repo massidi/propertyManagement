@@ -41,7 +41,7 @@ class Appartement
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Commune::class, inversedBy="Appartement")
+     * @ORM\ManyToOne(targetEntity=Commune::class, fetch="EXTRA_LAZY", inversedBy="Appartement")
      */
     private $commune;
 
@@ -51,18 +51,18 @@ class Appartement
     private $adresse;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Accessoires::class, mappedBy="details")
+     * @ORM\ManyToMany(targetEntity=Accessoires::class, fetch="EXTRA_LAZY", mappedBy="details")
      */
     private $accessoires;
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="appartement",orphanRemoval="true")
+     * @ORM\OneToMany(targetEntity=Booking::class, fetch="EXTRA_LAZY", mappedBy="appartement",orphanRemoval="true")
      *
      */
     private $bookings;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="appartement",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity=Image::class, fetch="EXTRA_LAZY", mappedBy="appartement",cascade={"persist","remove"})
      */
     private $images;
 

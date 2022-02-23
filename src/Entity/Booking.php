@@ -38,18 +38,18 @@ class Booking
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="Booking",cascade={"persist"},orphanRemoval="true")
+     * @ORM\OneToMany(targetEntity=Client::class, fetch="EXTRA_LAZY", mappedBy="Booking",cascade={"persist"},orphanRemoval="true")
      */
     private $clients;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Appartement::class, inversedBy="bookings")
+     * @ORM\ManyToOne(targetEntity=Appartement::class , fetch="EXTRA_LAZY",inversedBy="bookings")
      * @ORM\joinColumn(onDelete="SET NULL")
      *
      */
     private $appartement;
     /**
-     * @ORM\OneToOne(targetEntity="Facturation", mappedBy="booking", cascade={"persist", "remove"},orphanRemoval="true")
+     * @ORM\OneToOne(targetEntity="Facturation", fetch="EXTRA_LAZY", mappedBy="booking", cascade={"persist", "remove"},orphanRemoval="true")
      */
     private $facturation;
 
