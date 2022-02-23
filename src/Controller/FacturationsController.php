@@ -101,6 +101,7 @@ class FacturationsController extends AbstractController
             //send a sms to the client after the payment is confirmed by using the event service
 
             $even=new SendNotificationEvent($facturation);
+//            dd($even->getBooking()->getBooking()->getClients()[0]->getTelephone());
             $dispatcher->dispatch($even,SendNotificationEvent::NAME);
 
             $this->notifier->success('Merci pour la confirmation de votre payment une SMS vient d\'etre envoyer au cleint');

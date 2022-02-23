@@ -33,8 +33,9 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
 
         $ClientName = $sendNotification->getBooking()->getBooking()->getClients()[0]->getNom();
 
-        $arrivalDate=$sendNotification->getBooking()->getBooking()->getCheckInAt()->format('d.m.Y');;
+        $arrivalDate=$sendNotification->getBooking()->getBooking()->getCheckInAt()->format('d.m.Y');
         $departurDate=$sendNotification->getBooking()->getBooking()->getCheckOutAt()->format('d.m.Y');
+        $clientNumber=$sendNotification->getBooking()->getBooking()->getClients()[0]->getTelephone();
 
 //        dd([$ClientName, $arrivalDate,$departurDate]);
 
@@ -52,6 +53,7 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
                 );
         } catch (TwilioException $e) {
         }
+//        dd($twilio);
 
     }
 }
