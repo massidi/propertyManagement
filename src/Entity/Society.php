@@ -269,7 +269,7 @@ class Society
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeUser(Users $user): self
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
