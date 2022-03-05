@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/client")
+ * @Route("/admin/client")
  */
 class ClientController extends AbstractController
 {

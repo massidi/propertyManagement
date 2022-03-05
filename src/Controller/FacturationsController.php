@@ -21,7 +21,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 
 /**
- * @Route("/facturations")
+ * @Route("/admin/facturations")
  */
 class FacturationsController extends AbstractController
 {
