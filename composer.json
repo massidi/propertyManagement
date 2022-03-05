@@ -103,9 +103,8 @@
             "php bin/console cache:clear",
 
             "php bin/console cache:warmup",
-            "php bin/console doctrine:fixtures:load --env=prod --append",
-
-            "php bin/console doctrine:schema:update --force"
+            "php bin/console doctrine:schema:update --force",
+            "php bin/console doctrine:fixtures:load --env=prod --append"
         ]
     },
     "conflict": {
