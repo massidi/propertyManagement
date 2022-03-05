@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block contenu %}
+    <h1>Register</h1>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Register</h4>
+                        <p class="card-category"> Veuillez renseigner le detail de votre payement</p>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(registrationForm) }}
+
+                        <div class="row">
+                            <div class=" col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(registrationForm.name, 'Nom') }}
+                                    {{ form_widget(registrationForm.name) }}
+                                </div>
+                            </div>
+                            <div class=" col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(registrationForm.lastName, 'Prenom') }}
+
+                                    {{ form_widget(registrationForm.lastName) }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class=" col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(registrationForm.email, 'Email') }}
+
+                                    {{ form_widget(registrationForm.email) }}                                </div>
+                            </div>
+                            <div class=" col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+
+                                    {{ form_widget(registrationForm.plainPassword, {
+                                        label: 'Password'
+                                    }) }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class=" col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(registrationForm.roles, 'Role') }}
+
+                                    {{ form_widget(registrationForm.roles) }}                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        <button type="submit" class="btn">Register</button>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

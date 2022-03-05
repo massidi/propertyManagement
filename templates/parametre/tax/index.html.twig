@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tax index{% endblock %}
+
+{% block contenu %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+
+            <div class="col-sm-6">
+                <h4 class="m-0 text-dark">Mes TAX</h4>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Page d'acceuil</a></li>
+                    <li class="breadcrumb-item active">tax</li>
+                </ol>
+            </div><!-- /.col -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<div class="container-fluid">
+
+    <a href="{{ path('tax_new') }}" type="btn" class="btn btn-success">{{ button_label|default('ajouter') }}</a>
+
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title ">Mes Tax</h4>
+            <p class="card-category"> Detail de tout mes tax</p>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+
+    <table class="table table-striped table-bordered"
+
+           id="table"
+           data-toggle="table"
+
+           data-pagination="true"
+           data-search="true">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Value</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tax in taxes %}
+            <tr>
+                <td>{{ tax.id }}</td>
+                <td>{{ tax.nom }}</td>
+                <td>{{ tax.value }}</td>
+                <td>
+                    <a href="{{ path('tax_show', {'id': tax.id}) }}">show</a>
+                    <a href="{{ path('tax_edit', {'id': tax.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+            </div>
+        </div>
+    </div>
+</div>
+    <a href="{{ path('tax_new') }}">Create new</a>
+{% endblock %}

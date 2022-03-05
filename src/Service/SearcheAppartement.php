@@ -13,7 +13,7 @@ class SearcheAppartement
     {
         $checkIn= 0;
         $checkOut=0;
-        if ($request->getMethod()  === 'GET')
+        if ($request->isMethod('POST'))
         {
             $checkIn= $request->query->get('checkIn');
             $checkOut=$request->query->get('checkOut');

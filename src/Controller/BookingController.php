@@ -121,7 +121,7 @@ class BookingController extends AbstractController
      */
     public function getCurrentBooking(BookingRepository $bookingRepository): Response
     {
-
+//dd($bookingRepository->getCurrentBooking());
         //here getting the current reservation
         return $this->render('booking/currentBooking.html.twig', [
             'currentBooking' => $bookingRepository->getCurrentBooking(),

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/commune")
+ * @Route("Admin/commune")
  */
 class CommuneController extends AbstractController
 {

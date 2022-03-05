@@ -28,10 +28,7 @@ class Facturation
      */
     private $modeReglement;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $taxe;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -48,6 +45,11 @@ class Facturation
      * @ORM\Column(type="float")
      */
     private $amount;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Tax::class, inversedBy="facturation")
+     */
+    private $tax;
 
     public function getId(): ?int
     {
@@ -78,17 +80,6 @@ class Facturation
         return $this;
     }
 
-    public function getTaxe(): ?int
-    {
-        return $this->taxe;
-    }
-
-    public function setTaxe(int $taxe): self
-    {
-        $this->taxe = $taxe;
-
-        return $this;
-    }
 
     public function getCreatedAd(): ?\DateTimeInterface
     {
@@ -122,6 +113,18 @@ class Facturation
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getTax(): ?Tax
+    {
+        return $this->tax;
+    }
+
+    public function setTax(?Tax $tax): self
+    {
+        $this->tax = $tax;
 
         return $this;
     }

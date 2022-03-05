@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Facturation;
+use App\Entity\Tax;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -41,12 +43,9 @@ class FacturationType extends AbstractType
                         'class' => 'form-control '
                     ]
                 ])
-            ->add('taxe', ChoiceType::class, [
-                'choices'  => [
-                    'TVA 5,5%' => "5",
-                    'TVA 10%' => "10",
-                    'TVA 20%' => "20",
-                ],
+            ->add('tax', EntityType::class, [
+                'class'=>Tax::class,
+
                 'placeholder' => 'Veillez choisir votre taxe',
                 'attr' => [
                     'class' => 'form-control '

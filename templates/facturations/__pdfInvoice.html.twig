@@ -17,8 +17,8 @@
         <div class="invoice-header " style="background: #f0f3f4">
             <div class=" invoice-from ">
                 <address class="m-t-5 m-b-5">
-                    <strong class="text-inverse">{{ facturation.booking.appartement.nom }}</strong><br>
-                    {{ facturation.booking.appartement.adresse }}<br>
+                    <strong class="text-inverse">{{ facturation.booking.appartement.society.name }}</strong><br>
+                    {{ facturation.booking.appartement.society.adresse }}<br>
                     Tel: (123) 456-7890<br>
                 </address>
             </div>
@@ -93,11 +93,11 @@
                         </div>
                         <div class="sub-price">
                             <small>TVA </small>
-                            <span class="text-inverse">{{ facturation.taxe }} %</span>
+                            <span class="text-inverse">{{ facturation.tax.value }} %</span>
                         </div>
                     </div>
                 </div>
-                {% set total = (facturation.amount) *(facturation.taxe)/100 %}
+                {% set total = (facturation.amount) *(facturation.tax.value)/100 %}
                 {% set number= (facturation.amount)+total%}
                 <div class="invoice-price-right" >
 
@@ -110,7 +110,7 @@
         <!-- end invoice-content -->
         <!-- begin invoice-note -->
         <div class="invoice-note">
-            * Établissez tous les chèques à l'ordre de Cosmos Technology<br>
+            * Établissez tous les chèques à l'ordre de  {{ facturation.booking.appartement.society.name }}<br>
             * Le paiement est exigible sous 30 jours<br>
             * Pour toute question concernant cette facture, contactez  [Name, Phone Number, Email]
         </div>
@@ -121,7 +121,7 @@
                 MERCI POUR VOTRE CONFIANCE
             </p>
             <p class="text-center" >
-                <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> matiasgallipoli.com</span>
+                <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i>  {{ facturation.booking.appartement.society.siteWeb }}</span>
                 <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:016-18192302</span>
                 <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> rtiemps@gmail.com</span>
             </p>

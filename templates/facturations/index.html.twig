@@ -72,7 +72,7 @@
 
                             </td>
                             <td>{{ facturation.modeReglement }}</td>
-                            <td>{{ facturation.taxe }} %</td>
+                            <td>{{ facturation.tax }} %</td>
                             <td>{{ facturation.createdAd ? facturation.createdAd|date('d-m-Y') : '' }}</td>
                             <td>
                                 <a  href="{{ path('facturations_detail', {'id': facturation.id}) }}"><button class="btn btn-info btn-sm"> <i class="material-icons"> visibility</i></button></a>

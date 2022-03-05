@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Society index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        input {
+            pointer-events: none;
+        }
+    </style>
+{% endblock %}
+
+{% block contenu %}
+{#    <h1>Society index</h1>#}
+
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <th>Name</th>#}
+{#                <th>Adresse</th>#}
+{#                <th>AdresseSociale</th>#}
+{#                <th>SiteWeb</th>#}
+{#                <th>NumeroRegistre</th>#}
+{#                <th>NatureSociete</th>#}
+{#                <th>NumeroImpot</th>#}
+{#                <th>NumeroInss</th>#}
+{#                <th>CodeProvince</th>#}
+{#                <th>actions</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for society in societies %}#}
+{#            <tr>#}
+{#                <td>{{ society.id }}</td>#}
+{#                <td>{{ society.name }}</td>#}
+{#                <td>{{ society.adresse }}</td>#}
+{#                <td>{{ society.adresseSociale }}</td>#}
+{#                <td>{{ society.siteWeb }}</td>#}
+{#                <td>{{ society.numeroRegistre }}</td>#}
+{#                <td>{{ society.natureSociete }}</td>#}
+{#                <td>{{ society.numeroImpot }}</td>#}
+{#                <td>{{ society.numeroInss }}</td>#}
+{#                <td>{{ society.codeProvince }}</td>#}
+{#                <td>#}
+{#                    <a href="{{ path('society_show', {'id': society.id}) }}">show</a>#}
+{#                    <a href="{{ path('society_edit', {'id': society.id}) }}">edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% else %}#}
+{#            <tr>#}
+{#                <td colspan="11">no records found</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+    <div class="container rounded bg-white mt-5 mb-5">
+        {% for society in societies %}
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{ asset('uploads/' ~ society.image) }}"><span class="font-weight-bold">COSMO TECHNOLOGY</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Cosmo technology</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Nom</label><input type="text" class="form-control" placeholder="first name" value="{{ society.name }}" ></div>
+                        <div class="col-md-6"><label class="labels">Responsable</label><input type="text" class="form-control" value="{{ society.responsableName }}" placeholder="surname"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Adresse</label><input type="text" class="form-control" placeholder="enter address line 1" value="{{ society.adresse }}"></div>
+                        <div class="col-md-12"><label class="labels">Adresse sociale</label><input type="text" class="form-control" placeholder="enter address line 2" value="{{ society.adresseSociale }}"></div>
+                        <div class="col-md-12"><label class="labels">site web</label><input type="text" class="form-control" placeholder="enter address line 2" value="{{ society.siteWeb }}"></div>
+                        <div class="col-md-12"><label class="labels">Numéro Registre</label><input type="text" class="form-control" placeholder="enter address line 2" value="{{ society.numeroRegistre }}"></div>
+                        <div class="col-md-12"><label class="labels">Nature Societe</label><input type="text" class="form-control" placeholder="enter address line 2" value="{{ society.natureSociete }}"></div>
+                        <div class="col-md-12"><label class="labels">Numéro Impot</label><input type="text" class="form-control" placeholder="enter email id" value="{{ society.numeroImpot }}"></div>
+                        <div class="col-md-12"><label class="labels">Numéro Inss</label><input type="text" class="form-control" placeholder="education" value="{{ society.numeroInss }}"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Code Province</label><input type="text" class="form-control" placeholder="country" value="{{ society.codeProvince }}"></div>
+                        <div class="col-md-6"><label class="labels">Pays</label><input type="text" class="form-control" value="Rép.Démocratique du congo" placeholder="state"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Modifier</span><a href="{{ path('society_edit', {'id': society.id}) }}"><button class="btn btn-primary profile-button" type="button">Editer</button></a></div><br>
+                    <div class="col-md-12"><label class="labels">Créer en </label><input type="text" class="form-control" placeholder="experience" value="{{ society.createdAt|date('F/m/Y') }}"></div> <br>
+                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="additional details" value="{{ society.email }}"></div>
+                </div>
+            </div>
+        </div>
+            {{ include('parametre/society/_delete_form.html.twig') }}
+
+            </div>
+    {% endfor %}
+    </div>
+
+
+
+{% endblock %}

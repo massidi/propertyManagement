@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Categorie Appartement{% endblock %}
 
 {% block contenu %}
 
@@ -11,8 +11,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Simple Table</h4>
-                        <p class="card-category"> Here is a subtitle for this table</p>
+                        <h4 class="card-title ">Categories</h4>
+                        <p class="card-category"> Liste de mes catagories</p>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -32,8 +32,9 @@
                                         <td>{{ category.nom }}</td>
                                         <td>{{ category.descriptions }}</td>
                                         <td>
-                                            <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                                            <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+                                            {{ include('parametre/category/_delete_form.html.twig') }}
+{#                                            <a href="{{ path('category_show', {'id': category.id}) }}"><button class="btn btn-info btn-sm"> <i class="material-icons"> visibility</i></button></a>#}
+                                            <a href="{{ path('category_edit', {'id': category.id}) }}"><button class="btn btn-warning btn-sm"> <i class="material-icons"> edite</i></button></a>
                                         </td>
                                     </tr>
                                 {% else %}

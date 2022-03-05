@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
@@ -24,6 +25,7 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity=Appartement::class, inversedBy="images")
+     *
      */
     private $appartement;
 

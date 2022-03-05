@@ -6,6 +6,7 @@ use App\Repository\AppartementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=AppartementRepository::class)
@@ -63,8 +64,16 @@ class Appartement
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, fetch="EXTRA_LAZY", mappedBy="appartement",cascade={"persist","remove"})
+     * @JoinColumn(onDelete="CASCADE")
+
      */
     private $images;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="Appartements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $society;
 
     public function __construct()
     {
@@ -253,4 +262,16 @@ class Appartement
 //    {
 //        return $this->getNom();
 //    }
+
+public function getSociety(): ?Society
+{
+    return $this->society;
+}
+
+public function setSociety(?Society $society): self
+{
+    $this->society = $society;
+
+    return $this;
+}
 }

@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Appartement;
 use App\Entity\Image;
+use App\Entity\Society;
 use App\Form\AppartementType;
 use App\Repository\AppartementRepository;
 use App\Service\SearcheAppartement;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/appartement")
+ * @Route("Admin/appartement")
  */
 class AppartementController extends AbstractController
 {
@@ -28,7 +30,6 @@ class AppartementController extends AbstractController
     {
         $this->notifier = $notifier;
     }
-
 
 
     /**
@@ -52,27 +53,26 @@ class AppartementController extends AbstractController
      * @param SearcheAppartement $searcheAppartement
      * @return Response
      */
-    public function filterAppartement(AppartementRepository $appartementRepository,Request  $request,SearcheAppartement  $searcheAppartement): Response
+    public function filterAppartement(AppartementRepository $appartementRepository, Request $request, SearcheAppartement $searcheAppartement): Response
     {
 
-        $appartements=$appartementRepository->findAll();
+        $appartements = $appartementRepository->findAll();
 
 
-        if ($request->getMethod() === 'GET')
-        {
-            $date_start= new \DateTime($searcheAppartement->available($request)[0]) ;
-            $date_final= new \DateTime($searcheAppartement->available($request)[1]);
+        if ($request->isMethod('POST')) {
+            $date_start = new DateTime($searcheAppartement->available($request)[0]);
+            $date_final = new DateTime($searcheAppartement->available($request)[1]);
 
-            $appartements=$appartementRepository->getAvailableRooms($date_start->format('Y-m-d H:i:s'),$date_final->format('Y-m-d H:i:s'));
+            /** @var TYPE_NAME $appartements */
+            $appartements = $appartementRepository->getAvailableRooms($date_start->format('Y-m-d H:i:s'), $date_final->format('Y-m-d H:i:s'));
 
 
         }
 //        dd([$date_start]);
 
 
-
         return $this->render('appartement/filter.html.twig', [
-            'appartements' =>$appartements,
+            'appartements' => $appartements,
         ]);
     }
 
@@ -82,22 +82,52 @@ class AppartementController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, FlashyNotifier $notifier): Response
     {
 
         $appartement = new Appartement();
         $form = $this->createForm(AppartementType::class, $appartement);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
 
+        //get the current user
+        $user = $this->getUser();
+
+
+        //find the society related to the current user
+        $societe = $entityManager->getRepository(Society::class)->find($user);
+
+        //if society doesn't existe redirect to the creation of a new socierty
+
+        if (empty($societe)) {
+            $notifier->warning("veillez commencer par créeer votre societé");
+            return $this->redirectToRoute('society_new');
+        }
+
+
+        //assign the society into apartment
+
+        $appartement->setSociety($societe);
+
+
+        if ($form->isSubmitted() && $form->isValid())
+
+            {
+
+
+            if (empty($appartement->getCategory() && $appartement->getAccessoires())) {
+                $notifier->error("Commencer par créer les accessoires et les categories");
+
+                return $this->redirectToRoute('parametre');
+
+            }
             // On récupère les images transmises
             $images = $form->get('image')->getData();
 
             // On boucle sur les images
-            foreach($images as $image){
+            foreach ($images as $image) {
                 // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
 
                 // On copie le fichier dans le dossier uploads
                 $image->move(
@@ -115,7 +145,6 @@ class AppartementController extends AbstractController
             $entityManager->persist($appartement);
             $entityManager->flush();
             $this->notifier->success('Merci vous venez d\'ajouter une nouvelle habitation');
-
 
 
             return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
@@ -159,9 +188,9 @@ class AppartementController extends AbstractController
             $images = $form->get('image')->getData();
 
             // On boucle sur les images
-            foreach($images as $image){
+            foreach ($images as $image) {
                 // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
 
                 // On copie le fichier dans le dossier uploads
                 $image->move(
@@ -174,8 +203,6 @@ class AppartementController extends AbstractController
                 $img->setNom($fichier);
                 $appartement->addImage($img);
             }
-
-
 
 
             $entityManager->flush();
@@ -198,7 +225,7 @@ class AppartementController extends AbstractController
      */
     public function delete(Request $request, Appartement $appartement, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$appartement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $appartement->getId(), $request->request->get('_token'))) {
             $entityManager->remove($appartement);
             $entityManager->flush();
         }

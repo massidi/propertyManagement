@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tax{% endblock %}
+
+{% block contenu %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+
+                <div class="col-sm-6">
+                    <h4 class="m-0 text-dark">Tax</h4>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('tax_index') }}">Liste Tax</a></li>
+                        <li class="breadcrumb-item active">Création-tax</li>
+                    </ol>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Tax</h4>
+                        <p class="card-category"> la création d'une tax qui doit etre ajouté pendant la facturation</p>
+                    </div>
+                    <div class="card-body">
+                        {{ include('parametre/tax/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <a href="{{ path('tax_index') }}">back to list</a>
+{% endblock %}

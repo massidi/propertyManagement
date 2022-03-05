@@ -52,13 +52,19 @@ class BookingRepository extends ServiceEntityRepository
 //        $de->format('Y-m-d Y-m-d H:i:s');
 //        $today = date('Y-m-d Y-m-d H:i:s');
 
-        $query = $em->createQuery("SELECT b, a, c 
+        $query = $em->createQuery('SELECT b, a, c,f 
         FROM App\Entity\Booking b                           
         JOIN b.appartement a 
         JOIN b.clients c
+        JOIN b.facturation f
         WHERE b.checkInAt  <= b.checkOutAt OR b.checkOutAt <= b.checkInAt
-        ORDER BY b.checkInAt DESC
-        ");
+        
+        ORDER BY f.createdAd DESC
+        
+        
+        
+        ');
+
 
         $rs_reservations = $query->getResult();
 

@@ -49,6 +49,7 @@
                         <th>Arriver</th>
                         <th data-field="price">Départ</th>
                         <th>Prix</th>
+                        <th>Date de Creation</th>
                         <th>Action</th>
 
                     </tr>
@@ -64,6 +65,8 @@
                             <td> <h4><span class="badge badge-pill badge-danger">{{ booked.checkOutAt ? booked.checkOutAt|date('Y-m-d H:i:s') : '' }}</span></h4> </td>
 {#                            <td>{{ booked.comment }}</td>#}
                             <td>{{ booked.appartement.price }}</td>
+                            <td>{{ booked.facturation.createdAd|date() }}</td>
+
 
                             <td>
                                 <a href="{{ path('booking_show', {'id': booked.id}) }}"><button class="btn btn-info btn-sm"> <i class="material-icons"> visibility</i></button></a>

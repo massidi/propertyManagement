@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+{% if app.request.attributes.get('_route') == 'society_edit' %}
+    <h3> image</h3>
+    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{ asset('uploads/' ~ society.image) }}"><span class="font-weight-bold">COSMO TECHNOLOGY</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+
+
+{% endif %}
+
+    <button class="btn btn-success btn-block">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
