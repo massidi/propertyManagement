@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("Admin/accessoires")
+ * @Route("/admin/accessoires")
  */
 class AccessoiresController extends AbstractController
 {

@@ -103,16 +103,17 @@ The above copyright notice and this permission notice shall be included in all c
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ path('parametre') }}">
                         <i class="material-icons">build</i>
-                        <p>Parametre</p>
+                        <p>Parametre**</p>
                     </a>
                 </li>
+                {% if app.user %}
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ path('app_logout') }}">
                         <i class="material-icons">logout</i>
                         <p>Deconnection</p>
                     </a>
                 </li>
-
+                {% endif %}
             </ul>
         </div>
     </div>

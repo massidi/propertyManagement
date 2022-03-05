@@ -14,13 +14,14 @@ use Symfony\Component\Serializer\Encoder\JsonEncode;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/admin", name="homepage")
      * @param AppartementRepository $appartementRepository
      * @param FacturationService $facturationService
      * @return Response
      */
     public function index(AppartementRepository  $appartementRepository,FacturationService  $facturationService): Response
     {
+
 
         $booked=$facturationService->factureData();
 

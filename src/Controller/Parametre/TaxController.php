@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("Admin/tax")
+ * @Route("/admin/tax")
  */
 class TaxController extends AbstractController
 {

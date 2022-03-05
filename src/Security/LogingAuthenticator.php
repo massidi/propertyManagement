@@ -61,6 +61,7 @@ class LogingAuthenticator extends AbstractLoginFormAuthenticator
 //        dd($token);
 
         // For example:
+
         return new RedirectResponse($this->urlGenerator->generate('homepage'));
 
     }
