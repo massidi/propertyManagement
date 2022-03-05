@@ -4,14 +4,12 @@ namespace App\Controller\Parametre;
 
 
 use App\Entity\Society;
-use App\Entity\User;
 use App\Entity\Users;
 use App\Form\SocietyType;
 use App\Repository\SocietyRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,6 +37,7 @@ class SocietyController extends AbstractController
     /**
      * @Route("/new", name="society_new", methods={"GET", "POST"})
      * @param Request $request
+     * @param FileUploader $fileUploader
      * @param EntityManagerInterface $entityManager
      * @return Response
      */

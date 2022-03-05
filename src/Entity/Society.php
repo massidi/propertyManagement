@@ -252,14 +252,14 @@ class Society
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, Users>
      */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
-    public function addUser(User $user): self
+    public function addUser(Users $user): self
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
