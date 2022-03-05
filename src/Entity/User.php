@@ -48,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastName;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="users",nullable=true)
      */
     private $society;
 
