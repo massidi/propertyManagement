@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Users;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -24,7 +25,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request,FlashyNotifier  $notifier, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $user = new User();
+        $user = new Users();
 
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

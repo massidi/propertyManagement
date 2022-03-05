@@ -70,7 +70,7 @@ class Society
     private $Appartements;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="society",orphanRemoval=true,fetch="EXTRA_LAZY", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Users::class, mappedBy="society",orphanRemoval=true,fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      */
     private $users;
 

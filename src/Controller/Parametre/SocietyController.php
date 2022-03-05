@@ -5,6 +5,7 @@ namespace App\Controller\Parametre;
 
 use App\Entity\Society;
 use App\Entity\User;
+use App\Entity\Users;
 use App\Form\SocietyType;
 use App\Repository\SocietyRepository;
 use App\Service\FileUploader;
@@ -44,7 +45,7 @@ class SocietyController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader, EntityManagerInterface $entityManager): Response
     {
         $society = new Society();
-       $user= $entityManager->getRepository(User::class)->find($this->getUser());
+       $user= $entityManager->getRepository(Users::class)->find($this->getUser());
         $society->addUser($user);
 
         $form = $this->createForm(SocietyType::class, $society);
