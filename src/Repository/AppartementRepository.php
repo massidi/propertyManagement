@@ -85,9 +85,9 @@ class AppartementRepository extends ServiceEntityRepository
 
         $nots = $em->createQuery("
         SELECT IDENTITY(b.appartement) FROM App\Entity\Booking b
-            WHERE NOT (b.checkOutAt   < '$date_start'
+            WHERE NOT (b.checkOutAt   <= '$date_start'
                OR
-               b.checkInAt > '$date_final')
+               b.checkInAt >= '$date_final')
         ");
 
         $dql_query = $nots->getDQL();
@@ -104,7 +104,7 @@ class AppartementRepository extends ServiceEntityRepository
 
             return $query;
         } catch (NoResultException $e) {
-            return null;
+            return $e;
         }
     }
 }

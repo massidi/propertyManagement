@@ -45,30 +45,45 @@ class AppartementController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/filer-appartement", name="filter_appartement", methods={"GET"})
+     * @param AppartementRepository $appartementRepository
+     * @return Response
+     */
+    public function filter(AppartementRepository $appartementRepository,Request  $request): Response
+    {
+
+        $appartements=0;
+
+        if ($request->isMethod('GET'))
+        {
+            $checkIn= new DateTime($request->query->get('checkIn'));
+            $checkOut= new DateTime($request->query->get('checkOut'));
+
+            $appartements = $appartementRepository->getAvailableRooms($checkIn->format('Y-m-d H:i:s'),$checkOut->format('Y-m-d H:i:s'));
+
+
+        }
+
+
+
+        return $this->render('appartement/filter.html.twig', [
+            'appartements' => $appartements,
+        ]);
+    }
+
+
+
 
     /**
      * @Route("/liste-appartement", name="appartement_index", methods={"GET", "POST"})
      * @param AppartementRepository $appartementRepository
-     * @param Request $request
-     * @param SearcheAppartement $searcheAppartement
      * @return Response
      */
-    public function filterAppartement(AppartementRepository $appartementRepository, Request $request, SearcheAppartement $searcheAppartement): Response
+    public function Appartement(AppartementRepository $appartementRepository): Response
     {
 
         $appartements = $appartementRepository->findAll();
-
-
-        if ($request->isMethod('POST')) {
-            $date_start = new DateTime($searcheAppartement->available($request)[0]);
-            $date_final = new DateTime($searcheAppartement->available($request)[1]);
-
-            /** @var TYPE_NAME $appartements */
-            $appartements = $appartementRepository->getAvailableRooms($date_start->format('Y-m-d H:i:s'), $date_final->format('Y-m-d H:i:s'));
-
-
-        }
-//        dd([$date_start]);
 
 
         return $this->render('appartement/filter.html.twig', [
