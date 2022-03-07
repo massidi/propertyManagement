@@ -110,13 +110,7 @@ class FacturationsController extends AbstractController
 
             return $this->redirectToRoute('liste_facturation', [], Response::HTTP_SEE_OTHER);
         }
-//        else if ($facturation)
-//        {
-//            $booking = $bookingRepository->find($filters->getid());
-//            $entityManager->remove($booking);
-//            return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
-//
-//        }
+
 
 
         return $this->renderForm('facturations/new.html.twig', [

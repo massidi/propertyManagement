@@ -39,6 +39,10 @@ class GeneratePdfService
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
 
+
+
+        $dompdf->setOptions("isHtml5ParserEnabled", true);
+
         // Retrieve the HTML generated in our twig file
 //        $html = $this->twig->render('default/mypdf.html.twig', [
 //            'title' => "Welcome to our PDF Test"
