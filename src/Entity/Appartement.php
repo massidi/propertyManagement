@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Gedmo\Mapping\Annotation as Gedmo;
+//use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=AppartementRepository::class)
@@ -77,7 +77,7 @@ class Appartement
     private $society;
 
     /**
-     * @Gedmo\Slug(fields={"nom"})
+     *
      * @ORM\Column(type="string", length=120, nullable=true, unique=true)
      */
     private $slug;
