@@ -173,20 +173,22 @@ class AppartementController extends AbstractController
     }
 
     /**
-     * @Route("/voir-detail-appartement/{id}", name="appartement_show", methods={"GET"})
+     * @Route("/voir_detail_appartement/{slug}", name="appartement_show", methods={"GET"})
      * @param Appartement $appartement
+     * @param AppartementRepository $repository
+     * @param $slug
      * @return Response
      */
-    public function show(Appartement $appartement): Response
+    public function show(Appartement $appartement,AppartementRepository  $repository,$slug): Response
     {
 //        dd($appartement->getAccessoires()[0]);
         return $this->render('appartement/show.html.twig', [
-            'appartement' => $appartement,
+            'appartement' => $repository->findOneBy($slug),
         ]);
     }
 
     /**
-     * @Route("/modifier-appartement/{id}/edit", name="appartement_edit", methods={"GET", "POST"})
+     * @Route("/modifier-appartement/{slug}/edit", name="appartement_edit", methods={"GET", "POST"})
      * @param Request $request
      * @param Appartement $appartement
      * @param EntityManagerInterface $entityManager

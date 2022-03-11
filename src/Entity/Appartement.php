@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=AppartementRepository::class)
@@ -74,6 +75,12 @@ class Appartement
      * @ORM\JoinColumn(nullable=false)
      */
     private $society;
+
+    /**
+     * @Gedmo\Slug(fields={"nom"})
+     * @ORM\Column(type="string", length=120, nullable=true, unique=true)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -274,4 +281,16 @@ public function setSociety(?Society $society): self
 
     return $this;
 }
+
+public function getSlug(): ?string
+{
+    return $this->slug;
+}
+
+//public function setSlug(?string $slug): self
+//{
+//    $this->slug = $slug;
+//
+//    return $this;
+//}
 }
