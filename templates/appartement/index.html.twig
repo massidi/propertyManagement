@@ -73,11 +73,11 @@
                             <td>{{ appartement.status }}</td>
                             <td>{{ appartement.price }}</td>
                             <td>
-                                <a href="{{ path('appartement_show', {'slug': appartement.id}) }}">
+                                <a href="{{ path('appartement_show', {'id': appartement.id}) }}">
                                     <button class="btn btn-warning btn-sm"><i class="material-icons"> visibility</i>
                                     </button>
                                 </a>
-                                <a href="{{ path('appartement_edit', {'slug': appartement.id}) }}">
+                                <a href="{{ path('appartement_edit', {'id': appartement.id}) }}">
                                     <button class="btn btn-info btn-sm"><i class="material-icons"> edit</i></button>
                                 </a>
                                {{ include('appartement/_delete_form.html.twig') }}
