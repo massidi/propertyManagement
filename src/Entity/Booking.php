@@ -44,7 +44,7 @@ class Booking
 
     /**
      * @ORM\ManyToOne(targetEntity=Appartement::class , fetch="EXTRA_LAZY",inversedBy="bookings")
-     * @ORM\joinColumn(onDelete="SET NULL")
+     *
      *
      */
     private $appartement;
