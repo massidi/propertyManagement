@@ -154,11 +154,13 @@
                 <small>Facture / {{ facturation.createdAd|date('Y-m-d') }}</small>
                 <div class="invoice-detail">
                     Prestations immobilières <br>
-                    Montant à payer:  <span class="badge badge-pill badge-success">{{ TotalPrix }} CD</span> <br>
+                    Montant à payer:  <span class="badge badge-pill badge-success" id="total"> </span> <br>
 
                 </div>
             </div>
         </div>
+
+
 
         <div class="container-fluid">
             <div class="row">
@@ -182,4 +184,29 @@
 
 
 {#    <a href="{{ path('liste-facturation') }}">back to list</a>#}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(window).on('load', function () {
+
+            let total=  $('#total');
+            $(function () {
+                $("#facturation_tax").change(function () {
+                    var selectedText = $(this).find("option:selected").text();
+                    var myArray = selectedText.split(" ");
+                    var price=parseFloat(myArray[1])
+
+                    let monant=(({{ TotalPrix }}) * (price)/100)
+
+                    total.html(({{ TotalPrix }} )+(({{ TotalPrix }})*price/100));
+                    console.log(price)
+
+                    console.log({{ TotalPrix }})
+                })
+            })
+        });
+    </script>
+
 {% endblock %}

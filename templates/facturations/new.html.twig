@@ -150,14 +150,15 @@
                     Email: {{ facturation.booking.clients[0].email }}
                 </address>
             </div>
-            <div class="invoice-date">
+            <div class="invoice-date" >
                 <small>Facture / {{ facturation.createdAd|date('Y-m-d') }}</small>
                 <div class="invoice-detail">
                     Prestations immobilières <br>
-                  Prix:  <span class="badge badge-pill badge-success">{{ TotalPrix }} UDF</span>
+                  Prix:  <span class="badge badge-pill badge-success" id="total" ></span>
 
                 </div>
             </div>
+            <p ></p>
         </div>
 
         <div class="container-fluid">
@@ -182,4 +183,26 @@
 
 
 {#    <a href="{{ path('liste-facturation') }}">back to list</a>#}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script>
+        $(window).on('load', function () {
+
+        let total=  $('#total');
+        $(function () {
+            $("#facturation_tax").change(function () {
+                var selectedText = $(this).find("option:selected").text();
+                var myArray = selectedText.split(" ");
+                var price=parseInt(myArray[1])
+
+                total.html(({{ TotalPrix }} )+(({{ TotalPrix }})*price/100));
+
+          {#console.log({{ TotalPrix }}+{{ TotalPrix }}*price/100)#}
+            })
+        })
+        });
+    </script>
+
 {% endblock %}

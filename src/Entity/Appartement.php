@@ -37,8 +37,9 @@ class Appartement
     private $status=true;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="appartement")
-     * @ORM\JoinColumn(nullable=false)
+     *
+     * @ORM\ManyToOne(targetEntity=Category::class,  fetch="EXTRA_LAZY",inversedBy="appartement",cascade={"persist"})
+     *
      */
     private $category;
 
@@ -259,7 +260,7 @@ class Appartement
 
     public function __toString():string
     {
-        return $this->nom;
+        return $this->getNom();
     }
 
 //    /**

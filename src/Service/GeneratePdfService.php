@@ -66,7 +66,6 @@ class GeneratePdfService
     public function pdfAction($html,$title)
     {
 
-
         return new Response(
             $this->pdf->getOutputFromHtml($html),
             200,

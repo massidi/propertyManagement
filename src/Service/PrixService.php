@@ -15,7 +15,7 @@ class PrixService
      */
     public  function  getSommeFacture($facturation)
     {
-        $facturation= new  Facturation();
+
         //recuperer la date de l'entrée de client et  de sortie
         $later = $facturation->getBooking()->getCheckInAt();
 
@@ -26,7 +26,7 @@ class PrixService
         $abs_diff = $later->diff($earlier)->format("%a"); //3
 
         //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
-        $TotalPrix=($abs_diff)*$facturation->getBooking()->getAppartement()->getNbrDeChambre();
+        $TotalPrix=($abs_diff)*$facturation->getBooking()->getAppartement()->getPrice();
 
         return $TotalPrix;
 

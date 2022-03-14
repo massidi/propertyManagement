@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Appartement;
 use App\Entity\Booking;
 use App\Entity\Facturation;
 use App\Event\SendNotificationEvent;
@@ -54,16 +55,40 @@ class FacturationsController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param RequestStack $requestStack
-     * @param BookingRepository $bookingRepository
      * @param EventDispatcherInterface $dispatcher
      * @return Response
+     * @throws \Exception
      */
-    public function facture(Request $request, EntityManagerInterface $entityManager, RequestStack $requestStack, BookingRepository $bookingRepository,EventDispatcherInterface $dispatcher): Response
+    public function facture(Request $request, EntityManagerInterface $entityManager, RequestStack $requestStack, EventDispatcherInterface $dispatcher,PrixService  $prixService): Response
     {
-
+        //Get session
 
         $session = $requestStack->getSession();
         $filters = $session->get('booking_new', []);
+
+
+        //Check if the session exist
+        if ($filters)
+        {
+
+        //Create a booking entity and assign a value from the session call filter
+
+        $ActualBooking= new Booking();
+
+        $ActualBooking->setCheckInAt($filters->getCheckInAt());
+        $ActualBooking->setCheckOutAt($filters->getCheckOutAt());
+        $immobilier=$entityManager->getRepository(Appartement::class)->find($filters->getAppartement()->getId());
+        $ActualBooking->setAppartement($immobilier);
+        $ActualBooking->setComment($filters->getComment());
+
+        foreach ( $filters->getClients() as $cients)
+        {
+            $ActualBooking->addClient($cients);
+        }
+
+        $entityManager->persist($ActualBooking);
+
+
 
 
         $facturation = new Facturation();
@@ -72,36 +97,33 @@ class FacturationsController extends AbstractController
 
         $facturation->setCreatedAd(new \DateTime('today'));
 
-        $booking = $bookingRepository->find($filters->getid());
+//        $booking = $bookingRepository->find($filters->getid());
 
 
-        $facturation->setBooking($booking);
 
-        //recuperer la date de l'entrée de client et  de sortie
-        $later = $facturation->getBooking()->getCheckInAt();
+        $facturation->setBooking($ActualBooking);
 
-        $earlier = $facturation->getBooking()->getCheckOutAt();
 
-        //le nombre de jours entre date d'entré et de sortie
+//
+//        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
+        $TotalPrix=$prixService->getSommeFacture($facturation);
 
-        $abs_diff = $later->diff($earlier)->format("%a"); //3
-
-        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
-        $TotalPrix=($abs_diff)*$facturation->getBooking()->getAppartement()->getPrice();
-
-//        dd($facturation->getBooking());
 
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+
             $entityManager->persist($facturation);
+
+
             $entityManager->flush();
 
 
             //send a sms to the client after the payment is confirmed by using the event service
 
             $even=new SendNotificationEvent($facturation);
-//            dd($even->getBooking()->getBooking()->getClients()[0]->getTelephone());
             $dispatcher->dispatch($even,SendNotificationEvent::NAME);
 
             $this->notifier->success('Merci pour la confirmation de votre payment une SMS vient d\'etre envoyer au cleint');
@@ -109,6 +131,14 @@ class FacturationsController extends AbstractController
 
 
             return $this->redirectToRoute('liste_facturation', [], Response::HTTP_SEE_OTHER);
+        }
+
+        }
+
+        else
+        {
+            //throw en exception when the session filter is empty
+            throw new \Exception("booking not exist");
         }
 
 
@@ -128,11 +158,14 @@ class FacturationsController extends AbstractController
      * @param GeneratePdfService $pdfService
      * @return Response
      */
-    public function invoicePrint(Facturation $facturation, GeneratePdfService  $pdfService): Response
+    public function invoicePrint(Facturation $facturation, GeneratePdfService  $pdfService,PrixService  $prixService): Response
     {
+        $total=$prixService->getSommeFacture($facturation);
+
         $title=$facturation->getBooking()->getClients()[0]->getNom();
         $htm= $this->render('facturations/invoice-print.html.twig', [
             'facturation' => $facturation,
+            'TotalPrix'=>$total
         ]);
         $pdfService->pdfAction($htm,$title);
         return $htm ;
@@ -143,21 +176,22 @@ class FacturationsController extends AbstractController
     /**
      * @Route("/detail-facture/{id}", name="facturations_detail", methods={"GET"})
      * @param Facturation $facturation
+     * @param PrixService $prixService
      * @return Response
      */
-    public function show(Facturation $facturation): Response
+    public function show(Facturation $facturation,PrixService  $prixService): Response
     {
         //recuperer la date de l'entrée de client et  de sortie
-        $later = $facturation->getBooking()->getCheckInAt();
-
-        $earlier = $facturation->getBooking()->getCheckOutAt();
-
-        //lz nombre de jours entre date d'entré et de sortie
-
-        $abs_diff = $later->diff($earlier)->format("%a"); //3
-
-        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
-        $TotalPrix=($abs_diff)*($facturation->getBooking()->getAppartement()->getPrice());
+//        $later = $facturation->getBooking()->getCheckInAt();
+//
+//        $earlier = $facturation->getBooking()->getCheckOutAt();
+//
+//        //lz nombre de jours entre date d'entré et de sortie
+//
+//        $abs_diff = $later->diff($earlier)->format("%a"); //3
+//
+//        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
+        $TotalPrix=$prixService->getSommeFacture($facturation);
 
         return $this->render('facturations/show.html.twig', [
             'facturation' => $facturation,

@@ -77,9 +77,9 @@ class BookingController extends AbstractController
 
 
 
-                $entityManager->persist($booking);
-
-                $entityManager->flush();
+//                $entityManager->persist($booking);
+//
+//                $entityManager->flush();
 
                 //stores my booking into a session
 

@@ -163,13 +163,13 @@
                                                      style="text-align: right; color:green">{{ facturation.booking.clients[0].nom }}</span>
                 </div>
                 <div class="card-header">Prix Journalier <span class="float-right "
-                                                               style="text-align: right; color:green"> {{ facturation.booking.appartement.price }} /J</span></div>
+                                                               style="text-align: right; color:green"> {{ facturation.booking.appartement.price }}$ /J</span></div>
 
                 <div class="card-header">Nombre de jours <span class="float-right "
                                                                style="text-align: right; color:green"> {{ difference.days }}/J</span></div>
-                <div class="card-header">Montant à payer <span class="float-right "
-                                                       style="text-align: right; color:green"> {{ TotalPrix }} CD</span></div>
-                <div class="card-header">Montant déja payé <span class="float-right montant"
+                <div class="card-header">Montant <span class="float-right "
+                                                       style="text-align: right; color:green"> {{ TotalPrix }} $</span></div>
+                <div class="card-header">Montant(Taxe) <span class="float-right montant"
                                                        style="text-align: right; color:green"> </span></div>
                 <div class="card-header">Date<span class="float-right"
                                                    style="text-align: right; color: green">{{ facturation.paymentAt|date('d M Y') }}</span>

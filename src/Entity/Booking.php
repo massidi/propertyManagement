@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=BookingRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Booking
 {
@@ -43,8 +44,8 @@ class Booking
     private $clients;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Appartement::class , fetch="EXTRA_LAZY",inversedBy="bookings")
-     *
+     * @ORM\ManyToOne(targetEntity=Appartement::class ,inversedBy="bookings", cascade={"persist"}, fetch="EAGER")
+     * @JoinColumn(name="appartement_id", referencedColumnName="id",onDelete="SET NULL")
      *
      */
     private $appartement;
@@ -136,6 +137,8 @@ class Booking
     {
         return $this->appartement;
     }
+
+
 
     public function setAppartement(?Appartement $appartement): self
     {
