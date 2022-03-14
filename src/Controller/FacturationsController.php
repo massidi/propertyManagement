@@ -67,6 +67,7 @@ class FacturationsController extends AbstractController
         $filters = $session->get('booking_new', []);
 
 
+
         //Check if the session exist
         if ($filters)
         {
@@ -127,6 +128,7 @@ class FacturationsController extends AbstractController
             $dispatcher->dispatch($even,SendNotificationEvent::NAME);
 
             $this->notifier->success('Merci pour la confirmation de votre payment une SMS vient d\'etre envoyer au cleint');
+            $session->remove("booking_new");
 
 
 
