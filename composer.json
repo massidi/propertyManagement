@@ -54,14 +54,15 @@
         "twig/extra-bundle": "^3.3",
         "twig/intl-extra": "^3.3",
         "twig/twig": "^2.12|^3.0",
-        "twilio/sdk": "^6.33",
-        "vich/uploader-bundle": "^1.19"
+        "twilio/sdk": "^6.33"
+
     },
     "require-dev": {
         "symfony/debug-bundle": "5.4.*",
         "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "5.4.*",
-        "symfony/web-profiler-bundle": "5.4.*"
+        "symfony/web-profiler-bundle": "5.4.*",
+        "vich/uploader-bundle": "^1.19"
     },
     "config": {
         "allow-plugins": {
