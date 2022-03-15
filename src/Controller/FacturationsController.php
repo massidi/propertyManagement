@@ -169,7 +169,7 @@ class FacturationsController extends AbstractController
             'facturation' => $facturation,
             'TotalPrix'=>$total
         ]);
-        $pdfService->pdfAction($htm,$title);
+        $pdfService->getPdf($htm,$title);
         return $htm ;
 
     }

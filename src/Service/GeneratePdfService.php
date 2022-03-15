@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use Dompdf\Css\Stylesheet;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -34,22 +35,30 @@ class GeneratePdfService
     {
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
+//        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->setIsHtml5ParserEnabled(true);
 
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
+//        $css=new Stylesheet($dompdf);
 
+//        $publicDirectory = $this->get('kernel')->getProjectDir() . '/public';
+//
+//        $css->load_css_file();
+//        $dompdf->setCss(new Stylesheet($dompdf));
+//        $dompdf->setHttpContext(fopen(__DIR__ . "assets/invoice/invoice.css", 'r',''));
 
-
-        $dompdf->setOptions("isHtml5ParserEnabled", true);
+//        $dompdf->getOptions()->setChroot($this->projectDir . DIRECTORY_SEPARATOR . 'www');
+//        $dompdf->setOptions("isHtml5ParserEnabled", true);
 
         // Retrieve the HTML generated in our twig file
 //        $html = $this->twig->render('default/mypdf.html.twig', [
 //            'title' => "Welcome to our PDF Test"
 //        ]);
+//        $dompdf->setProtocol();
 
         // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
+        $dompdf->loadHtml($html->getContent());
 
         // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
         $dompdf->setPaper('A4', 'portrait');
