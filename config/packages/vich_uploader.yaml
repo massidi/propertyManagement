@@ -1,5 +1,5 @@
-vich_uploader:
-    db_driver: orm
+#vich_uploader:
+#    db_driver: orm
 
     #mappings:
     #    products:
