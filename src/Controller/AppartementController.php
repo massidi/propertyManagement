@@ -200,7 +200,12 @@ class AppartementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // On récupère les images transmises
-            $images = $form->get('image')->getData();
+
+
+            $images = $form['image']->getData();
+
+
+            if ($images) {
 
             // On boucle sur les images
             foreach ($images as $image) {
@@ -219,7 +224,7 @@ class AppartementController extends AbstractController
                 $appartement->addImage($img);
             }
 
-
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
