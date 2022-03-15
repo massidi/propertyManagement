@@ -108,7 +108,7 @@
     <div class="invoice-note">
         * Établissez tous les chèques à l'ordre de {{ facturation.booking.appartement.society.name }}<br>
         * Le paiement est exigible sous 30 jours<br>
-        * Pour toute question concernant cette facture, contactez [Name, Phone Number, Email]
+        * Pour toute question concernant cette facture, contactez :{{ facturation.booking.appartement.society.phoneNbr }} ,{{ facturation.booking.appartement.society.email }}
     </div>
     <!-- end invoice-note -->
     <!-- begin invoice-footer -->
@@ -119,8 +119,8 @@
         <p class="text-center">
             <span class="m-r-10"><i
                         class="fa fa-fw fa-lg fa-globe"></i>  {{ facturation.booking.appartement.society.siteWeb }}</span>
-            <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:016-18192302</span>
-            <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> rtiemps@gmail.com</span>
+            <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> {{ facturation.booking.appartement.society.phoneNbr }}</span>
+            <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> {{ facturation.booking.appartement.society.email }}</span>
         </p>
     </div>
     <!-- end invoice-footer -->

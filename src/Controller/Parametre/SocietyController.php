@@ -82,6 +82,11 @@ class SocietyController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="society_edit", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Society $society
+     * @param EntityManagerInterface $entityManager
+     * @param FileUploader $uploader
+     * @return Response
      */
     public function edit(Request $request, Society $society, EntityManagerInterface $entityManager,FileUploader  $uploader): Response
     {
@@ -92,19 +97,14 @@ class SocietyController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $image = $form->get('image')->getData();
+            $image = $form['image']->getData();
+
+
             if ($image) {
                 $imageName = $uploader->upload($image);
                 $society->setImage($imageName);
 
             }
-
-
-
-
-
-
-
             $entityManager->flush();
 
             return $this->redirectToRoute('society_index', [], Response::HTTP_SEE_OTHER);

@@ -58,7 +58,7 @@ class SocietyType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            "image/jpeg","image/gif","image/png"
+                            "image/jpeg","image/png"
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image document',
                     ])
