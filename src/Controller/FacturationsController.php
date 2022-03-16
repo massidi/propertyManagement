@@ -72,19 +72,19 @@ class FacturationsController extends AbstractController
         if ($filters)
         {
 
-        //Create a booking entity and assign a value from the session call filter
+        //Create a booking instance and sign
 
         $ActualBooking= new Booking();
-
+        //assign a value from filter to booking instance
         $ActualBooking->setCheckInAt($filters->getCheckInAt());
         $ActualBooking->setCheckOutAt($filters->getCheckOutAt());
         $immobilier=$entityManager->getRepository(Appartement::class)->find($filters->getAppartement()->getId());
         $ActualBooking->setAppartement($immobilier);
         $ActualBooking->setComment($filters->getComment());
 
-        foreach ( $filters->getClients() as $cients)
+        foreach ( $filters->getClients() as $clients)
         {
-            $ActualBooking->addClient($cients);
+            $ActualBooking->addClient($clients);
         }
 
         $entityManager->persist($ActualBooking);
@@ -98,15 +98,15 @@ class FacturationsController extends AbstractController
 
         $facturation->setCreatedAd(new \DateTime('today'));
 
-//        $booking = $bookingRepository->find($filters->getid());
+
 
 
 
         $facturation->setBooking($ActualBooking);
 
 
-//
-//        //calculer la sommes total entre le nombre des jours multiplier par le prix de l'appartement
+
+        //calculer la sommes total entre le nombre des jours multiplié par le prix journalier de l'appartement
         $TotalPrix=$prixService->getSommeFacture($facturation);
 
 
@@ -164,13 +164,19 @@ class FacturationsController extends AbstractController
     {
         $total=$prixService->getSommeFacture($facturation);
 
-        $title=$facturation->getBooking()->getClients()[0]->getNom();
-        $htm= $this->render('facturations/invoice-print.html.twig', [
+//        $title=$facturation->getBooking()->getClients()[0]->getNom();
+//        $htm= $this->render('facturations/invoice-print.html.twig', [
+//            'facturation' => $facturation,
+//            'TotalPrix'=>$total
+//        ]);
+//
+//        $pdfService->getPdf($htm,$title);
+//        return $htm ;
+ return $this->render('facturations/invoice-print.html.twig', [
             'facturation' => $facturation,
             'TotalPrix'=>$total
         ]);
-        $pdfService->getPdf($htm,$title);
-        return $htm ;
+
 
     }
 
