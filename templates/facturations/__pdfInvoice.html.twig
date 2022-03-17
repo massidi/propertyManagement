@@ -1,6 +1,6 @@
 {% set factureNbr=facturation.id ~ facturation.createdAd|date('mdy') %}
 
-<div class="invoice  " id="printableArea">
+<div class="invoice  " >
     <!-- begin invoice-company -->
     <div class="invoice-company text-inverse f-w-600">
          <span class="pull-right hidden-print">
@@ -52,7 +52,7 @@
         <!-- begin table-responsive -->
         <div class="table-responsive">
             <table class="table table-invoice" style="display: table">
-                <thead>
+                <thead style="color: black">
                 <tr style="text-align: justify;display: table-row " >
                     <th class="text-lg-left" width="30%">DESCRIPTIONS</th>
                     <th class="text-center" width="10%">ARRIVER</th>
@@ -116,7 +116,7 @@
     </div>
     <!-- end invoice-note -->
     <!-- begin invoice-footer -->
-    <div class="invoice-footer" style="text-align: center">
+    <div class="invoice-footer " style="text-align: center">
         <p class="text-center m-b-5 f-w-600">
             MERCI POUR VOTRE CONFIANCE
         </p>
