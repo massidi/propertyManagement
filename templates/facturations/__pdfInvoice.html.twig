@@ -1,21 +1,18 @@
 {% set factureNbr=facturation.id ~ facturation.createdAd|date('mdy') %}
 
-<div class="invoice embed-responsive">
+<div class="invoice  " id="printableArea">
     <!-- begin invoice-company -->
     <div class="invoice-company text-inverse f-w-600">
          <span class="pull-right hidden-print">
-                         <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
 
             <div class=" invoice-date ">
                 <small>Facture / {{ facturation.createdAd|date('Y-m-d') }}</small>
             </div>
         </span>
-         <img src="{{ asset('assets/img/logo.jpg') }}" alt="Sysinfocom">
-        Cosmos Technology
-    </div>
-    <!-- end invoice-company -->
-    <!-- begin invoice-header -->
-    <div class="invoice-header " style="background: #f0f3f4">
+        <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5">
+
+        <img src="{{ asset('assets/img/logo.jpg') }}" alt="Sysinfocom">
+        </a>
         <div class=" invoice-from ">
             <address class="m-t-5 m-b-5">
                 <strong class="text-inverse">{{ facturation.booking.appartement.society.name }}</strong><br>
@@ -23,6 +20,11 @@
                 Tel: (123) 456-7890<br>
             </address>
         </div>
+
+    </div>
+    <!-- end invoice-company -->
+    <!-- begin invoice-header -->
+    <div class="invoice-header " style="background: #f0f3f4">
         <div class="invoice-to ">
             <address class="m-t-5 m-b-5">
                 <strong class="text-inverse">Destinataire:</strong><br>
@@ -52,24 +54,24 @@
             <table class="table table-invoice" style="display: table">
                 <thead>
                 <tr style="text-align: justify;display: table-row " >
-                    <th class="text-left" width="50%">DESCRIPTIONS</th>
-                    <th class="text-center" width="30%">ARRIVER</th>
-                    <th class="text-center" width="30%">DEPART</th>
-                    <th class="text-right" width="20%">TOTAL</th>
+                    <th class="text-lg-left" width="30%">DESCRIPTIONS</th>
+                    <th class="text-center" width="10%">ARRIVER</th>
+                    <th class="text-center" width="10%">DEPART</th>
+                    <th class="text-lg-right" width="10%">TOTAL</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <th>
-                        <span class="text-inverse">{{ facturation.booking.appartement.nom }}</span><br>
+                    <td>
+                        <span class="text-center">{{ facturation.booking.appartement.nom }}</span><br>
                         {% for acc in facturation.booking.appartement.accessoires %}
                         <small>{{ acc.nom }}</small>
                         {% endfor %}<br>
                         {{ facturation.booking.appartement.adresse }}
-                    </th>
-                    <th class="text-center">{{ facturation.booking.checkInAt|date('d M Y') }}</th>
-                    <th class="text-center">{{ facturation.booking.checkOutAt|date('d M Y') }}</th>
-                    <th class="text-right">${{ TotalPrix }}</th>
+                    </td>
+                    <td class="text-center">{{ facturation.booking.checkInAt|date('d M Y') }}</td>
+                    <td class="text-center">{{ facturation.booking.checkOutAt|date('d M Y') }}</td>
+                    <td class="text-right">${{ TotalPrix }}</td>
                 </tr>
 
                 </tbody>
