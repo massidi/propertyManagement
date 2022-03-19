@@ -208,15 +208,15 @@ class FacturationsController extends AbstractController
     }
 
 
-
     /**
      * @Route("/facturations_edit/{id}", name="facturations_edit", methods={"GET", "POST"})
      * @param Request $request
      * @param Facturation $facturation
      * @param EntityManagerInterface $entityManager
+     * @param EventDispatcherInterface $dispatcher
      * @return Response
      */
-    public function edit(Request $request, Facturation $facturation, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Facturation $facturation, EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher): Response
     {
         $form = $this->createForm(FacturationType::class, $facturation);
         $form->handleRequest($request);
@@ -235,6 +235,8 @@ class FacturationsController extends AbstractController
 //        dd([$abs_diff,$TotalPrix,$facturation->getBooking()->getAppartement()->getNbrDeChambre()],[$later,$earlier]);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $even=new SendNotificationEvent($facturation);
+            $dispatcher->dispatch($even,SendNotificationEvent::NAME);
 
             return $this->redirectToRoute('liste_facturation', [], Response::HTTP_SEE_OTHER);
         }

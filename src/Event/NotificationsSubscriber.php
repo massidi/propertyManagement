@@ -4,8 +4,10 @@
 namespace App\Event;
 
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Client;
+use UltraMsg\WhatsAppApi;
 
 class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
 {
@@ -24,7 +26,10 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
     {
         return [
 
-            SendNotificationEvent::NAME => 'OnSendSms',
+            SendNotificationEvent::NAME => [
+                ['OnSendSms',-10],['onWhatsapp',10]
+            ]
+
         ];
     }
 
@@ -35,9 +40,10 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
 
         $arrivalDate=$sendNotification->getBooking()->getBooking()->getCheckInAt()->format('d.m.Y');
         $departurDate=$sendNotification->getBooking()->getBooking()->getCheckOutAt()->format('d.m.Y');
-        $clientNumber=$sendNotification->getBooking()->getBooking()->getClients()[0]->getTelephone();
+        $createdAt=$sendNotification->getBooking()->getBooking()->getFacturation ()->getCreatedAd ()->format('l d F Y');
 
-//        dd([$ClientName, $arrivalDate,$departurDate]);
+//        $clientNumber=$sendNotification->getBooking()->getBooking()->getClients()[0]->getTelephone();
+
 
 
 
@@ -48,12 +54,39 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
                 ->create("+917433034016", // to
                     [
                         "from" => self::TWILIO_NUMBER,
-                        "body" => "Bonjour, Ref cleint: $ClientName Nous vous confirmons votre réservation du mardi au nom de Monsieur $ClientName Detail de votre séjour Date d'arriver: $arrivalDate Départ :$departurDate MERCI"
+                        "body" => "Bonjour, Ref cleint: $ClientName Nous vous confirmons votre réservation du $createdAt au Nom de Monsieur $ClientName Detail de votre Reservation. Date d'Arriver: $arrivalDate Départ :$departurDate MERCI"
                     ]
                 );
         } catch (TwilioException $e) {
         }
-//        dd($twilio);
+
+
+    }
+
+    public function onWhatsapp(SendNotificationEvent  $sendNotification)
+    {
+        $ClientName = $sendNotification->getBooking()->getBooking()->getClients()[0]->getNom();
+
+        $arrivalDate=$sendNotification->getBooking()->getBooking()->getCheckInAt()->format('d.m.Y');
+        $createdAt=$sendNotification->getBooking()->getBooking()->getFacturation ()->getCreatedAd ()->format('l d F Y');
+        $departurDate=$sendNotification->getBooking()->getBooking()->getCheckOutAt()->format('d.m.Y');
+        $clientNumber=$sendNotification->getBooking()->getBooking()->getClients()[0]->getTelephone();
+
+
+        $ultramsg_token="1ca6zx1t4m5yiyvo"; // Ultramsg.com token
+        $instance_id="instance3984"; // Ultramsg.com instance id
+        $client = new WhatsAppApi($ultramsg_token,$instance_id);
+
+        $to="+917433034016";
+        $body="Bonjour, Ref cleint: $ClientName Nous vous confirmons votre réservation du $createdAt au Nom de Monsieur $ClientName Detail de votre Reservation. Date d'Arriver: $arrivalDate Départ :$departurDate MERCI";
+        try {
+            $client -> sendChatMessage ( $to , $body );
+        }
+       catch (HttpException $exception)
+       {
+           return $exception;
+       }
+
 
     }
 }
