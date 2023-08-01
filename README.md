@@ -10,7 +10,7 @@ Documentation
 # CADRAGE DE L'APPLICATION
 
 
-# INTRODUCTION  : 
+**INTRODUCTION**  : 
 
 
 SYSINFO-IMMOBILIER est une application web de gestion de réservation immobilière en République Démocratique du Congo L’application est composée de plusieurs utilisateurs ayant des rôles différents (ex : ajouter des bien immobiliers, ajouter des images des bien immobiliers, ajouter une description du bien immobilier et les prix ). L'application Sysinfo-immobilier est basée sur un système de hiérarchie des rôles utilisateur dans lequel l'utilisateur ayant le rôle le plus élevé a le pouvoir de créer, supprimer, modifier un bien immobilier et créer une nouvelle réservation, contrairement aux autres utilisateurs qui ont simplement le droit soit de créer, modifier et supprimer une réservation.
@@ -34,7 +34,7 @@ SYSINFO-IMMOBILIER est un logiciel répondant ce qui veut dire qu’il s'adapte 
 
 
 
-# Démarrage de SYSINFO-IMMOBILIER
+**Démarrage de SYSINFO-IMMOBILIER**
 
 
 Comme pour la plupart des logiciels fonctionnant sous environnement web, pour démarrer SYSINFO-IMMOBILIER,  il faut vous authentifier ( identifié ) avec un email et mot de passe.
@@ -47,7 +47,7 @@ Après  l’authentification ( identification ), l'étape suivante est la créat
 
 
 
- # Configuration de l’application
+ **Configuration de l’application**
 
 
  
@@ -63,7 +63,7 @@ Le paramétrage ou la configuration du logiciel constitue à l’ensemble des ca
 
 
 
-# Etapes de configuration : 
+**Etapes de configuration** : 
 
 
 La création d'entreprise(compte société) : Paramétrage qui ne se fait qu'une seule fois ultérieurement. Vous ne pouvez que modifier (il est vivement recommandé de ne pas supprimer un compte société au risque de perdre toutes les données)
@@ -84,7 +84,7 @@ Accessoires (ex.Salon, Cuisine, Nombre de chambre,TV, etc.)
 
 
  
-# Création des produits (bien immobilier)
+**Création des produits (bien immobilier)**
 
 
 Ici, les produits représentent le logement. Cette étape consiste à créer un bien à louer. 
@@ -92,7 +92,7 @@ C'est là que vous allez renseigner tous les détails de votre bien en remplissa
 Néanmoins, il n'est pas obligatoire que le logement contient des images
 
 
-# Moteur Réservation
+**Moteur Réservation**
 
 
 Un moteur des réservations dans le domaine de gestion d' immobilier est utilisé pour traiter les réservations en ligne en toute sécurité cette étape vous donne l'aperçu sur les différentes immobiliers proposés, leurs disponibilités selon les dates
@@ -103,7 +103,7 @@ Nous avons deux Bouton : recherche qui est utilisé comme filtre  il te permet d
 
 
 
-Bouton Booking
+**Bouton Booking**
 
 
 Passer une réservation en ajoutant les informations suivantes: date d’Arrivées, date Départ et commentaire, ensuite remplir les informations du Client. Une réservation peut avoir un ou  plusieurs clients.
@@ -118,7 +118,7 @@ Après avoir valider sa réservation, l'étape suivante  est le paiement. La pag
 prix = (total nombre de jours) + (total nombre de jour  x  (taxe÷ 100) ) 
 
 
-Facturation
+**Facturation**
 
 
 L'application SYSINFO-IMMOBILIER est dotée d'un système de facturation qui se fait d'une manière automatique une fois que le paiement du réservation est confirmée la facture peut être imprimée directement dans l'espace facturation de l'application, il peut être modifié.
@@ -126,7 +126,7 @@ L'application SYSINFO-IMMOBILIER est dotée d'un système de facturation qui se 
 
 
  
-# MÉTHODE UTILISÉES : 
+**MÉTHODE UTILISÉES** : 
 
 
 Agile : La méthodologie Agile se base sur un principe simple “ Planifier la totalité de votre projet dans les moindres détails avant de le développer est contre-productif. “ 
