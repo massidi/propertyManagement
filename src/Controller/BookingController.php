@@ -53,20 +53,15 @@ class BookingController extends AbstractController
         $form->handleRequest($request);
         $booking->setAppartement($appartement);
 
-
-
-
             // dd($checkInAt->format('Y-m-d H:i'));
 
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
             //Check if there are booked Apartment with those dates
 
             $checkInAt= $form["checkInAt"]->getData()->format('Y-m-d H:i');
             $checkOutAt=$form["checkOutAt"]->getData()->format('Y-m-d H:i');
-
 
             $room_availability = $appartementRepository->checkAppartementAvailability($appartement->getId(),$checkInAt, $checkOutAt);
 
@@ -75,12 +70,6 @@ class BookingController extends AbstractController
             if ($room_availability=="0") {
 
 
-
-
-//                $entityManager->persist($booking);
-//
-//                $entityManager->flush();
-
                 //stores my booking into a session
 
 
@@ -88,11 +77,9 @@ class BookingController extends AbstractController
                 $session->set('booking_new', $booking);
 
 
-
                 $notifier->success('vous venez de faire une reservation à ' . " " . $booking->getClients()[0]->getNom() . ' avec success');
 
                 // stores an attribute in the session for later reuse
-
 
                 return $this->redirectToRoute('creation_facture', [], Response::HTTP_SEE_OTHER);
             }
