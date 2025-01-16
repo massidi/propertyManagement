@@ -2,17 +2,29 @@
 
 {% block title %}Appartement index{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card-img-top {
+            height: 200px; /* Ajustez selon vos besoins */
+            object-fit: cover; /* Cette propriété garantit que l'image est recadrée pour s'adapter */
+        }
+        .card {
+            height: 100%; /* S'assure que toutes les cartes ont la même hauteur */
+        }
+    </style>
+
+{% endblock %}
+
 {% block contenu %}
 
-    <div class="container">
+    <div class="rk-container bg-white">
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title ">Appartement Disponible</h4>
                 <p class="card-category"> vérifier la disponibilité des appartements</p>
             </div>
             <div class="card-body">
-
-
                     <form class="form-inline" action="{{ path('filter_appartement') }}" >
                         <div class="col-md-4 col-sm-12 order-1">
                         <div class="form-group mb-2">
@@ -34,32 +46,26 @@
             </div>
         </div>
 
-<div class="container">
+    <div class="rk-container">
         <div class="container-fluid">
-            <div class="row justify-content-center">
             {% for appartement in appartements %}
+                {% if loop.index0 is divisible by(3) %}
+                    <div class="row justify-content-center mb-4">
+                {% endif %}
 
                 <div class="col-md-4">
-                    <div class="card border-success mb-3" >
-                        <a type="button" href="{{ path('appartement_show', {'id': appartement.id}) }}">
-
-
-                            {% if appartement.images %}
-                            <img class="card-img-top"
-                                 src="{{ asset('uploads/' ~ appartement.images[0].nom | imagine_filter('my_thumb')) }}"
-                                 rel="nofollow" alt="Card image cap">
-
+                    <div class="card border-success mb-3">
+                        <a href="{{ path('appartement_show', {'id': appartement.id}) }}">
+                            {% if appartement.images|length > 0 %}
+                                <img class="card-img-top" src="{{ asset('uploads/' ~ appartement.images[0].nom) }}" alt="Image">
                             {% else %}
                                 <img class="card-img-top"
                                      src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80"
-                                     rel="nofollow" alt="Card image cap">
-
-
+                                     alt="Default image">
                             {% endif %}
                         </a>
                         <div class="card-body">
-
-                            <h5 class="card-title">   {{ appartement.nom |upper }} </h5>
+                            <h5 class="card-title">{{ appartement.nom | upper }}</h5>
                             <div class="d-flex flex-row bd-highlight mb-3">
                                 <ul class="list-inline" style="list-style: none;">
                                     {% for accessoire in appartement.accessoires %}
@@ -67,36 +73,56 @@
                                     {% endfor %}
                                 </ul>
                             </div>
-                            <p class="card-text">Prix par jour: <strong>{{ appartement.price }}</strong> </p>
-{#                            <p class="card-text"> commune:</p>#}
+                            <p class="card-text">Prix par jour: <strong>{{ appartement.price }}</strong></p>
                             <p class="card-text">{{ appartement.commune }} {{ appartement.adresse }}</p>
-                            <p class="card-text">
-                                Categorie:{{ appartement.Category }}</p>
+                            <p class="card-text">Categorie: {{ appartement.Category }}</p>
                         </div>
                         {% if appartement.status == false %}
                             <button class="btn btn-success">{{ button_label|default('Booking') }}</button>
                         {% else %}
-                            <a type="button" class="btn btn-success"
-                               href="{{ path('booking_new', {'id': appartement.id}) }}">{{ button_label|default('Booking') }}</a>
+                            <a class="btn btn-success" href="{{ path('booking_new', {'id': appartement.id}) }}">{{ button_label|default('Booking') }}</a>
                         {% endif %}
-
-
                     </div>
                 </div>
-{#                {% for appartements in appartement.bookings %}#}
 
-{#                {{ dump(appartements) }}#}
-{#            {% endfor %}#}
+                {% if loop.index is divisible by(3) or loop.last %}
+                    </div>
+                {% endif %}
             {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
+                <div class="row">
+                    <div class="col">
+                        <p>No records found</p>
+                    </div>
+                </div>
             {% endfor %}
-            </div>
-
         </div>
+    </div>
 
-</div>
+    <hr class="my-4"> {# Ligne de séparation avec un espacement personnalisé #}
+
+    <h1>Actualités Immobilier</h1>
+    <div class="rss-container  bg-white" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% if rssItems is not empty %}
+            {% for item in rssItems|slice(0, 6) %}
+                <div class="rss-card" style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; width: calc(33.333% - 20px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <h2 style="font-size: 18px; margin-bottom: 10px;">
+                        <a href="{{ item.link }}" target="_blank" style="text-decoration: none; color: #007bff;">{{ item.title }}</a>
+                    </h2>
+                    <p style="font-size: 14px; color: #555; margin-bottom: 12px;">
+                        {{ item.description|raw }}
+                    </p>
+                    <p style="font-size: 12px; color: #999; margin-bottom: 8px;">
+                        <strong>Publié le :</strong> {{ item.pubDate }}
+                    </p>
+                    <p style="font-size: 12px; color: #777;">
+                        <strong>Catégories :</strong> {{ item.categories|join(', ') }}
+                    </p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucune actualité disponible pour le moment.</p>
+        {% endif %}
+    </div>
 
 
     {# <a href="{{ path('appartement_show', {'id': appartement.id}) }}">show</a> #}

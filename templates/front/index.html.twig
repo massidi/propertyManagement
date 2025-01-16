@@ -1,0 +1,278 @@
+{% extends 'base-front.html.twig' %}
+
+    {% block content %}
+        <div class="page-title" data-aos="fade">
+
+
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ol>
+                        <li><a href="index.html">Acceuil</a></li>
+                        <li class="current">Bien Immobilier</li>
+                    </ol>
+                </div>
+            </nav>
+        </div>
+        <section id="real-estate" class="real-estate section">
+
+            <div class="row d-flex justify-content-center text-center">
+
+                <h4 class="card-title  ">Appartement Disponible</h4>
+                <p class="card-category"> vérifier la disponibilité des appartements</p>
+                <div class="card-body">
+                    <form class="form-inline mb-4" action="{{ path('filter_appartement_front') }}">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="form-group mb-2 me-2">
+                                <label class="me-2">ARRIVER</label>
+                                <input type="datetime-local" class="form-control" name="checkIn">
+                            </div>
+                            <div class="form-group mb-2 me-2">
+                                <label class="me-2">DEPART</label>
+                                <input type="datetime-local" class="form-control" name="checkOut">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-success me-2 ">Recherche</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+            <div class="container">
+                <div class="row gy-4">
+                    {% for appartement in appartements %}
+                        <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                            <div class="card">
+                                <a href="{{ path('appartement_show_front', {'id': appartement.id}) }}">
+                                    <img src="{{ appartement.images|length > 0 ? asset('uploads/' ~ appartement.images[0].nom) : 'https://via.placeholder.com/340x240' }}"
+                                         alt="Appartement Image" class="img-fluid">
+                                </a>
+                                <div class="card-body">
+                                    <span class="sale-rent">{{ appartement.category | capitalize }} | ${{ appartement.price }}</span>
+                                    <h3>
+                                        <a href="{{ path('appartement_show_front', {'id': appartement.id}) }}"
+                                           class="stretched-link">
+                                            {{ appartement.adresse }}
+                                        </a>
+                                    </h3>
+                                    <div class="card-content d-flex flex-column justify-content-center text-center">
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <ul class="list-inline">
+                                                    {% for accessoire in appartement.accessoires %}
+                                                        <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col">
+                            <p>No appartements available.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </section><!-- /Real Estate Section -->
+
+
+{#        recommandation#}
+
+        <section id="testimonials" class="testimonials section">
+
+            <!-- Section Title -->
+            <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+                <h2>Recommandation</h2>
+            </div><!-- End Section Title -->
+
+            <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="swiper init-swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
+                    <script type="application/json" class="swiper-config">
+                        {
+                            "loop": true,
+                            "speed": 600,
+                            "autoplay": {
+                                "delay": 5000
+                            },
+                            "slidesPerView": "auto",
+                            "pagination": {
+                                "el": ".swiper-pagination",
+                                "type": "bullets",
+                                "clickable": true
+                            },
+                            "breakpoints": {
+                                "320": {
+                                    "slidesPerView": 1,
+                                    "spaceBetween": 40
+                                },
+                                "1200": {
+                                    "slidesPerView": 3,
+                                    "spaceBetween": 1
+                                }
+                            }
+                        }
+                    </script>
+                    <div class="swiper-wrapper" id="swiper-wrapper-e76252109b67c87cc" aria-live="off" style="transition-duration: 0ms; transform: translate3d(-736px, 0px, 0px); transition-delay: 0ms;">
+
+                        <!-- End testimonial item -->
+
+                        <!-- End testimonial item -->
+
+                        <!-- End testimonial item -->
+
+                        <!-- End testimonial item -->
+
+                        <!-- End testimonial item -->
+
+                        <div class="swiper-slide swiper-slide-prev" role="group" aria-label="1 / 5" style="width: 696px; margin-right: 40px;" data-swiper-slide-index="0">
+                            <div class="testimonial-item">
+                                <div class="stars">
+                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                </div>
+                                <p>
+                                    Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                                </p>
+                                <div class="profile mt-auto">
+                                    <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                                    <h3>Saul Goodman</h3>
+                                    <h4>Ceo &amp; Founder</h4>
+                                </div>
+                            </div>
+                        </div><div class="swiper-slide swiper-slide-active" role="group" aria-label="2 / 5" data-swiper-slide-index="1" style="width: 696px; margin-right: 40px;">
+                            <div class="testimonial-item">
+                                <div class="stars">
+                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                </div>
+                                <p>
+                                    Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                                </p>
+                                <div class="profile mt-auto">
+                                    <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                                    <h3>Sara Wilsson</h3>
+                                    <h4>Designer</h4>
+                                </div>
+                            </div>
+                        </div><div class="swiper-slide swiper-slide-next" role="group" aria-label="3 / 5" data-swiper-slide-index="2" style="width: 696px; margin-right: 40px;">
+                            <div class="testimonial-item">
+                                <div class="stars">
+                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                </div>
+                                <p>
+                                    Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                                </p>
+                                <div class="profile mt-auto">
+                                    <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                                    <h3>Jena Karlis</h3>
+                                    <h4>Store Owner</h4>
+                                </div>
+                            </div>
+                        </div><div class="swiper-slide" role="group" aria-label="4 / 5" data-swiper-slide-index="3" style="width: 696px; margin-right: 40px;">
+                            <div class="testimonial-item">
+                                <div class="stars">
+                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                </div>
+                                <p>
+                                    Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                                </p>
+                                <div class="profile mt-auto">
+                                    <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                                    <h3>Matt Brandon</h3>
+                                    <h4>Freelancer</h4>
+                                </div>
+                            </div>
+                        </div><div class="swiper-slide" role="group" aria-label="5 / 5" data-swiper-slide-index="4" style="width: 696px; margin-right: 40px;">
+                            <div class="testimonial-item">
+                                <div class="stars">
+                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                </div>
+                                <p>
+                                    Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                                </p>
+                                <div class="profile mt-auto">
+                                    <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                                    <h3>John Larson</h3>
+                                    <h4>Entrepreneur</h4>
+                                </div>
+                            </div>
+                        </div></div>
+                    <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 2" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 3"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 4"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 5"></span></div>
+                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+
+            </div>
+
+        </section>
+
+        <section id="testimonials" class="testimonials section">
+            <!-- Section Title -->
+            <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+                <h2>Dernières annonces immobilières</h2>
+                <p>Découvrez les propriétés disponibles et les opportunités dans les DOM</p>
+            </div><!-- End Section Title -->
+
+            <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper init-swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
+                    <script type="application/json" class="swiper-config">
+                        {
+                            "loop": true,
+                            "speed": 600,
+                            "autoplay": {
+                                "delay": 5000
+                            },
+                            "slidesPerView": "auto",
+                            "pagination": {
+                                "el": ".swiper-pagination",
+                                "type": "bullets",
+                                "clickable": true
+                            },
+                            "breakpoints": {
+                                "320": {
+                                    "slidesPerView": 1,
+                                    "spaceBetween": 40
+                                },
+                                "1200": {
+                                    "slidesPerView": 3,
+                                    "spaceBetween": 1
+                                }
+                            }
+                        }
+                    </script>
+{#                    {{ dump(rssItems) }}#}
+
+                    <div class="swiper-wrapper" id="swiper-wrapper-841f21a3d1a7d63c" aria-live="off">
+                        {% for item in rssItems|slice(0, 10) %}
+
+                            <div class="swiper-slide" role="group" aria-label="1 / 5"
+                                 style="width: 936px; margin-right: 40px;">
+                                <div class="testimonial-item">
+
+                                    <h5 class="card-title">{{ item.title }}</h5>
+                                    <p class="card-text">{{ item.description[:50] }}...</p>
+                                    <div class="profile mt-auto">
+                                        <a href="{{ item.link }}" class="btn btn-success" target="_blank">Lire la
+                                            suite</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        Published on: {{ item.pubDate }}
+                                    </div>
+                                    <div class="profile mt-auto">
+                                        <img src="{{ item.image }}" class="testimonial-img" alt="{{ item.title }}">
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
+                    </div>
+                    <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
+                </div>
+            </div>
+        </section>
+    {% endblock %}

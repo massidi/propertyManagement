@@ -1,0 +1,108 @@
+{% extends 'base-front.html.twig' %}
+
+{% block content %}
+    <div class="page-title" data-aos="fade">
+
+
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a href="index.html">Bien Immobilier</a></li>
+                    <li class="current">{{ appartement.nom }}</li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <section id="real-estate-2" class="real-estate-2 section">
+        <div class="container aos-init aos-animate" data-aos="fade-up">
+            <div class="portfolio-details-slider swiper init-swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
+                <script type="application/json" class="swiper-config">
+                    {
+                        "loop": true,
+                        "speed": 600,
+                        "autoplay": {
+                            "delay": 5000
+                        },
+                        "slidesPerView": "auto",
+                        "navigation": {
+                            "nextEl": ".swiper-button-next",
+                            "prevEl": ".swiper-button-prev"
+                        },
+                        "pagination": {
+                            "el": ".swiper-pagination",
+                            "type": "bullets",
+                            "clickable": true
+                        }
+                    }
+                </script>
+                <div class="swiper-wrapper align-items-center">
+                    {% for image in appartement.images %}
+                        <div class="swiper-slide">
+                            <img src="{{ asset('uploads/' ~ image.nom) }}" alt="Appartement Image">
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="row justify-content-between gy-4 mt-4">
+                <div class="col-lg-8 aos-init" data-aos="fade-up">
+                    <div class="portfolio-description">
+                        <h2>{{ appartement.adresse }}</h2>
+                        <p>
+                            Il s'agit d'une spacieuse maison de standing, lumineuse, bien exposée
+                            (photo de la maison ci-dessus), dans une très belle résidence privée composée d'une
+                            douzaine de maisons. Elle est à 5 minutes à pied du maison communal
+                            de {{ appartement.commune }} . La plage de Karadere est à 15 minutes.
+
+                        </p>
+                        <p>
+                            De construction très recente, elle dispose de tout le confort : une cuisine équipée, un
+                            beau salon / séjour avec TV et DVD,
+                        </p>
+
+                        <p><strong>Price: </strong>${{ appartement.price }}/J</p>
+                        <p><strong>Category: </strong>{{ appartement.category | capitalize }}</p>
+
+                    </div>
+
+                    <!-- Tabs -->
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                        <li><a class="nav-link active" data-bs-toggle="pill" href="#real-estate-2-tab1"
+                               aria-selected="true" role="tab">Video</a></li>
+                        <li><a class="nav-link" data-bs-toggle="pill" href="#real-estate-2-tab2" aria-selected="false"
+                               role="tab">Floor Plans</a></li>
+                        <li><a class="nav-link" data-bs-toggle="pill" href="#real-estate-2-tab3" aria-selected="false"
+                               role="tab">Location</a></li>
+                    </ul>
+
+
+                </div>
+
+                <div class="col-lg-3 aos-init" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-info">
+                        <h3>Quick Summary</h3>
+                        <ul>
+                            <li><strong>Property ID:</strong> {{ appartement.id }}</li>
+                            <li><strong>Location:</strong> {{ appartement.adresse }}</li>
+                            <li><strong>Property Type:</strong> {{ appartement.category }}</li>
+                            <li><strong>Status:</strong> {{ appartement.status }}</li>
+                            <strong>Equipement:</strong>
+                            {% for accessoire in appartement.accessoires %}
+                                <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li>
+                            {% endfor %}
+                            <li> <a class="btn btn-success" href="{{ path('booking_new_front', {'id': appartement.id}) }}">Reserver</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
+
