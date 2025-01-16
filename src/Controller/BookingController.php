@@ -7,7 +7,7 @@ use App\Entity\Booking;
 use App\Form\Booking1Type;
 use App\Repository\AppartementRepository;
 use App\Repository\BookingRepository;
-use Cassandra\Date;
+use App\Service\BookingService;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,66 +40,43 @@ class BookingController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param Appartement $appartement
-     * @param AppartementRepository $appartementRepository
-     * @param RequestStack $requestStack
+     * @param BookingService $bookingService
      * @return Response
-     * @throws \Exception
      */
-    public function booking(FlashyNotifier $notifier, Request $request, EntityManagerInterface $entityManager, Appartement $appartement, AppartementRepository $appartementRepository,RequestStack  $requestStack): Response
-    {
-
+    public function booking(
+        FlashyNotifier $notifier,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Appartement $appartement,
+        BookingService $bookingService
+    ): Response {
         $booking = new Booking();
         $form = $this->createForm(Booking1Type::class, $booking);
         $form->handleRequest($request);
-        $booking->setAppartement($appartement);
-
-            // dd($checkInAt->format('Y-m-d H:i'));
-
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $checkInAt = $form["checkInAt"]->getData();
+            $checkOutAt = $form["checkOutAt"]->getData();
 
-            //Check if there are booked Apartment with those dates
+            // Attempt to create the booking
+            $isBooked = $bookingService->createBooking($booking, $appartement, $checkInAt, $checkOutAt);
 
-            $checkInAt= $form["checkInAt"]->getData()->format('Y-m-d H:i');
-            $checkOutAt=$form["checkOutAt"]->getData()->format('Y-m-d H:i');
-
-            $room_availability = $appartementRepository->checkAppartementAvailability($appartement->getId(),$checkInAt, $checkOutAt);
-
-            //Room is available
-
-            if ($room_availability=="0") {
-
-
-                //stores my booking into a session
-
-
-                $session = $requestStack->getSession();
-                $session->set('booking_new', $booking);
-
-
-                $notifier->success('vous venez de faire une reservation à ' . " " . $booking->getClients()[0]->getNom() . ' avec success');
-
-                // stores an attribute in the session for later reuse
-
+            if ($isBooked) {
+                $notifier->success('Vous venez de faire une réservation avec succès.');
                 return $this->redirectToRoute('creation_facture', [], Response::HTTP_SEE_OTHER);
             }
-            else{
-                //Room is booked
-                $notifier->error('veillez choisir une autre date car la date choisie n\'est pas disponible');
-                return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
 
-
-            }
-
+            // Explicitly clear session if booking fails
+            $bookingService->clearBookingSession();
+            $notifier->error('Veuillez choisir une autre date car la date choisie n\'est pas disponible.');
+            return $this->redirectToRoute('appartement_index', [], Response::HTTP_SEE_OTHER);
         }
-
 
         return $this->renderForm('booking/new.html.twig', [
             'booking' => $booking,
             'form' => $form,
         ]);
     }
-
 
     /**
      * @Route("/current-booking", name="current-booking", methods={"GET"})
@@ -108,7 +85,6 @@ class BookingController extends AbstractController
      */
     public function getCurrentBooking(BookingRepository $bookingRepository): Response
     {
-//dd($bookingRepository->getCurrentBooking());
         //here getting the current reservation
         return $this->render('booking/currentBooking.html.twig', [
             'currentBooking' => $bookingRepository->getCurrentBooking(),

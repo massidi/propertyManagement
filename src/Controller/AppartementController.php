@@ -7,6 +7,7 @@ use App\Entity\Image;
 use App\Entity\Society;
 use App\Form\AppartementType;
 use App\Repository\AppartementRepository;
+use App\Service\RssService;
 use App\Service\SearcheAppartement;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,6 +50,7 @@ class AppartementController extends AbstractController
      * @Route("/filer-appartement", name="filter_appartement", methods={"GET"})
      * @param AppartementRepository $appartementRepository
      * @return Response
+     * @throws \Exception
      */
     public function filter(AppartementRepository $appartementRepository,Request  $request): Response
     {
@@ -80,16 +82,31 @@ class AppartementController extends AbstractController
      * @param AppartementRepository $appartementRepository
      * @return Response
      */
-    public function Appartement(AppartementRepository $appartementRepository): Response
+    public function Appartement(AppartementRepository $appartementRepository, RssService $rssService): Response
     {
-
+        // Récupérer les appartements depuis la base de données
         $appartements = $appartementRepository->findAll();
 
+        // URL du flux RSS
+        $rssUrl = 'https://monimmeuble.com/actualites/theme/immobilier/feed';
 
+        try {
+            // Récupérer les actualités depuis le flux RSS
+            $rssItems = $rssService->fetchRssFeed($rssUrl);
+        } catch (\Exception $e) {
+            // En cas d'erreur, afficher un message dans les logs ou dans la vue
+            $rssItems = [];
+            $this->addFlash('error', 'Erreur lors de la récupération des actualités : ' . $e->getMessage());
+        }
+
+//        dd($rssItems);
+        // Passer les données des appartements et des actualités RSS à la vue
         return $this->render('appartement/filter.html.twig', [
             'appartements' => $appartements,
+            'rssItems' => $rssItems,
         ]);
     }
+
 
     /**
      * @Route("/ajouter-nouvel-appartement", name="appartement_new", methods={"GET", "POST"})
@@ -179,7 +196,8 @@ class AppartementController extends AbstractController
      */
     public function show(Appartement $appartement): Response
     {
-//        dd($appartement->getAccessoires()[0]);
+
+//        dd($appartement->getImages());
         return $this->render('appartement/show.html.twig', [
             'appartement' => $appartement,
         ]);

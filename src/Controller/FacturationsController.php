@@ -9,6 +9,7 @@ use App\Event\SendNotificationEvent;
 use App\Form\FacturationType;
 use App\Repository\BookingRepository;
 use App\Repository\FacturationRepository;
+use App\Service\BookingService;
 use App\Service\GeneratePdfService;
 use App\Service\PrixService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,11 +30,13 @@ class FacturationsController extends AbstractController
     /**
      * @var FlashyNotifier
      */
-    private $notifier;
+    private FlashyNotifier $notifier;
+    private BookingService $bookingService;
 
-    public function __construct(FlashyNotifier $notifier)
+    public function __construct(FlashyNotifier $notifier,BookingService $bookingService)
     {
         $this->notifier = $notifier;
+        $this->bookingService = $bookingService;
     }
 
     /**
@@ -54,106 +57,60 @@ class FacturationsController extends AbstractController
      * @Route("/creation-facture", name="creation_facture", methods={"GET", "POST"})
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param RequestStack $requestStack
      * @param EventDispatcherInterface $dispatcher
+     * @param PrixService $prixService
      * @return Response
-     * @throws \Exception
      */
-    public function facture(Request $request, EntityManagerInterface $entityManager, RequestStack $requestStack, EventDispatcherInterface $dispatcher,PrixService  $prixService): Response
-    {
-        //Get session
+    public function facture(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        EventDispatcherInterface $dispatcher,
+        PrixService $prixService
+    ): Response {
+        try {
+            // Use the service to create the booking from the session
+            $booking = $this->bookingService->createBookingFromSession();
 
-        $session = $requestStack->getSession();
-        $filters = $session->get('booking_new', []);
+            // Create the Facturation entity and form
+            $facturation = new Facturation();
+            $facturation->setCreatedAd(new \DateTime('today'));
+            $facturation->setBooking($booking);
 
+            $form = $this->createForm(FacturationType::class, $facturation);
+            $form->handleRequest($request);
 
+            // Calculate the total price
+            $totalPrice = $prixService->getSommeFacture($facturation);
 
-        //Check if the session exist
-        if ($filters)
-        {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($facturation);
+                $entityManager->flush();
 
-        //Create a booking instance and sign
+                // Dispatch the notification event
+                $event = new SendNotificationEvent($facturation);
+                $dispatcher->dispatch($event, SendNotificationEvent::NAME);
 
-        $ActualBooking= new Booking();
-        //assign a value from filter to booking instance
-        $ActualBooking->setCheckInAt($filters->getCheckInAt());
-        $ActualBooking->setCheckOutAt($filters->getCheckOutAt());
-        $immobilier=$entityManager->getRepository(Appartement::class)->find($filters->getAppartement()->getId());
-        $ActualBooking->setAppartement($immobilier);
-        $ActualBooking->setComment($filters->getComment());
+                $this->notifier->success(
+                    'Merci pour la confirmation de votre paiement. Un SMS a été envoyé au client.'
+                );
 
-        foreach ( $filters->getClients() as $clients)
-        {
-            $ActualBooking->addClient($clients);
+                // Clear the session
+                $this->bookingService->clearSession();
+
+                return $this->redirectToRoute('liste_facturation', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('facturations/new.html.twig', [
+                'facturation' => $facturation,
+                'form' => $form,
+                'reservation' => 'booking',
+                'TotalPrix' => $totalPrice,
+            ]);
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('appartement_front');
         }
-
-        $entityManager->persist($ActualBooking);
-
-
-
-
-        $facturation = new Facturation();
-        $form = $this->createForm(FacturationType::class, $facturation);
-        $form->handleRequest($request);
-
-        $facturation->setCreatedAd(new \DateTime('today'));
-
-
-
-
-
-        $facturation->setBooking($ActualBooking);
-
-
-
-        //calculer la sommes total entre le nombre des jours multiplié par le prix journalier de l'appartement
-        $TotalPrix=$prixService->getSommeFacture($facturation);
-
-
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-
-
-            $entityManager->persist($facturation);
-
-
-            $entityManager->flush();
-
-
-            //send a sms to the client after the payment is confirmed by using the event service
-
-            $even=new SendNotificationEvent($facturation);
-            $dispatcher->dispatch($even,SendNotificationEvent::NAME);
-
-            $this->notifier->success('Merci pour la confirmation de votre payment une SMS vient d\'etre envoyer au cleint');
-            $session->remove("booking_new");
-
-
-
-            return $this->redirectToRoute('liste_facturation', [], Response::HTTP_SEE_OTHER);
-        }
-
-        }
-
-        else
-        {
-            //throw en exception when the session filter is empty
-            throw new \Exception("booking not exist");
-        }
-
-
-
-        return $this->renderForm('facturations/new.html.twig', [
-            'facturation' => $facturation,
-            'form' => $form,
-            'reservation' => "booking",
-            'TotalPrix'=>$TotalPrix
-
-        ]);
     }
-
     /**
      * @Route("/print_incoice/{id}", name="print_invoice", methods={"GET"})
      * @param Facturation $facturation

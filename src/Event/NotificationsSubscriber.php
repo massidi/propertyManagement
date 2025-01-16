@@ -40,7 +40,8 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
 
         $arrivalDate=$sendNotification->getBooking()->getBooking()->getCheckInAt()->format('d.m.Y');
         $departurDate=$sendNotification->getBooking()->getBooking()->getCheckOutAt()->format('d.m.Y');
-        $createdAt=$sendNotification->getBooking()->getBooking()->getFacturation ()->getCreatedAd ()->format('l d F Y');
+//        $createdAt=$sendNotification->getBooking()->getBooking()->getFacturation ()->getCreatedAd ()->format('l d F Y');
+        $createdAt=$this->getCurrentDate();
 
 //        $clientNumber=$sendNotification->getBooking()->getBooking()->getClients()[0]->getTelephone();
 
@@ -68,9 +69,12 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
         $ClientName = $sendNotification->getBooking()->getBooking()->getClients()[0]->getNom();
 
         $arrivalDate=$sendNotification->getBooking()->getBooking()->getCheckInAt()->format('d.m.Y');
-        $createdAt=$sendNotification->getBooking()->getBooking()->getFacturation ()->getCreatedAd ()->format('l d F Y');
+//        $createdAt=$sendNotification->getBooking()->getBooking()->getFacturation ()->getCreatedAd ()->format('l d F Y');
         $departurDate=$sendNotification->getBooking()->getBooking()->getCheckOutAt()->format('d.m.Y');
         $clientNumber=$sendNotification->getBooking()->getBooking()->getClients()[0]->getTelephone();
+
+
+        $createdAt=$this->getCurrentDate();
 
 
         $ultramsg_token="1ca6zx1t4m5yiyvo"; // Ultramsg.com token
@@ -79,6 +83,7 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
 
         $to=$clientNumber;
         $body="Bonjour, Ref cleint: $ClientName Nous vous confirmons votre réservation du $createdAt au Nom de Monsieur $ClientName Detail de votre Reservation. Date d'Arriver: $arrivalDate Départ :$departurDate MERCI";
+
         try {
             $client -> sendChatMessage ( $to , $body );
         }
@@ -86,6 +91,13 @@ class NotificationsSubscriber implements \Symfony\Component\EventDispatcher\Even
        {
            return $exception;
        }
+
+    }
+
+    private function getCurrentDate()
+    {
+        $createdAt=new \DateTime('now');
+        return $createdAt->format('Y-m-d H:i:s');
 
 
     }

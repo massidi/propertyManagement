@@ -1,0 +1,170 @@
+{% extends 'base-front.html.twig' %}
+
+{% block content %}
+<div class="page-title" data-aos="fade">
+
+
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li><a href="">Bien Immobilier</a></li>
+                <li class="current">Reservation</li>
+            </ol>
+        </div>
+    </nav>
+</div>
+
+    <section id="real-estate-2" class="real-estate-2 section">
+        <div class="container">
+            <div class="row justify-content-between gy-4 mt-4">
+            <div class="col-lg-8 aos-init" data-aos="fade-up">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal', 'id': 'my-form'}}) }}
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_label(form.checkInAt, 'Date d\'entrée') }}
+                        {{ form_widget(form.checkInAt) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_label(form.checkOutAt, 'Date de sortie') }}
+                        {{ form_widget(form.checkOutAt) }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ form_label(form.comment, 'Commentaire', {'label_attr': {'class': 'bmd-label-floating'}}) }}
+                        {{ form_widget(form.comment, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+                    </div>
+                </div>
+
+            </div>
+
+            <h4 class="justify-content-center">Enregistre tes cliens</h4>
+            <ul id="client-list" class="list-unstyled"
+                data-prototype="{{ form_widget(form.clients.vars.prototype)|e('html_attr') }}">
+                {% for client in form.clients %}
+                    <li class="client-item mb-3" style="opacity: 1; transition: opacity 0.5s;">
+                        <div class="card rounded border border-dark px-3 py-3" style="position: relative;">
+                            <button type="button" class="btn-close remove-client" aria-label="Close"
+                                    style="position: absolute; top: 5px; right: 10px; cursor: pointer;">
+                                X
+                            </button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(client.prenom) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form_row(client.nom) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(client.telephone) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form_row(client.email) }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="form-group">
+                <button type="button" id="add-client" class="btn btn-info mb-4">Add Client</button>
+            </div>
+
+            {{ form_row(form._token) }}
+
+            <button class="btn btn-success btn-lg btn-block mb-4">
+                Passer au paiement / Modifier
+            </button>
+
+            {{ form_end(form) }}
+
+        </div>
+            <div class="col-lg-3 aos-init" data-aos="fade-up" data-aos-delay="100">
+                <div class="portfolio-info">
+                    <h3>Quick Summary</h3>
+                    <ul>
+
+                        <li>reddy</li>
+{#                        <li><strong>Property ID:</strong> {{ appartement.id }}</li>#}
+{#                        <li><strong>Location:</strong> {{ appartement.adresse }}</li>#}
+{#                        <li><strong>Property Type:</strong> {{ appartement.category }}</li>#}
+{#                        <li><strong>Status:</strong> {{ appartement.status }}</li>#}
+{#                        <strong>Equipement:</strong>#}
+{#                        {% for accessoire in appartement.accessoires %}#}
+{#                            <li class="list-inline-item">{{ accessoire.nom|join(",") }}</li>#}
+{#                        {% endfor %}#}
+{#                        <li> <a class="btn btn-success" href="{{ path('booking_new', {'id': appartement.id}) }}">Reserver</a></li>#}
+
+                    </ul>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const clientList = document.getElementById('client-list');
+            const addClientButton = document.getElementById('add-client');
+            const prototype = clientList.dataset.prototype;
+            let index = clientList.children.length;
+
+            // Add a new client form
+            addClientButton.addEventListener('click', function () {
+                const newForm = prototype.replace(/__name__/g, index);
+                const newClient = document.createElement('li');
+                newClient.classList.add('client-item', 'mb-3');
+                newClient.style.opacity = '0'; // Initial opacity for smooth fade-in
+                newClient.style.transition = 'opacity 0.5s'; // Smooth transition effect
+                newClient.innerHTML = `
+            <div class="card rounded border border-dark px-3 py-3" style="position: relative;">
+                <button type="button" class="btn-close remove-client" aria-label="Close"
+                        style="position: absolute; top: 5px; right: 10px; cursor: pointer;">
+
+                </button>
+                ${newForm}
+            </div>
+        `;
+
+                clientList.appendChild(newClient);
+
+                // Trigger smooth fade-in
+                requestAnimationFrame(() => {
+                    newClient.style.opacity = '1';
+                });
+
+                index++;
+                attachRemoveListener(newClient);
+            });
+
+            // Attach remove listener
+            function attachRemoveListener(client) {
+                const removeButton = client.querySelector('.remove-client');
+                removeButton.addEventListener('click', function () {
+                    client.style.opacity = '0'; // Smooth fade-out
+                    setTimeout(() => client.remove(), 500); // Remove after transition
+                });
+            }
+
+            // Attach initial remove listeners
+            document.querySelectorAll('.client-item').forEach(function (client) {
+                attachRemoveListener(client);
+            });
+        });
+
+    </script>
+{% endblock %}
